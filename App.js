@@ -9,10 +9,10 @@ export default function App() {
   return (
    <ThemeProvider>
       <SignIn />
-      <SignUp />
-      <WelcomePage />
-      <SellerPage />
-      
+      {/* <SignUp /> */}
+      {/* <WelcomePage /> */}
+      {/* <SellerPage /> */}
+
    </ThemeProvider>
   
   );
