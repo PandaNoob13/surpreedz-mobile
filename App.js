@@ -1,20 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {  Text, View } from 'react-native';
+import SellerPage from './src/features/seller/SellerPage';
+import SignIn from './src/features/signin/SignIn';
+import SignUp from './src/features/signup/SignUp';
+import WelcomePage from './src/features/welcome/WelcomePage';
 import { ThemeProvider } from './src/shared/context/ThemeContext';
 
 export default function App() {
   return (
    <ThemeProvider>
-    
+      <SignIn />
+      <SignUp />
+      <WelcomePage />
+      <SellerPage />
+      
    </ThemeProvider>
+  
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
