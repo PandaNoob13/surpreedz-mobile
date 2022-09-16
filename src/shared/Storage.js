@@ -29,8 +29,16 @@ const Storage = () => {
         }
     }
 
+    const clearStorage = async () => {
+        try {
+            await AsyncStorage.clear();
+        }catch(e){
+            throw(e)
+        }
+    }
+
     return {
-        setData, getData, deleteData
+        setData, getData, deleteData, clearStorage
     }
 }
 

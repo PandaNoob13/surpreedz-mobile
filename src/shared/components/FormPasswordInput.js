@@ -29,7 +29,7 @@ const FormPasswordInput = ({label, value, onChangeText, placeholder='', keyboard
             //     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
             //     return regex.test(value);
             // }]} 
-            validate={['required', (value) => value.length > 6]}
+            validate={['required', (value) => value.length >= 6]}
             validationMessage={['Password is required', 'Password is invalid']} 
             validateOnChange validationMessageStyle={styles.labelStyle} validationMessagePosition={TextField.validationMessagePositions.TOP}
             keyboardType={keyboard}

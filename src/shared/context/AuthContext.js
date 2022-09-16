@@ -1,4 +1,4 @@
-import {createContext} from "react";
+import {createContext, useState} from "react";
 import Storage from "../Storage"
 import useDependency from "../hook/UseDependency";
 import {KEY} from "../constants"
@@ -6,19 +6,24 @@ import {KEY} from "../constants"
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
-    const {loginService} = useDependency();
+    const {signInService} = useDependency();
     const storage = Storage();
+    const [token, setToken] = useState()
 
     const onLogin = async (userCred = {}) => {
         try {
-            const response = await loginService.authenticate(userCred);
+            const response = await signInService.postLogin(userCred);
             if (response) {
-                await storage.storeData(KEY.TOKEN, response.token);
+                console.log('response AuthContext', response);
+                console.log('response AuthContext', response.token.AccessToken);
+                await storage.setData(KEY.TOKEN, response.token.AccessToken);
                 return true;
             } else {
+                console.log('response authcontext false');
                 return false;
             }
         } catch (e) {
+            console.log('e authcontext', e);
             return false;
         }
     };
