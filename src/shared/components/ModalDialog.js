@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     modalView: {
         backgroundColor: Colors.colourBg,
-        color: Colors.colourText,
+        color: Colors.colourTextPrimary,
         padding: 35,
         alignItems: 'center',
         alignSelf: 'stretch',
