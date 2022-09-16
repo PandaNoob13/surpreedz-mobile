@@ -12,13 +12,17 @@
     "@react-native-community/blur": "^4.2.0",
     "expo": "~46.0.9",
     "expo-status-bar": "~1.4.0",
+    "intl": "^1.2.5",
+    "jsc-android": "^250230.2.1",
     "react": "18.0.0",
+    "react-intl": "^6.1.1",
     "react-native": "0.69.5",
     "react-native-gesture-handler": "^2.6.0",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "^2.10.0",
     "react-native-safe-area-context": "^4.3.3",
-    "react-native-ui-lib": "^6.21.1"
+    "react-native-ui-lib": "^6.21.1",
+    "react-number-format": "^5.0.0-beta.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

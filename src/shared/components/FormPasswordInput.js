@@ -13,11 +13,11 @@ const FormPasswordInput = ({label, value, onChangeText, placeholder='', keyboard
     return (
         <TextField 
             text70R 
-            labelColor={Colors.colourText} 
+            labelColor={Colors.colourTextPrimary} 
             labelStyle={styles.labelStyle} 
             placeholderTextColor={Colors.grey50} 
             fieldStyle={styles.withFrame} 
-            color={Colors.colourText}
+            color={Colors.colourTextPrimary}
             label={label}
             placeholder={placeholder} 
             value={value}

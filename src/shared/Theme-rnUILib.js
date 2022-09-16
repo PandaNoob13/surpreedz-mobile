@@ -5,7 +5,8 @@ export const themeRnUILib = () => {
     Colors.loadColors({
         colourBg: "#212121",
         colourCard: "#373535",
-        colourText: "white",
+        colourTextPrimary: "white",
+        colourTextSecondary: "white, .6",        
         colourNav: "black",
         colourLight: "#F8F9FA",
     });
