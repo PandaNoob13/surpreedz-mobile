@@ -59,7 +59,8 @@ const ProfilPage = () => {
                         <FormTextInput label={'Name'} />
                         <FormTextInput label={'Location'} />
                         <View style={{width:'50%', marginBottom:32}}>
-                            <FormButton label={'Upload Photo'} />   
+                            {/* <FormButton label={'Upload Photo'} />    */}
+                            <Button title='Upload Photo' />
                         </View>
                         <FormButton label={'Submit'} />
                     </View>
