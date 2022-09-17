@@ -31,7 +31,15 @@ const HomeRouter = () => {
         tabBarInactiveTintColor:'rgb(92,93,95)',
     })}>
        
-            <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerShown: false}} />
+            {/* <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerTitle:'How Surpreedz Works',headerStyle: {
+            backgroundColor: '#000000',
+          }, headerTitleStyle:{
+            color: '#ffffff',
+            fontSize:15,
+            marginLeft:170
+          }}} 
+          /> */}
+          <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerShown: false}}/>
             <Tab.Screen name={ROUTE.SELLER} component={SellerPage} options={{headerShown: false}} />
             <Tab.Screen name={ROUTE.BUYER} component={PurchaseListPage} options={{headerShown: false}} />
             <Tab.Screen name={ROUTE.PROFIL} component={ProfilPage} options={{headerShown: false}} />

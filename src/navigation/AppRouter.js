@@ -10,6 +10,7 @@ import WelcomePage from "../features/welcome/WelcomePage";
 import { ROUTE } from "../shared/constants";
 import useAuth from "../shared/hook/UseAuth";
 import { Ionicons } from '@expo/vector-icons';
+import AboutPage from "../features/about/AboutPage";
 
 
 
@@ -50,6 +51,10 @@ const AppRouter = () => {
           }, headerBackImage: ()=> <Ionicons name="ios-caret-back" size={40} color="white" />}} /> 
           
         <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'',headerStyle: {
+            backgroundColor: '#000000',
+          }, headerBackImage: ()=> <Ionicons name="ios-caret-back" size={40} color="white" />}} />
+
+        <Stack.Screen name={ROUTE.ABOUT} component={AboutPage} options={{headerTitle:'',headerStyle: {
             backgroundColor: '#000000',
           }, headerBackImage: ()=> <Ionicons name="ios-caret-back" size={40} color="white" />}} />
     </Stack.Navigator>

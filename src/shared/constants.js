@@ -8,7 +8,8 @@ export const ROUTE = {
     SELLER:'seller',
     BUYER:'buyer',
     PAYMENT:'payment',
-    PROFIL:'profil'
+    PROFIL:'profil',
+    ABOUT:'About'
 }
 
 export const SERVICE = {

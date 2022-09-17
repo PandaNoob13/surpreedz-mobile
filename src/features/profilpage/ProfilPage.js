@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, ScrollView, Image} from 'react-native'
+import { View, StyleSheet, Text, ScrollView, Image, Button} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import { KEY, ROUTE } from '../../shared/constants';
@@ -10,6 +10,8 @@ import FormButton from '../../shared/components/FormButton';
 import CardContainer from '../../shared/components/CardContainer';
 import Avatar from '../../shared/components/Avatar';
 import ProfileCard from '../../shared/components/ProfileCard';
+import ModalDialog from '../../shared/components/ModalDialog';
+import FormTextInput from '../../shared/components/FormTextInput';
 
 const ProfilPage = () => {
     const theme = useTheme();
@@ -18,6 +20,8 @@ const ProfilPage = () => {
     const {onLogout} = useAuth();
     const storage = Storage();
     const [name, setName] = useState('')
+    const [modalVisible, setModalVisible] = useState(false);
+    
     const imageUrl = 'https://img.okezone.com/content/2022/03/15/33/2561783/musisi-ardhito-pramono-akan-segera-bebas-dari-jerat-hukum-narkoba-PSrk23ID54.jpg'
 
     useEffect(()=> {
@@ -48,6 +52,21 @@ const ProfilPage = () => {
 
   return (
     <MainContainer>
+      {modalVisible && 
+          <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
+                <CardContainer>
+                    <View>
+                        <FormTextInput label={'Name'} />
+                        <FormTextInput label={'Location'} />
+                        <View style={{width:'50%', marginBottom:32}}>
+                            <FormButton label={'Upload Photo'} />   
+                        </View>
+                        <FormButton label={'Submit'} />
+                    </View>
+                </CardContainer>
+            
+          }
+          />}
       <ScrollView>
           <ProfileCard imageUrl='https://img.okezone.com/content/2022/03/15/33/2561783/musisi-ardhito-pramono-akan-segera-bebas-dari-jerat-hukum-narkoba-PSrk23ID54.jpg' 
           name='Ardhito Pramono'
@@ -64,7 +83,7 @@ const ProfilPage = () => {
           </CardContainer>
 
           <View style={styles.profileItem}>
-            <FormButton label="Edit Profile" ></FormButton>
+            <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
           </View>
           
           <View style={styles.profileItem}>

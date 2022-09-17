@@ -4,6 +4,7 @@ import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ROUTE } from '../../../shared/constants';
+import HeaderPageLabel from '../../../shared/components/HeaderPageLabel';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -13,6 +14,13 @@ const HomePage = () => {
 
   return (
     <MainContainer>
+      <HeaderPageLabel > 
+          <TouchableOpacity onPress={()=>{navigation.navigate(ROUTE.ABOUT,{
+            prevPage:route.name
+          })}}>
+            <Text style={styles.textTitle}>How Surpreedz Works</Text>
+          </TouchableOpacity>
+      </HeaderPageLabel>
         <View>
           <Text>HomePage</Text>
         </View>
@@ -35,7 +43,12 @@ const HomePage = () => {
 }
 
 const styling = (theme) => ( StyleSheet.create({
-   
+  textTitle:{
+    fontSize:15,
+    color: '#ffffff',
+    fontWeight:'bold',
+    marginRight:8
+},
 }))
 
 export default HomePage
