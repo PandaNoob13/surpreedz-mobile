@@ -38,7 +38,7 @@ const AppRouter = () => {
     },[])
 
   return initialRoute !== null ? (
-    <Stack.Navigator initialRouteName={ROUTE.MAIN} >
+    <Stack.Navigator initialRouteName={initialRoute} >
         <Stack.Group screenOptions={{headerShown:false}}>
             <Stack.Screen name={ROUTE.WELCOME} component={WelcomePage}></Stack.Screen>
             <Stack.Screen name={ROUTE.SIGNIN} component={SignIn} />
