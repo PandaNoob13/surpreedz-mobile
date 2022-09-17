@@ -1,9 +1,14 @@
 export const ROUTE = {
-    SIGNIN: 'SignIn',
+    SIGNIN: 'signIn',
     WELCOME: 'welcome',
-    HOME: 'Home',
+    HOME: 'home',
     MAIN: 'main',
-    SIGNUP: 'SignUp'
+    SIGNUP: 'signUp',
+    ORDER:'order',
+    SELLER:'seller',
+    BUYER:'buyer',
+    PAYMENT:'payment',
+    PROFIL:'profil'
 }
 
 export const SERVICE = {
@@ -12,5 +17,10 @@ export const SERVICE = {
 }
 
 export const KEY = {
-    TOKEN: 'token' ,  
+    TOKEN: 'token' ,
+    ACCOUNTNAME:'account_name',
+    USER_INFO:'user_info'
+    // ACCOUNT_ID:'account_id',
+    // ACCOUNT_EMAIL:'account_email',
+
 }

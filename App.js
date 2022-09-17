@@ -1,8 +1,11 @@
+import { NavigationContainer } from '@react-navigation/native';
 import {  Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SellerPage from './src/features/seller/SellerPage';
 import SignIn from './src/features/signin/SignIn';
 import SignUp from './src/features/signup/SignUp';
 import WelcomePage from './src/features/welcome/WelcomePage';
+import AppRouter from './src/navigation/AppRouter';
 import ServiceFactory from './src/services/ServiceFactory';
 import apiClientFactory from './src/shared/ApiClientFactory';
 import { clientInstance } from './src/shared/AxiosClient';
@@ -19,16 +22,17 @@ export default function App() {
 
   return (
     <DependencyProvider services={services}>
-        <ThemeProvider>
-          <AuthProvider>
-            <SignIn />
-            {/* <SignUp />
-            <WelcomePage />
-            <SellerPage /> */}
+      <SafeAreaProvider>
+            <ThemeProvider>
+                <NavigationContainer>
+                    <AuthProvider>
+                        <AppRouter />
 
-          </AuthProvider>
-            
-        </ThemeProvider>
+                    </AuthProvider>
+                </NavigationContainer>
+                
+            </ThemeProvider>
+        </SafeAreaProvider>
    </DependencyProvider>
   
   );

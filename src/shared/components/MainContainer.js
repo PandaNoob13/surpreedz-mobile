@@ -4,7 +4,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 const MainContainer = ({children}) => {
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor={'white'}/>
+            {/* <StatusBar translucent style="light"/> */}
             {children}
         </SafeAreaView>
     );

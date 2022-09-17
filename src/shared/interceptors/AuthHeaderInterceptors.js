@@ -4,7 +4,7 @@ import Storage from "../Storage";
 const authHeaderInterceptor = async (config) => {
     const storage = Storage();
     const token = await storage.getData(KEY.TOKEN)
-    if (config.url !== '/api/auth/login') {
+    if (config.url !== SERVICE.SIGNIN) {
         config.headers.Authorization = token;
     }
     // else if (token === ''){

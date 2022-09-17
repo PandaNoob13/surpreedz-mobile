@@ -1,4 +1,5 @@
-// import { SERVICE } from "../shared/constants";
+
+import { SERVICE } from "../shared/constants";
 
 const SignInService = ({doPost}) => {
     const postLogin = async (userCred={}) => {
@@ -6,7 +7,7 @@ const SignInService = ({doPost}) => {
         console.log('userCred 1', userCred);
         try {
             console.log('userCred', userCred);
-            return await doPost({url: '/api/auth/login', data: userCred})
+            return await doPost({url: SERVICE.SIGNIN, data: userCred})
             console.log('doPOst');
         } catch (error) {
             // throw error

@@ -1,15 +1,16 @@
 import { Keyboard } from 'react-native'
 import  { useEffect, useState } from 'react'
-// import { useNavigation } from '@react-navigation/native'
 import useViewState from '../../shared/hook/UseViewState';
 import useAuth from '../../shared/hook/UseAuth';
+import { ROUTE } from '../../shared/constants';
+import { useNavigation } from '@react-navigation/native';
 
 const useSignIn = () => {
-    // const navigation = useNavigation();
     const [email,onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('')
     const {viewState, setLoading, setError} = useViewState();
     const {onLogin} = useAuth();
+    const navigation = useNavigation();
 
 
     const onPostSignIn = async () => {
@@ -23,8 +24,8 @@ const useSignIn = () => {
 
                 console.log('Response Login',response);
                 if (response) {
-                    // navigation.replace(ROUTE.HOME)
                     console.log('SIGN IN SUCCESS');
+                    navigation.replace(ROUTE.MAIN)
                 } else {
                     setError(new Error('Unauthorized'));
                     console.log('error Unauthorized');
