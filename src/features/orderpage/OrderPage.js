@@ -1,5 +1,5 @@
 import { View, Text ,StyleSheet, ScrollView} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
 import ProfileCard from '../../shared/components/ProfileCard';
