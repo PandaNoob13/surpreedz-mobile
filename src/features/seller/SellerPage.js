@@ -1,5 +1,5 @@
 import { View, Text ,StyleSheet, Button} from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
 import FormButton from '../../shared/components/FormButton';
@@ -8,13 +8,61 @@ import RequestCard from '../../shared/components/RequestCard';
 import ModalDialog from '../../shared/components/ModalDialog';
 import FormTextInput from '../../shared/components/FormTextInput';
 import OrderDetailInfo from '../../shared/components/OrderDetailInfo';
+import Storage from '../../shared/Storage';
+import { KEY } from '../../shared/constants';
+import useAddEditService from './hookSeller/UseAddEditService';
 
 const SellerPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
     const [modalVisible, setModalVisible] = useState(false)
+    const storage = Storage();
     // const [modalDetailOrder, setModalDetailOrder] = useState(false)
+    const getRole = async () => {
+      return  await storage.getData(KEY.SERVICE_ROLE);
+    }
+    const getPrice = async () => {
+      return await storage.getData(KEY.SERVICE_PRICE);
+    }
+    const getDesc = async () => {
+      return await storage.getData(KEY.SERVICE_DESCRIPTION);
+    }
+    const getIdAccount = async () => {
+     return await storage.getData(KEY.ACCOUNT_ID);
+    }
+    const getAllItem = async () => {
+      const role = await storage.getData(KEY.SERVICE_ROLE);
+      const price = await storage.getData(KEY.SERVICE_PRICE);
+      const desc = await storage.getData(KEY.SERVICE_DESCRIPTION);
+      const accId =  await storage.getData(KEY.ACCOUNT_ID);
+      setRole(role);
+      setPrice(price);
+      setDescription(desc);
+      setAccountId(accId)
+    }
 
+    useEffect(()=>{
+      getAllItem();
+    },[role, description, price])
+
+    // var accountId = getIdAccount();
+    var serviceDetailRole = getRole();
+    var serviceDetailDesc = getDesc();
+    var serviceDetailPrice = getPrice();
+    const [role, setRole] = useState(serviceDetailRole)
+    const [description, setDescription] = useState(serviceDetailDesc)
+    const [price, setPrice] = useState(serviceDetailPrice);
+    const [dataVideo ,setDataVideo] = useState();
+    const {onPostService} = useAddEditService();
+    const [accountId, setAccountId] = useState()
+
+    const handleSubmit = async () => {
+      console.log('accountId', accountId);
+      console.log('role',role);
+      console.log('description',description);
+      console.log('price',price);
+      onPostService(parseInt(accountId) ,role, description, parseInt(price),dataVideo)
+    }
 
   return (
     <MainContainer>
@@ -22,10 +70,10 @@ const SellerPage = () => {
         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} children={
           <CardContainer>
               <View>
-                  <FormTextInput label={'Role'} />
-                  <FormTextInput label={'Description'} />
-                  <FormTextInput label={'Price'} />
-                  <FormButton label={'Submit'} />
+                  <FormTextInput label={'Role'} value={role} onChangeText={setRole} />
+                  <FormTextInput label={'Description'} value={description} onChangeText={setDescription} />
+                  <FormTextInput label={'Price'} value={price} onChangeText={setPrice} />
+                  <FormButton label={'Submit'} onPress={handleSubmit} />
               </View>
           </CardContainer>
       

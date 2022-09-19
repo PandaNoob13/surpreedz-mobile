@@ -1,50 +1,33 @@
-import {createContext, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import Storage from "../Storage"
 import useDependency from "../hook/UseDependency";
 import {KEY} from "../constants"
+import { log } from "react-native-reanimated";
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
     const {signInService} = useDependency();
     const storage = Storage();
+    const [dataUser, setDataUser] = useState('')
+
 
     const onLogin = async (userCred = {}) => {
         try {
             const response = await signInService.postLogin(userCred);
             if (response) {
-                // console.log('response AuthContext', response);
-                // console.log('response AuthContext', response.token.AccessToken);
                 await storage.setData(KEY.TOKEN, response.token.AccessToken);
-                const data = response.account;
-                const account = data.account
-                // console.log('response account =>', account);
-                // console.log('response account =>', account.email);
-                // console.log('response account =>', account.AccountDetail.name);
-                // const userInfo ={
-                //     id:account.id,
-                //     email:account.email,
-                //     name: account.AccountDetail.name,
-                //     location: account.AccountDetail.location,
-                //     joinDate : data.string_join_date,
-                //     serviceId : account.ServiceDetail.id,
-                //     serviceRole: account.ServiceDetail.role,
-                //     serviceDescription : account.ServiceDetail.description
-                // }
-                // console.log('user info  auth context=> ', userInfo);
-                console.log('type token', typeof(response.token.AccessToken));
-                console.log('type name', typeof(account.AccountDetail.name));
-                await storage.setData(KEY.ACCOUNTNAME, account.AccountDetail.name )
+                setDataUser(response.account);
                 return true;
             } else {
-                console.log('response authcontext false');
+                // console.log('response authcontext false');
                 return false;
             }
         } catch (e) {
             console.log('e authcontext', e);
             return false;
         }
-    };
+    }; 
 
     const isTokenExist = async () => {
         try {
@@ -69,6 +52,48 @@ export const AuthProvider = ({children}) => {
             return false;
         }
     };
+
+    const handleUserInfo = async () => {
+        if (dataUser != '') {
+            const account = dataUser.account;
+            const userInfo = {
+                id:String(account.id),
+                email:account.email,
+                name: account.AccountDetail.name,
+                location: account.AccountDetail.location,
+                joinDate : dataUser.string_join_date,
+                serviceId : String(account.ServiceDetail.id),
+                serviceRole: account.ServiceDetail.role,
+                serviceDescription : account.ServiceDetail.description,
+            }
+
+            await storage.setData(KEY.ACCOUNTNAME, userInfo.name )
+            await storage.setData(KEY.ACCOUNT_ID, userInfo.id )
+            await storage.setData(KEY.ACCOUNT_EMAIL, userInfo.email)
+            await storage.setData(KEY.ACCOUNT_LOCATION, userInfo.location )
+            await storage.setData(KEY.ACCOUNT_JOINDATE, userInfo.joinDate )
+            await storage.setData(KEY.SERVICE_ID, userInfo.serviceId )
+            await storage.setData(KEY.SERVICE_ROLE, userInfo.serviceRole )
+            await storage.setData(KEY.SERVICE_DESCRIPTION, userInfo.serviceDescription )
+            
+            if (account.ServiceDetail.id != 0) {
+                const serviceDetail = account.ServiceDetail;
+                console.log(serviceDetail.ServicePrices);
+                const price = serviceDetail.ServicePrices[serviceDetail.ServicePrices.length - 1]
+                await storage.setData(KEY.SERVICE_PRICE, String(price.price))
+            } else {
+                await storage.setData(KEY.SERVICE_PRICE, String(0))
+                console.log("No service detail");
+            }
+            console.log('user Info Auth Context, ', userInfo);
+            
+        }
+   }
+
+   useEffect(()=>{
+        handleUserInfo();
+   },[dataUser])
+
     
     return <AuthContext.Provider value={{onLogin, onLogout, isTokenExist}}>{children}</AuthContext.Provider>;
 };
