@@ -4,11 +4,13 @@ import {Incubator, Colors} from 'react-native-ui-lib';
 const { TextField } = Incubator;
 import {useTheme} from "../context/ThemeContext";
 
-const FormTextInput = ({label, value, onChangeText, placeholder='', keyboard = 'default', enableErrors = false, validate = [], validationMessage = []}) => {
+const FormTextInput = (props) => {
+    const {label, value, onChangeText, placeholder='', keyboard = 'default', enableErrors = false, validate = [], validationMessage = []} = props;
     const theme = useTheme();
     const styles = styling(theme);
     return (
         <TextField 
+            {...props}
             text70R 
             labelColor={Colors.colourTextPrimary} 
             labelStyle={styles.labelStyle} 
@@ -24,7 +26,7 @@ const FormTextInput = ({label, value, onChangeText, placeholder='', keyboard = '
             validationMessage={validationMessage}
             validateOnChange validationMessageStyle={styles.labelStyle} validationMessagePosition={TextField.validationMessagePositions.TOP}
             keyboardType={keyboard}
-        />
+            />
     );
 };
 
@@ -53,3 +55,5 @@ const styling = (theme) => StyleSheet.create({
     }
 });
 export default FormTextInput;
+
+FormTextInput.defaultP

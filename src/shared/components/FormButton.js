@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-ui-lib';
 import {useTheme} from "../context/ThemeContext";
 
-const FormButton = ({props, label, onPress}) => {
+const FormButton = (props) => {
     const theme = useTheme();
     const styles = styling(theme);
     return (
@@ -12,8 +12,8 @@ const FormButton = ({props, label, onPress}) => {
             black 
             borderRadius={8}
             background-colourLight 
-            label={label}
-            onPress={onPress}
+            label={props.label}
+            onPress={props.onPress}
         />
     );
 };

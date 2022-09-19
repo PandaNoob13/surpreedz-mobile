@@ -1,37 +1,66 @@
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react'
-import { StyleSheet } from 'react-native';
-import {View, Incubator, Text, Button, Colors} from 'react-native-ui-lib';
-import AppBackground from '../../shared/components/AppBackground';
+import {View,Text, Button, Colors, Keyboard} from 'react-native-ui-lib';
 import FormButton from '../../shared/components/FormButton';
+// import FormButton from '../../shared/components/FormButton';
 import FormPasswordInput from '../../shared/components/FormPasswordInput';
 import FormTextInput from '../../shared/components/FormTextInput';
 import MainContainer from '../../shared/components/MainContainer';
+import { ROUTE } from '../../shared/constants';
 import { useTheme } from '../../shared/context/ThemeContext';
-const { TextField } = Incubator;
+import useSignIn from './UseSignIn';
+// const { TextField } = Incubator;
+
+const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
 const SignIn = () => {
     const theme = useTheme();
-    const styles = styling(theme)
+    const styles = styling(theme);
+    const {viewState, 
+        email, 
+        password, 
+        onChangeEmail, 
+        onChangePassword, 
+        onPostSignIn} = useSignIn();
+    const navigation = useNavigation();
+
+    
 
     return (
         <MainContainer>
-            {/* <AppBackground> */}
-                <View flex paddingH-25 paddingT-120 colourText useSafeArea>
-                    <Text colourText text20>Welcome</Text>
-                    <View marginV-10 useSafeArea>
-                        <FormTextInput label={'Email'} placeholder="youremail@sample.com" enableErrors={true} validate={['required', 'email']} validationMessage={['Email is required', 'Email is invalid']}></FormTextInput>
-                        <FormPasswordInput label="Password" placeholder="password"></FormPasswordInput>
-                    </View>
-                    
-                    <View marginT-100 useSafeArea>
-                        <FormButton label={'login'}></FormButton>
-                        <View row center>
-                            <Text margin-4 colourText>Not a member yet ?</Text>
-                            <Button margin-4 link colourText text80 labelStyle={{fontWeight: '700'}} label="Sign Up"/>
+            <ScrollView>
+                <View flex paddingH-25 paddingT-120 colourText>
+                    <Text colourTextPrimary text20>Welcome Back</Text>
+                        <View useSafeArea marginV-10>
+                                <FormTextInput 
+                                label={'Email'} 
+                                placeholder="youremail@sample.com" 
+                                enableErrors={true} validate={['required', 'email']} 
+                                validationMessage={['Email is required', 'Email is invalid']} 
+                                value={email}
+                                onChangeText={onChangeEmail}
+                                ></FormTextInput>
+
+                                <FormPasswordInput 
+                                label="Password" 
+                                placeholder="password" 
+                                value={password} 
+                                onChangeText={onChangePassword}
+
+                                ></FormPasswordInput>
+                        
                         </View>
-                    </View>
+                        <FormButton onPress={onPostSignIn} label="Continue"/>
+                        <View marginT-100 center flex row bottom>
+                            <Text style={styles.text} >Not a member yet ?  </Text>
+                            
+                            <TouchableOpacity onPress={()=> {navigation.replace(ROUTE.SIGNUP)}} >
+                                    <Text style={styles.textButton}>Sign Up</Text>
+                            </TouchableOpacity>
+                        </View>
                 </View>
-            {/* </AppBackground> */}
+            </ScrollView>
         </MainContainer>
     );
 }
@@ -54,6 +83,15 @@ const styling = (theme) => ( StyleSheet.create({
     labelStyle: {
         paddingLeft: 16,
         paddingBottom: 8,
+        fontSize: 14,
+    },
+    textButton:{
+        color:'white',
+        fontSize: 14,
+        fontWeight:'bold'
+    },
+    text:{
+        color:'white',
         fontSize: 14,
     }
 }))
