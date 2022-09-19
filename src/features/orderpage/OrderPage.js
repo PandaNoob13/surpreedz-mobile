@@ -10,7 +10,7 @@ import FormButton from '../../shared/components/FormButton';
 
 import UseOrderPage from './UseOrderPage';
 import PersonalisedMessageCard from '../../shared/components/PersonalisedMessageCard';
-import OccasionCard from '../../shared/components/OccasionCard';
+import OccasionCard from '../../shared/components/Occasion/OccasionCard';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -34,8 +34,8 @@ const OrderPage = () => {
     },[route.params])
 
   return (
-    <MainContainer>
-        <ScrollView>
+    <MainContainer p>
+        <ScrollView style={{paddingHorizontal: 16}}>
             <ProfileCard 
               imageUrl='https://img.okezone.com/content/2022/03/15/33/2561783/musisi-ardhito-pramono-akan-segera-bebas-dari-jerat-hukum-narkoba-PSrk23ID54.jpg'
                 name={orderParam.nameSeller} 

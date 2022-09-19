@@ -13,12 +13,17 @@ import { AuthProvider } from './src/shared/context/AuthContext';
 import { DependencyProvider } from './src/shared/context/DependencyContext';
 import { ThemeProvider } from './src/shared/context/ThemeContext';
 import { themeRnUILib } from './src/shared/Theme-rnUILib';
+import useAppFont from "./src/shared/hook/UseAppFont";
 
 themeRnUILib();
 
 export default function App() {
   const apiClient = apiClientFactory(clientInstance);
   const services = ServiceFactory(apiClient);
+  const fonts = useAppFont();
+  if (!fonts) {
+    return null;
+  }
 
   return (
     <DependencyProvider services={services}>
