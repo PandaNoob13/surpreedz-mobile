@@ -1,10 +1,12 @@
-import { View, Text ,StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text ,StyleSheet, TouchableOpacity, ScrollView} from 'react-native'
 import React from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ROUTE } from '../../../shared/constants';
 import HeaderPageLabel from '../../../shared/components/HeaderPageLabel';
+import ServiceCard from '../../../shared/components/ServiceCard';
+import FormButton from '../../../shared/components/FormButton';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -21,12 +23,16 @@ const HomePage = () => {
             <Text style={styles.textTitle}>How Surpreedz Works</Text>
           </TouchableOpacity>
       </HeaderPageLabel>
+      <ScrollView>
         <View>
           <Text>HomePage</Text>
+          <ServiceCard></ServiceCard>
+          <ServiceCard></ServiceCard>
+          <ServiceCard></ServiceCard>
         </View>
 
         <View>
-          <TouchableOpacity onPress={()=>{
+          <FormButton label="ORDER PAGE" style={{color:'white'}} onPress={()=>{
             navigation.navigate(ROUTE.ORDER,{
                 serviceId:10,
                 nameSeller:'Ardhito',
@@ -34,10 +40,10 @@ const HomePage = () => {
                 sinceMember:'22 September 2021',
                 prevPage: route.name
             })
-            }}>
-              <Text style={{color:'white'}}>ORDER PAGE</Text>
-          </TouchableOpacity>
+            }}
+          ></FormButton>
         </View>
+      </ScrollView>
     </MainContainer>
   )
 }

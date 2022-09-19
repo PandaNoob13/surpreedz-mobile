@@ -4,12 +4,13 @@ import Modal from "react-native-modal";
 import { Colors } from "react-native-ui-lib";
 import FormButton from "./FormButton";
 
-const ModalDialog = ({props, visible, onPress, children, titleModal}) => {
+const ModalDialog = (props) => {
     // const [isModalVisible, setModalVisible] = useState(false);
 
     // const toggleModal = () => {
     //     setModalVisible(!isModalVisible);
     // };
+    const {visible, onBackdropPress, onPress, children, titleModal} = props;
     return (
         <Modal
             {...props}
@@ -18,23 +19,20 @@ const ModalDialog = ({props, visible, onPress, children, titleModal}) => {
             style={{ margin: 0 }}
             animationType={"slide"}
             isVisible={visible}
-            // onBackdropPress={onPress}
+            onBackdropPress={onBackdropPress}
             swipeDirection='down'
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <View style={{paddingTop:8,paddingRight:8, alignSelf:'flex-end'}}>
-                            <TouchableOpacity  onPress={onPress}>
-                                <MaterialCommunityIcons name="close" size={24} color="white" />
-                            </TouchableOpacity>
-                    </View>
-                    <View style={{alignSelf:'flex-start', paddingLeft:24}}>
+                    <View spread >
                         <Text style={styles.subtitle}>{titleModal}</Text>
+                        <TouchableOpacity onPress={onPress}>
+                            <MaterialCommunityIcons name="close" size={24} color="white" />
+                        </TouchableOpacity>
                     </View>
-
-                        <View style={{minWidth:'100%', paddingBottom:8}}>
-                                {children}
-                        </View>
+                    <View style={{minWidth:'100%', marginBottom:20}}>
+                        {children}
+                    </View>
                 </View>
             </View>            
         </Modal>        
@@ -53,11 +51,12 @@ const styles = StyleSheet.create({
         color: Colors.colourTextPrimary,
         alignItems: 'center',
         alignSelf: 'stretch',
-        // height: '70%',
+        height: '80%',
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
         shadowRadius: 10,
         elevation: 5,
+        padding:8,
     },
     subtitle:{
         fontSize:15,

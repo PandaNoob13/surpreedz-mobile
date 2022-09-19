@@ -1,7 +1,8 @@
 import { Text } from "react-native-ui-lib";
 import { NumericFormat } from "react-number-format";
 
-const NumberCurrency = ( {textParams, price, currency} ) => {
+const NumberCurrency = (props) => {
+    const {price, currency} = props;
     return (
       <NumericFormat
         value={price}
@@ -11,7 +12,7 @@ const NumberCurrency = ( {textParams, price, currency} ) => {
         decimalScale={2}
         thousandSeparator="." decimalSeparator=','
         prefix={`${currency}`}
-        renderText={(value) => <Text colourTextPrimary text70H style={{fontWeight: '700'}} {...textParams}>{value}</Text>}
+        renderText={(value) => <Text colourTextPrimary text70H style={{fontWeight: '700'}} {...props}>{value}</Text>}
       />
     );
   };

@@ -9,6 +9,8 @@ import FormTextInput from '../../shared/components/FormTextInput';
 import FormButton from '../../shared/components/FormButton';
 
 import UseOrderPage from './UseOrderPage';
+import PersonalisedMessageCard from '../../shared/components/PersonalisedMessageCard';
+import OccasionCard from '../../shared/components/OccasionCard';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -39,45 +41,49 @@ const OrderPage = () => {
                 name={orderParam.nameSeller} 
                 location={orderParam.locationSeller} 
                 memberSince={orderParam.sinceMember}
+                style={{marginVertical: 4}}
             />
 
-            <CardContainer> 
-                <View style={{margin: 8}}>
+            {/* <CardContainer style={{marginVertical: 4}}> 
+                <View>
                     <Text style={styles.subtitle}>
                             {orderParam.nameSeller} would help you with ...
                     </Text>
                 </View>
-            </CardContainer>
+            </CardContainer> */}
 
-            <CardContainer> 
-                <View style={{margin: 8}}>
+            <OccasionCard occasion={occasion} onPress={onChangeOccasion} orderParam={orderParam}></OccasionCard>
+
+            <PersonalisedMessageCard onChangeRecipient={onChangeRecipient} onChangeMessage={onChangeMessage} onChangeDescription={onChangeDescription} recipient={recipient} message={message} description={description} orderParam={orderParam} ></PersonalisedMessageCard>
+
+            {/* <CardContainer style={{marginVertical: 4}}> 
+                <View>
                     <Text style={styles.subtitle}>
                           Your Personalised Message
                     </Text>
                 </View>
-                <View style={{margin: 8}}>
+                <View>
                     <FormTextInput 
                      label={'Who is this message for ?'}
                      value={recipient} 
                      onChangeText={onChangeRecipient}
-
                      />
 
                      <FormTextInput 
                         label={`What should ${orderParam.nameSeller} say to the person ?`}
                         value={message}
                         onChangeText={onChangeMessage}
-
+                        multiline
                      />
 
                      <FormTextInput 
                      label={`What should ${orderParam.nameSeller} know about the person?`}
                      value={description} 
                      onChangeText={onChangeDescription}
-
+                     multiline
                      />
                 </View>
-            </CardContainer>
+            </CardContainer> */}
 
             <View style={{margin: 8, marginBottom:16}}>
                 <FormButton label={`Send Request`} />
@@ -91,9 +97,11 @@ const OrderPage = () => {
 
 const styling = (theme) => ( StyleSheet.create({
    subtitle:{
+    textAlign:'center',
     fontSize:15,
     color: '#ffffff',
-    fontWeight:'bold'
+    fontWeight:'bold',
+    marginBottom: 8,
    },
 }))
 

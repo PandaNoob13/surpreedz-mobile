@@ -32,7 +32,7 @@ const SignUp = () => {
           <MainContainer>
           <ScrollView>
               <View flex paddingH-25 paddingT-120 colourText>
-                  <Text colourText text20>Welcome</Text>
+                  <Text colourTextPrimary text20>Welcome</Text>
                       <View useSafeArea marginV-10>
                               <FormTextInput 
                               label={'Email'} 

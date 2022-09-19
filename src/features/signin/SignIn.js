@@ -31,7 +31,7 @@ const SignIn = () => {
         <MainContainer>
             <ScrollView>
                 <View flex paddingH-25 paddingT-120 colourText>
-                    <Text colourText text20>Welcome Back</Text>
+                    <Text colourTextPrimary text20>Welcome Back</Text>
                         <View useSafeArea marginV-10>
                                 <FormTextInput 
                                 label={'Email'} 

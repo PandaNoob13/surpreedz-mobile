@@ -3,11 +3,12 @@ import React from 'react'
 import { useTheme } from '../context/ThemeContext'
 import CardContainer from './CardContainer';
 
-const ProfileCard = ({imageUrl = '',name='',location='',memberSince=''}) => {
+const ProfileCard = (props) => {
+    const {imageUrl = '',name='',location='',memberSince=''} = props;
     const theme = useTheme();
     const styles = styling(theme)
   return (
-        <CardContainer>
+        <CardContainer {...props}>
             <View style={{margin:8}}>
                 <View>
                     <Image source={{uri:imageUrl}} 
