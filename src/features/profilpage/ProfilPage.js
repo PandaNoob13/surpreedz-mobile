@@ -75,44 +75,42 @@ const ProfilPage = () => {
 
   return (
     <MainContainer>
-      {modalVisible && 
-          <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
-                <CardContainer>
-                    <View>
-                        <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
-                        <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
-                        <View style={{width:'50%', marginBottom:32}}>
-                        <Button title='Upload Photo' />
-                        </View>
-                        <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
+        {modalVisible && 
+            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
+                <View>
+                    <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
+                    <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
+                    <View style={{width:'50%', marginBottom:32}}>
+                    <Button title='Upload Photo' />
                     </View>
-                </CardContainer>
-            
-          }
-          />}
-      <ScrollView>
-          <ProfileCard data={data}
-          />
+                    <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
+                </View>
+                
+            }
+        />}
+        <ScrollView>
+            <ProfileCard data={data}
+            />
 
-          <CardContainer style={styles.profileItem}>
-            <View style={{margin:8}}>
-                <Text style={styles.subtitle}>Account Information</Text>
-                <View style = {styles.lineStyle} />
-                <Text style={styles.textStyle2}>Email : {data.email}</Text>
+            <CardContainer style={styles.profileItem}>
+                <View style={{margin:8}}>
+                    <Text style={styles.subtitle}>Account Information</Text>
+                    <View style = {styles.lineStyle} />
+                    <Text style={styles.textStyle2}>Email : {data.email}</Text>
+                </View>
+            </CardContainer>
+
+            <View style={styles.profileItem}>
+                <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
             </View>
-          </CardContainer>
+            
+            <View style={styles.profileItem}>
+                <FormButton label={`Sign Out as ${nameUser}`} onPress={handleLogout} ></FormButton>
+            </View>
 
-          <View style={styles.profileItem}>
-            <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
-          </View>
-          
-          <View style={styles.profileItem}>
-            <FormButton label={`Sign Out as ${nameUser}`} onPress={handleLogout} ></FormButton>
-          </View>
-
-      </ScrollView>
-    </MainContainer>
-  )
+        </ScrollView>
+        </MainContainer>
+    )
 }
 
 const styling = (theme) => ( StyleSheet.create({

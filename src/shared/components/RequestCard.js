@@ -17,7 +17,7 @@ const RequestCard = () => {
   return (
     <View>
         {modalVisible && 
-            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`}>
+            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} modalHeight={'70%'} >
                 <OrderDetailInfo />
             </ModalDialog>}
         <CardContainer>

@@ -2,44 +2,48 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import {StyleSheet, TouchableOpacity, View, Text, ScrollView} from "react-native";
 import Modal from "react-native-modal";
 import { Colors } from "react-native-ui-lib";
+import { useTheme } from '../context/ThemeContext';
+import CardContainer from './CardContainer';
 import FormButton from "./FormButton";
 
 const ModalDialog = (props) => {
+    const theme = useTheme();
+    const styles = styling({theme, props});
     // const [isModalVisible, setModalVisible] = useState(false);
 
     // const toggleModal = () => {
     //     setModalVisible(!isModalVisible);
     // };
-    const {visible, onBackdropPress, onPress, children, titleModal} = props;
+    const {visible, onPress, children, titleModal} = props;
+
     return (
         <Modal
             {...props}
-            backdropColor={'black'}
-            backdropOpacity= {.7}
             style={{ margin: 0 }}
             animationType={"slide"}
             isVisible={visible}
-            onBackdropPress={onBackdropPress}
+            onBackdropPress={onPress}
+            onSwipeComplete={onPress}
             swipeDirection='down'
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <View spread >
+                    <View style={styles.container} >
                         <Text style={styles.subtitle}>{titleModal}</Text>
                         <TouchableOpacity onPress={onPress}>
                             <MaterialCommunityIcons name="close" size={24} color="white" />
                         </TouchableOpacity>
                     </View>
-                    <View style={{minWidth:'100%', marginBottom:20}}>
+                    <CardContainer>
                         {children}
-                    </View>
+                    </CardContainer>
                 </View>
             </View>            
         </Modal>        
     );
 }
 
-const styles = StyleSheet.create({
+const styling = ({theme, props}) => StyleSheet.create({
     centeredView: {
         flex: 1,
         justifyContent: 'flex-end',
@@ -47,11 +51,11 @@ const styles = StyleSheet.create({
 
     },
     modalView: {
-        backgroundColor: Colors.colourBg,
+        backgroundColor: "#373535",
         color: Colors.colourTextPrimary,
-        alignItems: 'center',
+        // alignItems: 'center',
         alignSelf: 'stretch',
-        height: '80%',
+        height: props.modalHeight,
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,
         shadowRadius: 10,
@@ -59,9 +63,19 @@ const styles = StyleSheet.create({
         padding:8,
     },
     subtitle:{
-        fontSize:15,
+        fontSize:20,
         color: '#ffffff',
         fontWeight:'bold'
+    },
+    container: {
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        // flex: 1,
+        flexDirection:'row',
+        // gap: '1rem',
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
 });
 

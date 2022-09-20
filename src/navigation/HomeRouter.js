@@ -40,19 +40,22 @@ const HomeRouter = () => {
         tabBarIcon: ({color,size}) => {
             switch (route.name) {
                 case ROUTE.HOME:
-                  return <AntDesign name="home" size={24} color="black" />
+                  return <AntDesign name="home" size={24} color={color} />
                 case ROUTE.SELLER:
-                  return <SimpleLineIcons name="handbag" size={24} color="black" />
+                  return <SimpleLineIcons name="handbag" size={24} color={color} />
                 case ROUTE.BUYER:
-                  return  <AntDesign name="shoppingcart" size={24} color="black" />
+                  return  <AntDesign name="shoppingcart" size={24} color={color} />
                 case ROUTE.PROFIL:
-                  return <FontAwesome name="user-o" size={24} color="black" />
+                  return <FontAwesome name="user-o" size={24} color={color} />
                 default:
-                return <AntDesign name="home" size={24} color="black" />
+                return <AntDesign name="home" size={24} color={color} />
             }
         },
-        tabBarActiveTintColor:'rgb(252,80,40)',
-        tabBarInactiveTintColor:'rgb(92,93,95)',
+        tabBarActiveTintColor:'#FFFFFF',
+        tabBarInactiveTintColor:'#ACACAC',
+        tabBarStyle: {
+            backgroundColor: "#000000"
+        }
     })} >
        
             {/* <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerTitle:'How Surpreedz Works',headerStyle: {
