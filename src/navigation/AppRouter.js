@@ -1,6 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack"
-import { useEffect, useState } from "react";
-import { View } from "react-native";
 import MainPage from "../features/main/MainPage";
 import OrderPage from "../features/orderpage/OrderPage";
 import PurchaseConfirmation from "../features/purchaseConfirmation/PurchaseConfirmation";
@@ -8,7 +6,6 @@ import SignIn from "../features/signin/SignIn";
 import SignUp from "../features/signup/SignUp";
 import WelcomePage from "../features/welcome/WelcomePage";
 import { ROUTE } from "../shared/constants";
-import useAuth from "../shared/hook/UseAuth";
 import { AntDesign } from '@expo/vector-icons';
 import AboutPage from "../features/about/AboutPage";
 import ProtectiveRedirectPage from "../features/ProtectiveRedirect/ProtectiveRedirect";

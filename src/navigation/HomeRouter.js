@@ -10,6 +10,7 @@ import ProfilPage from '../features/profilpage/ProfilPage';
 import useAuth from '../shared/hook/UseAuth';
 import { useEffect, useState } from 'react';
 import SignIn from '../features/signin/SignIn';
+import ProtectiveRedirectPage from '../features/ProtectiveRedirect/ProtectiveRedirect';
 
 const Tab = createBottomTabNavigator();
 
@@ -77,9 +78,9 @@ const HomeRouter = () => {
           </Tab.Group> 
           :
           <Tab.Group>
-            <Tab.Screen name={ROUTE.SELLER} component={SignIn} options={{headerShown: false}} />
-            <Tab.Screen name={ROUTE.BUYER} component={SignIn} options={{headerShown: false}} />
-            <Tab.Screen name={ROUTE.PROFIL} component={SignIn} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.SELLER} component={ProtectiveRedirectPage} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.BUYER} component={ProtectiveRedirectPage} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.PROFIL} component={ProtectiveRedirectPage} options={{headerShown: false}} />
           </Tab.Group>
           }
             
