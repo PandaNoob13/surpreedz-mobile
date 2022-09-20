@@ -1,8 +1,9 @@
 import { View ,StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native-ui-lib';
 import { useTheme } from '../../../shared/context/ThemeContext';
 import RequestCard from '../../../shared/components/RequestCard';
+import useRequestList from '../hookSeller/UseRequestList';
 
 const RequestListPage = () => {
     const {posts, onGetService, isLoading} = useRequestList();
