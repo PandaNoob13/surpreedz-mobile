@@ -44,7 +44,7 @@ const OrderPage = () => {
     },[route.params])
 
   return (
-    <MainContainer p>
+    <MainContainer>
         <ScrollView style={{paddingHorizontal: 16}}>
             <ProfileCard 
                data={dataSeller}

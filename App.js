@@ -14,8 +14,10 @@ import { DependencyProvider } from './src/shared/context/DependencyContext';
 import { ThemeProvider } from './src/shared/context/ThemeContext';
 import { themeRnUILib } from './src/shared/Theme-rnUILib';
 import useAppFont from "./src/shared/hook/UseAppFont";
+import * as NavigationBar from 'expo-navigation-bar';
 
 themeRnUILib();
+NavigationBar.setBackgroundColorAsync("black");
 
 export default function App() {
   const apiClient = apiClientFactory(clientInstance);

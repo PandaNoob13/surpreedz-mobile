@@ -34,7 +34,7 @@ const ModalDialog = (props) => {
                             <MaterialCommunityIcons name="close" size={24} color="white" />
                         </TouchableOpacity>
                     </View>
-                    <CardContainer>
+                    <CardContainer style={{paddingBottom: 64}}>
                         {children}
                     </CardContainer>
                 </View>
