@@ -5,47 +5,25 @@ import {useTheme} from "../context/ThemeContext";
 import CardContainer from './CardContainer'
 import NumberCurrency from './CurrencyConverter';
 
-const serviceCardContainerData = {
-    picUrl: "https://jabarekspres.com/wp-content/uploads/2020/11/Gisel-.jpg",
-    name: "Gisella Anastasiaaaaaaa",
-    category: "Aktris",
-    currency: "IDR",
-    price: 1600000,
-    rating: 4.9
-}
-
-// Create our number formatter.
-// var formatter = new Intl.NumberFormat('id-ID', {
-//     style: 'currency',
-//     currency: 'IDR',
-// });
-
 const ServiceCard = (props) => {
-    // const accountDetail = props.data.AccountDetail
-    // const {name, location} = accountDetail
-    // const photoProfile = accountDetail.PhotoProfiles[accountDetail.PhotoProfiles.length - 1]
-    // const {photo_link} = photoProfile
-    // const serviceDetail = props.data.ServiceDetail
-    // const {id, role} = serviceDetail
-    // const servicePrice = serviceDetail.ServicePrices[serviceDetail.ServicePrices.length - 1]
-    // const {price} = servicePrice
-
     const theme = useTheme();
     const styles = styling(theme);
     return (
-        <TouchableOpacity>
-            <CardContainer style={{padding: 0, paddingBottom: 8, minWidth: 152, minHeight: 250, margin: 4}}>
-                <Image source={{uri: serviceCardContainerData.picUrl}} style={{height: 150, objectFit: "cover", borderTopRightRadius: 12, borderTopLeftRadius: 12}}></Image>
+        <TouchableOpacity 
+            {...props}
+        >
+            <CardContainer style={{padding: 0, paddingBottom: 8, maxWidth: 152, minHeight: 250, margin: 4}}>
+                <Image source={{uri: props.picUrl}} style={{height: 150, objectFit: "cover", borderTopRightRadius: 12, borderTopLeftRadius: 12}}></Image>
                 <View flex style={{padding: 8}}>
                     <View marginB-10>
-                        <View row>
-                            <Text colourTextPrimary text70 numberOfLines={1} style={{fontWeight: '700', flex: 1}}>{serviceCardContainerData.name}</Text>
+                        <View>
+                            <Text colourTextPrimary text70 numberOfLines={1} style={{fontWeight: '700', flex: 1}}>{props.name}</Text>
                         </View>
-                        <Text text70L style={{fontWeight: '200', color: 'white', opacity: 0.5}}>{serviceCardContainerData.category}</Text>
+                        <Text text70L style={{fontWeight: '200', color: 'white', opacity: 0.5}}>{props.category}</Text>
                     </View>
                     
                     <View row bottom spread>
-                        <NumberCurrency price={serviceCardContainerData.price} currency="Rp"  />
+                        <NumberCurrency price={props.price} currency="Rp"  />
                     </View>
                 </View>
             </CardContainer>
