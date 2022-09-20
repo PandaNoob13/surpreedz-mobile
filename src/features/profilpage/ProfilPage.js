@@ -73,72 +73,62 @@ const ProfilPage = () => {
       onPutProfile(nameUser,locationUser,'photo1','photo2',imageUrl,imageUrl)
     }
 
-  return (
-    <MainContainer>
-        {modalVisible && 
-            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
-                <View>
-                    <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
-                    <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
-                    <View style={{width:'50%', marginBottom:32}}>
-                    <Button title='Upload Photo' />
+    return (
+        <MainContainer>
+            {modalVisible && 
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
+                    <View>
+                        <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
+                        <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
+                        <View style={{width:'50%', marginBottom:32}}>
+                        <Button title='Upload Photo' />
+                        </View>
+                        <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
                     </View>
-                    <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
+                    
+                }
+            />}
+            <ScrollView>
+                <View style={{margin: 25}} >            
+                    <ProfileCard data={data} style={{marginBottom: 12}}/>
+                    <CardContainer style={{marginBottom: 12}}>
+                        <View style={{margin:8}}>
+                            <Text style={[styles.subtitle, {marginBottom:8}]}>Account Information</Text>
+                            <Text style={styles.textStyle2}>Email : {data.email}</Text>
+                        </View>
+                    </CardContainer>
+
+                    <View style={styles.profileItem}>
+                        <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
+                    </View>
+                    
+                    <View style={styles.profileItem}>
+                        <FormButton label={`Sign Out as ${nameUser}`} onPress={handleLogout} ></FormButton>
+                    </View>
                 </View>
-                
-            }
-        />}
-        <ScrollView>
-            <ProfileCard data={data}
-            />
-
-            <CardContainer style={styles.profileItem}>
-                <View style={{margin:8}}>
-                    <Text style={styles.subtitle}>Account Information</Text>
-                    <View style = {styles.lineStyle} />
-                    <Text style={styles.textStyle2}>Email : {data.email}</Text>
-                </View>
-            </CardContainer>
-
-            <View style={styles.profileItem}>
-                <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
-            </View>
-            
-            <View style={styles.profileItem}>
-                <FormButton label={`Sign Out as ${nameUser}`} onPress={handleLogout} ></FormButton>
-            </View>
-
-        </ScrollView>
+            </ScrollView>
         </MainContainer>
     )
 }
 
 const styling = (theme) => ( StyleSheet.create({
-   profileItem:{
-    margin:10,
-   },
-   textStyle :{
-    fontSize:15,
-    color: '#ffffff',
-    textAlign:'center'
-   },
-   textStyle2 :{
-    fontSize:15,
-    color: '#ffffff',
-   },
-   subtitle:{
-    fontSize:15,
-    color: '#ffffff',
-    fontWeight:'bold'
-   },
-   lineStyle:{
-    borderWidth: 0.5,
-    borderColor:'white',
-    alignItems:'flex-start',
-    marginRight:16,
-    marginTop:8,
-    marginBottom:8
-}
+    profileItem:{
+        marginVertical:10,
+    },
+    textStyle :{
+        fontSize:15,
+        color: '#ffffff',
+        textAlign:'center'
+    },
+    textStyle2 :{
+        fontSize:15,
+        color: '#ffffff',
+    },
+    subtitle:{
+        fontSize:15,
+        color: '#ffffff',
+        fontWeight:'bold'
+    },
 }))
 
 export default ProfilPage
