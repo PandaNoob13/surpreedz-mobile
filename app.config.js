@@ -4,4 +4,9 @@ export default {
     extra: {
         baseUrl: process.env.BASE_URL,
     },
+    splash: {
+        image: './assets/splash.png',
+        backgroundColor: '#212121',
+        resizeMode: 'contain',
+    }
 };
