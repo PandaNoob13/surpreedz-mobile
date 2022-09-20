@@ -10,6 +10,7 @@ import ProfilPage from '../features/profilpage/ProfilPage';
 import useAuth from '../shared/hook/UseAuth';
 import { useEffect, useState } from 'react';
 import SignIn from '../features/signin/SignIn';
+import ProtectiveRedirectPage from '../features/ProtectiveRedirect/ProtectiveRedirect';
 
 const Tab = createBottomTabNavigator();
 
@@ -40,19 +41,22 @@ const HomeRouter = () => {
         tabBarIcon: ({color,size}) => {
             switch (route.name) {
                 case ROUTE.HOME:
-                  return <AntDesign name="home" size={24} color="black" />
+                  return <AntDesign name="home" size={24} color={color} />
                 case ROUTE.SELLER:
-                  return <SimpleLineIcons name="handbag" size={24} color="black" />
+                  return <SimpleLineIcons name="handbag" size={24} color={color} />
                 case ROUTE.BUYER:
-                  return  <AntDesign name="shoppingcart" size={24} color="black" />
+                  return  <AntDesign name="shoppingcart" size={24} color={color} />
                 case ROUTE.PROFIL:
-                  return <FontAwesome name="user-o" size={24} color="black" />
+                  return <FontAwesome name="user-o" size={24} color={color} />
                 default:
-                return <AntDesign name="home" size={24} color="black" />
+                return <AntDesign name="home" size={24} color={color} />
             }
         },
-        tabBarActiveTintColor:'rgb(252,80,40)',
-        tabBarInactiveTintColor:'rgb(92,93,95)',
+        tabBarActiveTintColor:'#FFFFFF',
+        tabBarInactiveTintColor:'#ACACAC',
+        tabBarStyle: {
+            backgroundColor: "#000000"
+        }
     })} >
        
             {/* <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerTitle:'How Surpreedz Works',headerStyle: {
@@ -74,9 +78,9 @@ const HomeRouter = () => {
           </Tab.Group> 
           :
           <Tab.Group>
-            <Tab.Screen name={ROUTE.SELLER} component={SignIn} options={{headerShown: false}} />
-            <Tab.Screen name={ROUTE.BUYER} component={SignIn} options={{headerShown: false}} />
-            <Tab.Screen name={ROUTE.PROFIL} component={SignIn} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.SELLER} component={ProtectiveRedirectPage} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.BUYER} component={ProtectiveRedirectPage} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.PROFIL} component={ProtectiveRedirectPage} options={{headerShown: false}} />
           </Tab.Group>
           }
             

@@ -54,17 +54,18 @@ const PurchasedCard = (props) => {
         message: "testMessage"
     }
     return (
-        <CardContainer>
+        <CardContainer style={{marginBottom: 12}}>
             <View row>
-                <View>
-                    <Image source={{uri:imageUrl}} 
-                    style={styles.imageStyle}
-                    />
-                </View>
-                <View first>
-                    <Text style={[styles.subtitle,{textAlign:'center', marginBottom: 12}]}>{occasion} message from {name}</Text>
-                    <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
-                    
+                <View style={styles.container}>
+                    <View>
+                        <Image source={{uri:imageUrl}} 
+                        style={styles.imageStyle}
+                        />
+                    </View>
+                    <View style={{justifyContent: "space-between", alignItems: "center"}}>
+                        <Text style={[styles.subtitle,{textAlign:'center'}]}>{occasion} message from {name}</Text>
+                        <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
+                    </View>
                 </View>
                 <View>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
@@ -98,12 +99,22 @@ const styling = (theme) => ( StyleSheet.create({
         fontWeight:'bold'
     },
     imageStyle:{
-        width: "100%", 
-        padding: 4, 
-        height: 50, 
+        width: 60, 
+        // padding: 4, 
+        height: 60, 
         objectFit: "cover", 
-        borderRadius: 12
-    }
+        borderRadius: 6
+    },
+    container: {
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        // flex: 1,
+        flexDirection:'row',
+        // gap: '1rem',
+        // flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
  }))
 
 export default PurchasedCard
