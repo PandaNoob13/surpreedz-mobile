@@ -1,12 +1,11 @@
-import { View, Text ,StyleSheet, TouchableOpacity, ScrollView, Image, useWindowDimensions, Animated} from 'react-native'
+import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated} from 'react-native'
 import React, { useRef } from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { ROUTE } from '../../../shared/constants';
-import HeaderPageLabel from '../../../shared/components/HeaderPageLabel';
 import ServiceCard from '../../../shared/components/ServiceCard';
-import FormButton from '../../../shared/components/FormButton';
+import { Text } from 'react-native-ui-lib';
 
 const serviceCardContainerData = {
     picUrl: "https://jabarekspres.com/wp-content/uploads/2020/11/Gisel-.jpg",
@@ -40,7 +39,9 @@ const HomePage = () => {
                     {/* <ServiceCard></ServiceCard>
                     <ServiceCard></ServiceCard>
                     <ServiceCard></ServiceCard> */}
+                    <Text colourTextPrimary text40BO>Welcome home!</Text>
                     <ScrollView
+                        style={{marginVertical:10}}
                         horizontal={true}
                         // pagingEnabled
                         showsHorizontalScrollIndicator={false}
@@ -111,14 +112,14 @@ const styling = (theme) => ( StyleSheet.create({
         marginRight:8
     },
     container: {
-        paddingVertical: 16,
-        paddingHorizontal: 8,
+        marginVertical: 25,
+        paddingHorizontal: 25,
         // flex: 1,
-        flexDirection:'row',
+        // flexDirection:'row',
         // gap: '1rem',
         // flexWrap: "wrap",
         // justifyContent: "space-between",
-        alignItems: "center",
+        // alignItems: "center",
     },
 }))
 
