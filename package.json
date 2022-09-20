@@ -20,6 +20,7 @@
     "expo-status-bar": "~1.4.0",
     "intl": "^1.2.5",
     "jsc-android": "^250230.2.1",
+    "lottie-react-native": "^5.1.4",
     "react": "18.0.0",
     "react-intl": "^6.1.1",
     "react-native": "0.69.5",
