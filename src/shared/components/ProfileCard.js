@@ -1,17 +1,22 @@
 import { View, Text,StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import CardContainer from './CardContainer';
 
 const ProfileCard = (props) => {
-    const {imageUrl = '',name='',location='',memberSince=''} = props;
     const theme = useTheme();
-    const styles = styling(theme)
+    const styles = styling(theme);
+    const {name, location, joinDate, dataUrl} = props.data;
+
+    // useEffect(()=>{
+    //     console.log('name profile card=>', name);
+    // })
+
   return (
         <CardContainer {...props}>
             <View style={{margin:8}}>
                 <View>
-                    <Image source={{uri:imageUrl}} 
+                    <Image source={{uri:`${dataUrl}`}} 
                     style={styles.imageStyle}
                     />
                 </View>
@@ -22,7 +27,7 @@ const ProfileCard = (props) => {
                 
 
                 <View>
-                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since  {memberSince}</Text>
+                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since  {joinDate}</Text>
                 </View>
             </View>
 

@@ -7,10 +7,34 @@ import HomePage from '../features/main/home/HomePage';
 import SellerPage from '../features/seller/SellerPage';
 import PurchaseListPage from '../features/purchaselist/PurchaseListPage';
 import ProfilPage from '../features/profilpage/ProfilPage';
+import useAuth from '../shared/hook/UseAuth';
+import { useEffect, useState } from 'react';
+import SignIn from '../features/signin/SignIn';
 
 const Tab = createBottomTabNavigator();
 
 const HomeRouter = () => {
+    const {isTokenExist} = useAuth();
+    const [login, setLogin] = useState(false)
+
+    useEffect(()=> {
+      const onValidToken = async ()=>{
+            try {
+              const resp = await isTokenExist();
+              if (resp) {
+                setLogin(true)
+              } else {
+                setLogin(false)
+              }
+            } catch (e) {
+              console.log('error from Home Router',e);
+              setLogin(false)
+            }
+          }
+          onValidToken();
+    },[])
+
+
   return (
     <Tab.Navigator screenOptions={({route}) => ({
         tabBarIcon: ({color,size}) => {
@@ -29,7 +53,7 @@ const HomeRouter = () => {
         },
         tabBarActiveTintColor:'rgb(252,80,40)',
         tabBarInactiveTintColor:'rgb(92,93,95)',
-    })}>
+    })} >
        
             {/* <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerTitle:'How Surpreedz Works',headerStyle: {
             backgroundColor: '#000000',
@@ -39,10 +63,23 @@ const HomeRouter = () => {
             marginLeft:170
           }}} 
           /> */}
+
           <Tab.Screen name={ROUTE.HOME} component={HomePage} options={{headerShown: false}}/>
+
+          { login ? 
+          <Tab.Group>
             <Tab.Screen name={ROUTE.SELLER} component={SellerPage} options={{headerShown: false}} />
             <Tab.Screen name={ROUTE.BUYER} component={PurchaseListPage} options={{headerShown: false}} />
             <Tab.Screen name={ROUTE.PROFIL} component={ProfilPage} options={{headerShown: false}} />
+          </Tab.Group> 
+          :
+          <Tab.Group>
+            <Tab.Screen name={ROUTE.SELLER} component={SignIn} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.BUYER} component={SignIn} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.PROFIL} component={SignIn} options={{headerShown: false}} />
+          </Tab.Group>
+          }
+            
      
         
 
