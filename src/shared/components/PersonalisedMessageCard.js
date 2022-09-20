@@ -23,14 +23,14 @@ const PersonalisedMessageCard = (props) => {
                     />
 
                     <FormTextInput 
-                    label={`What should ${props.orderParam.nameSeller} say to the person ?`}
+                    label={`What should ${props.orderParam.name} say to the person ?`}
                     value={message}
                     onChangeText={onChangeMessage}
                     multiline
                     />
 
                     <FormTextInput 
-                    label={`What should ${props.orderParam.nameSeller} know about the person?`}
+                    label={`What should ${props.orderParam.name} know about the person?`}
                     value={description} 
                     onChangeText={onChangeDescription}
                     multiline

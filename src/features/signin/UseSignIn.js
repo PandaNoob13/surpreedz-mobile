@@ -4,6 +4,7 @@ import useViewState from '../../shared/hook/UseViewState';
 import useAuth from '../../shared/hook/UseAuth';
 import { ROUTE } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
+import {useDispatch,useSelector} from 'react-redux';
 
 const useSignIn = () => {
     const [email,onChangeEmail] = useState('');
@@ -11,6 +12,9 @@ const useSignIn = () => {
     const {viewState, setLoading, setError} = useViewState();
     const {onLogin} = useAuth();
     const navigation = useNavigation();
+    const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
+    const dispatch = useDispatch();
+
 
 
     const onPostSignIn = async () => {
@@ -25,7 +29,13 @@ const useSignIn = () => {
                 console.log('Response Login',response);
                 if (response) {
                     console.log('SIGN IN SUCCESS');
-                    navigation.replace(ROUTE.MAIN)
+                    if (addOrderDataResult) {
+                        console.log('orderData 1 ', addOrderDataResult);
+                        navigation.replace(ROUTE.PAYMENT)
+                    } else {
+                        console.log('Order Data tidak ada', addOrderDataResult);
+                        navigation.replace(ROUTE.MAIN)
+                    }
                 } else {
                     setError(new Error('Unauthorized'));
                     console.log('error Unauthorized');

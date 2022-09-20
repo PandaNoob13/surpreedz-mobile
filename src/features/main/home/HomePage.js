@@ -1,45 +1,34 @@
 import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated} from 'react-native'
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ROUTE } from '../../../shared/constants';
 import ServiceCard from '../../../shared/components/ServiceCard';
+import useHomePage from './UseHomePage';
+import {useSelector} from 'react-redux';
 import { Text } from 'react-native-ui-lib';
-
-const serviceCardContainerData = {
-    picUrl: "https://jabarekspres.com/wp-content/uploads/2020/11/Gisel-.jpg",
-    name: "Gisella Anastasiaaaaaaa",
-    category: "Aktris",
-    currency: "IDR",
-    price: 1600000,
-    rating: 4.9
-}
 
 const HomePage = () => {
     const theme = useTheme();
     const styles = styling(theme)
     const navigation = useNavigation();
     const route = useRoute();
+    const {posts, onGetService, isLoading} = useHomePage();
+    const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
 
+    useEffect(()=>{
+      onGetService();
+      // console.log('posts',posts);
+      console.log('AddorderResult Home Page => ', addOrderDataResult);
+    },[])
+
     return (
         <MainContainer>
-            {/* <HeaderPageLabel > 
-                <TouchableOpacity onPress={()=>{navigation.navigate(ROUTE.ABOUT,{
-                    prevPage:route.name
-                })}}>
-                    <Text style={styles.textTitle}>How Surpreedz Works</Text>
-                </TouchableOpacity>
-                <Image source={require('../../../../assets/img/surpreedz-logo.png')} style={{height: 20, width:120, objectFit: "cover"}}></Image>
-            </HeaderPageLabel> */}
             <ScrollView>
                 <View style={styles.container}>
-                    {/* <ServiceCard></ServiceCard>
-                    <ServiceCard></ServiceCard>
-                    <ServiceCard></ServiceCard> */}
-                    <Text colourTextPrimary text40BO>Welcome home!</Text>
+                <Text colourTextPrimary text40BO>Welcome home!</Text>
                     <ScrollView
                         style={{marginVertical:10}}
                         horizontal={true}
@@ -56,49 +45,17 @@ const HomePage = () => {
                         ])}
                         scrollEventThrottle={1}
                     >
-                        {/* {images.map((image, imageIndex) => {
-                            return (
-                            <View
-                                style={{ width: windowWidth, height: 250 }}
-                                key={imageIndex}
-                            >
-                                <ImageBackground source={{ uri: image }} style={styles.card}>
-                                <View style={styles.textContainer}>
-                                    <Text style={styles.infoText}>
-                                    {"Image - " + imageIndex}
-                                    </Text>
-                                </View>
-                                </ImageBackground>
-                            </View>
-                            );
-                        })} */}
-                        <ServiceCard picUrl={serviceCardContainerData.picUrl} name={serviceCardContainerData.name} category={serviceCardContainerData.category} price={serviceCardContainerData.price} onPress={()=>{
-                        navigation.navigate(ROUTE.ORDER,{
-                            serviceId:10,
-                            nameSeller:'Ardhito',
-                            locationSeller:'Bangka Belitung',
-                            sinceMember:'22 September 2021',
-                            prevPage: route.name
-                        })
-                        }}></ServiceCard>
-                        <ServiceCard picUrl={serviceCardContainerData.picUrl} name={serviceCardContainerData.name} category={serviceCardContainerData.category} price={serviceCardContainerData.price}></ServiceCard>
-                        <ServiceCard picUrl={serviceCardContainerData.picUrl} name={serviceCardContainerData.name} category={serviceCardContainerData.category} price={serviceCardContainerData.price}></ServiceCard>
-                        <ServiceCard picUrl={serviceCardContainerData.picUrl} name={serviceCardContainerData.name} category={serviceCardContainerData.category} price={serviceCardContainerData.price}></ServiceCard><ServiceCard picUrl={serviceCardContainerData.picUrl} name={serviceCardContainerData.name} category={serviceCardContainerData.category} price={serviceCardContainerData.price}></ServiceCard>
+                        {posts ? posts.map((account) => {
+                            const data = account.account
+                            // console.log('data',data);
+                            // console.log('data.ServiceDetail.id',data.ServiceDetail.id);
+                            if (data.ServiceDetail.id !== 0) {
+                                return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
+                            }
+                        }):
+                        <Text style={styles.textTitle}>Empty Data</Text> }
                     </ScrollView>
                 </View>
-
-                {/* <View>
-                <FormButton label="ORDER PAGE" style={{color:'white'}} onPress={()=>{
-                    navigation.navigate(ROUTE.ORDER,{
-                        serviceId:10,
-                        nameSeller:'Ardhito',
-                        locationSeller:'Bangka Belitung',
-                        sinceMember:'22 September 2021',
-                        prevPage: route.name
-                    })
-                    }}
-                ></FormButton>
-                </View> */}
             </ScrollView>
         </MainContainer>
     )
@@ -114,12 +71,6 @@ const styling = (theme) => ( StyleSheet.create({
     container: {
         marginVertical: 25,
         paddingHorizontal: 25,
-        // flex: 1,
-        // flexDirection:'row',
-        // gap: '1rem',
-        // flexWrap: "wrap",
-        // justifyContent: "space-between",
-        // alignItems: "center",
     },
 }))
 

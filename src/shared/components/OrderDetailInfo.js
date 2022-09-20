@@ -3,15 +3,17 @@ import React from 'react'
 import { useTheme } from '../context/ThemeContext'
 import FormTextInput from './FormTextInput';
 
-const OrderDetailInfo = () => {
+const OrderDetailInfo = (props) => {
     const theme = useTheme();
-    const styles = styling(theme)
+    const styles = styling(theme);
+    const data = props.data
 
   return (
     <ScrollView >
-        <FormTextInput editable={false} label={'Recepient name:'} value={'Novita Eka Widyastuti'}></FormTextInput>
-        <FormTextInput editable={false} label={'Message:'} value={'Selamattttt yaagggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg \nSelamattttt yaa\nSelamattttt yaa\nSelamattttt yaa\nSelamattttt yaa'} multiline ></FormTextInput>
-        <FormTextInput editable={false} label={'Description'} value={'She loves banaan'} multiline></FormTextInput>
+        {/* <Text> Order request from : </Text> */}
+        <FormTextInput editable={false} label={'Recepient name:'} value={data.orderRequest.recipient_name}></FormTextInput>
+        <FormTextInput editable={false} label={'Message:'} value={data.orderRequest.message} multiline ></FormTextInput>
+        <FormTextInput editable={false} label={'Description'} value={data.orderRequest.description} multiline></FormTextInput>
     </ScrollView>
   )
 }

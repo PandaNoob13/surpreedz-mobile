@@ -28,11 +28,19 @@ export const KEY = {
     ACCOUNT_ID:'account_id',
     ACCOUNT_EMAIL:'account_email',
     ACCOUNT_LOCATION :'account_location',
-    ACCOUNT_JOINDATE :'account_joinDate',
-    SERVICE_ID:'serviceId',
-    SERVICE_ROLE:'serviceRole',
-    SERVICE_DESCRIPTION:'serviceDes',
-    SERVICE_PRICE:'servicePrice',
-    PHOTO_PROFILE:'url_photoProfile'
+    ACCOUNT_JOINDATE :'account_join_date',
+    SERVICE_ID:'service_detail_id',
+    SERVICE_ROLE:'service_detail_role',
+    SERVICE_DESCRIPTION:'service_detail_desc',
+    SERVICE_PRICE:'service_detail_price',
+    PHOTO_PROFILE:'photo_profile'
 
+}
+
+export const EMAIL_REGEX = '([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\\.[A-Z|a-z]{2,})+';
+
+export const ORDER_ACTION_TYPE = {
+    ADD_ORDER : 'ADD_ORDER',
+    CLEAR_ORDER: 'CLEAR_ORDER',
+    GET_ORDER_DETAIL:'GET_ORDER_DETAIL'
 }

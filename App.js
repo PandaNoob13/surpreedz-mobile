@@ -10,6 +10,8 @@ import { ThemeProvider } from './src/shared/context/ThemeContext';
 import { themeRnUILib } from './src/shared/Theme-rnUILib';
 import useAppFont from "./src/shared/hook/UseAppFont";
 import * as NavigationBar from 'expo-navigation-bar';
+import { setupStore } from './src/store';
+import {Provider} from "react-redux"
 
 themeRnUILib();
 NavigationBar.setBackgroundColorAsync("black");
@@ -17,12 +19,14 @@ NavigationBar.setBackgroundColorAsync("black");
 export default function App() {
   const apiClient = apiClientFactory(clientInstance);
   const services = ServiceFactory(apiClient);
+  const store = setupStore();
   const fonts = useAppFont();
   if (!fonts) {
     return null;
   }
 
   return (
+    <Provider store={store}>
     <DependencyProvider services={services}>
       <SafeAreaProvider>
             <ThemeProvider>
@@ -36,6 +40,7 @@ export default function App() {
             </ThemeProvider>
         </SafeAreaProvider>
    </DependencyProvider>
+   </Provider>
   
   );
 }

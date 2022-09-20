@@ -9,7 +9,7 @@ import { ROUTE } from '../../shared/constants';
 
 const ProtectiveRedirectPage = () => {
     const theme = useTheme();
-    const styles = styling(theme)
+    const styles = styling(theme);
     const navigation = useNavigation();
 
     return (
