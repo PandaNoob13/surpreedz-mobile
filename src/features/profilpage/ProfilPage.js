@@ -59,7 +59,8 @@ const ProfilPage = () => {
       try {
         const response = await onLogout();
         if (response) {
-            navigation.replace(ROUTE.SIGNIN)
+            navigation.replace(ROUTE.MAIN);
+            
         }
         } catch (error) {
             console.log('error Logout', error);

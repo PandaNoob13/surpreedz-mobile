@@ -1,9 +1,12 @@
 import { View, Text,StyleSheet, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import CardContainer from './CardContainer';
 import NumberCurrency from './CurrencyConverter';
 import FormButton from './FormButton';
+import moment from 'moment';
+import ModalDialog from './ModalDialog';
+import OrderDetailInfo from './OrderDetailInfo';
 
 const StatusCondition = (status, callback, orderId) => {
     const theme = useTheme();
@@ -30,10 +33,7 @@ const StatusCondition = (status, callback, orderId) => {
                 <View>
                     <Text style={styles.textStyle}>DONE</Text>
                     <View>
-                        <FormButton onClick={(e) => {
-                        e.preventDefault();
-                        callback(orderId);
-                    }}>Get Video</FormButton>
+                        <FormButton onPress={()=>{callback(orderId)}} label={'Get Video'} />
                     </View>
                 </View>
             )
@@ -48,16 +48,27 @@ const StatusCondition = (status, callback, orderId) => {
 const PurchasedCard = (props) => {
     const theme = useTheme();
     const styles = styling(theme)
-    const {orderId='testOrdId', imageUrl = '',name='test',location='testLoc',dueDate='testDate', occasion='testOccasion', price=2000000, status="testStatus"} = props;
-    const orderRequest = {
-        recipient_name: "testRecip",
-        message: "testMessage"
-    }
+    const {occasion, name, price, dueDate, status, orderId, orderRequest, photoUrl} = props.data
+    const [modalVisible, setModalVisible] = useState(false)
+
     return (
+        <View style={{marginBottom:16}}>
+            {modalVisible && 
+            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
+                    <OrderDetailInfo 
+                    data={{
+                        orderRequest: orderRequest,
+                        buyerName:name
+                     }}
+                     />
+
+            </ModalDialog>
+            }
+
         <CardContainer>
             <View row>
                 <View>
-                    <Image source={{uri:imageUrl}} 
+                    <Image source={{uri:`data:image/jpg;base64,${photoUrl}`}} 
                     style={styles.imageStyle}
                     />
                 </View>
@@ -66,13 +77,19 @@ const PurchasedCard = (props) => {
                     <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
                     
                 </View>
+
+                <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
+
+                </View>
                 <View>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
                     <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
                     <Text text70L style={styles.textDesc}>Description:</Text>
                     <Text style={styles.textStyle}>{orderRequest.message}</Text>
                     <Text text70L style={styles.textDesc}>Due date:</Text>
-                    <Text style={styles.textStyle}>{dueDate}</Text>
+                    <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
                     {/* <p className='card-text mb-2'>{moment({dueDate}).format("MMMM Do YYYY")}</p> */}                    
                 </View>
                 <View style={{paddingVertical: 8}}>
@@ -82,6 +99,7 @@ const PurchasedCard = (props) => {
 
 
         </CardContainer>
+        </View>
     )
 }
 

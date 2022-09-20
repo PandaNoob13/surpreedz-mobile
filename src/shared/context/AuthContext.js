@@ -2,14 +2,22 @@ import {createContext, useEffect, useState} from "react";
 import Storage from "../Storage"
 import useDependency from "../hook/UseDependency";
 import {KEY} from "../constants"
-import { log } from "react-native-reanimated";
+import {useDispatch,useSelector} from 'react-redux';
+import { addOrder } from "../../features/orderpage/state/OrderDetailAction";
+
 
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) => {
     const {signInService} = useDependency();
     const storage = Storage();
-    const [dataUser, setDataUser] = useState('')
+    const [dataUser, setDataUser] = useState('');
+    const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
+    const dispatch = useDispatch();
+
+    useEffect(()=> {
+        console.log('orderData useEffect AuthProvider', addOrderDataResult);
+    },[addOrderDataResult])
 
 
     const onLogin = async (userCred = {}) => {
@@ -47,6 +55,18 @@ export const AuthProvider = ({children}) => {
         try {
             await storage.deleteData(KEY.TOKEN);
             await storage.deleteData(KEY.ACCOUNTNAME);
+            await storage.deleteData(KEY.ACCOUNT_ID);
+            await storage.deleteData(KEY.ACCOUNT_EMAIL)
+            await storage.deleteData(KEY.ACCOUNT_LOCATION)
+            await storage.deleteData(KEY.ACCOUNT_JOINDATE)
+            await storage.deleteData(KEY.SERVICE_ID)
+            await storage.deleteData(KEY.SERVICE_ROLE)
+            await storage.deleteData(KEY.SERVICE_DESCRIPTION)
+            await storage.deleteData(KEY.PHOTO_PROFILE)
+            await storage.deleteData(KEY.SERVICE_PRICE)
+            await storage.clearStorage();
+            dispatch(addOrder(false));
+            console.log('AuthContext addOrderDataResult terhapus => ',addOrderDataResult);
             return true;
         } catch (e) {
             return false;
@@ -65,6 +85,7 @@ export const AuthProvider = ({children}) => {
                 serviceId : String(account.ServiceDetail.id),
                 serviceRole: account.ServiceDetail.role,
                 serviceDescription : account.ServiceDetail.description,
+                dataUrl : dataUser.data_url
             }
 
             await storage.setData(KEY.ACCOUNTNAME, userInfo.name )
@@ -85,7 +106,9 @@ export const AuthProvider = ({children}) => {
                 await storage.setData(KEY.SERVICE_PRICE, String(0))
                 console.log("No service detail");
             }
-            console.log('user Info Auth Context, ', userInfo);
+            // console.log('user Info Auth Context, ', userInfo);
+
+            await storage.setData(KEY.PHOTO_PROFILE,userInfo.dataUrl)
             
         }
    }

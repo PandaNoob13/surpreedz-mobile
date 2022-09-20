@@ -14,18 +14,22 @@ import { DependencyProvider } from './src/shared/context/DependencyContext';
 import { ThemeProvider } from './src/shared/context/ThemeContext';
 import { themeRnUILib } from './src/shared/Theme-rnUILib';
 import useAppFont from "./src/shared/hook/UseAppFont";
+import { setupStore } from './src/store';
+import {Provider} from "react-redux"
 
 themeRnUILib();
 
 export default function App() {
   const apiClient = apiClientFactory(clientInstance);
   const services = ServiceFactory(apiClient);
+  const store = setupStore();
   const fonts = useAppFont();
   if (!fonts) {
     return null;
   }
 
   return (
+    <Provider store={store}>
     <DependencyProvider services={services}>
       <SafeAreaProvider>
             <ThemeProvider>
@@ -39,6 +43,7 @@ export default function App() {
             </ThemeProvider>
         </SafeAreaProvider>
    </DependencyProvider>
+   </Provider>
   
   );
 }

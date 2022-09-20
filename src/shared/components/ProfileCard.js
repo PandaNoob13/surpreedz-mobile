@@ -2,6 +2,7 @@ import { View, Text,StyleSheet, Image } from 'react-native'
 import React, { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import CardContainer from './CardContainer';
+import moment from 'moment';
 
 const ProfileCard = (props) => {
     const theme = useTheme();
@@ -16,7 +17,7 @@ const ProfileCard = (props) => {
         <CardContainer {...props}>
             <View style={{margin:8}}>
                 <View>
-                    <Image source={{uri:`${dataUrl}`}} 
+                    <Image source={{uri:`data:image/jpg;base64,${dataUrl}`}} 
                     style={styles.imageStyle}
                     />
                 </View>
@@ -27,7 +28,7 @@ const ProfileCard = (props) => {
                 
 
                 <View>
-                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since  {joinDate}</Text>
+                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since  {moment({joinDate}).format("MMMM Do YYYY")}</Text>
                 </View>
             </View>
 

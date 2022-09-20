@@ -4,10 +4,13 @@ import MainContainer from '../../shared/components/MainContainer';
 import FormButton from '../../shared/components/FormButton';
 import LottieView from 'lottie-react-native';
 import { Text } from 'react-native-ui-lib';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTE } from '../../shared/constants';
 
 const ProtectiveRedirectPage = () => {
     const theme = useTheme();
-    const styles = styling(theme)
+    const styles = styling(theme);
+    const navigation = useNavigation();
 
     return (
         <MainContainer>
@@ -19,9 +22,9 @@ const ProtectiveRedirectPage = () => {
                 </View>
                 <Text text50L style={[styles.subtitle, {marginBottom:32}]}>Ready to liberate your expression?</Text>
                 <View style={{margin: 8, marginBottom:16}}>
-                    <FormButton label={`Sign Up`} />
+                    <FormButton label={`Sign Up`} onPress={()=> {navigation.replace(ROUTE.SIGNUP)}} />
                     <Text text70L style={styles.subtitle}> or </Text>
-                    <FormButton label={`Sign In`} />
+                    <FormButton label={`Sign In`} onPress={()=> {navigation.replace(ROUTE.SIGNIN)}} />
                 </View>
             </ScrollView>
         </MainContainer>

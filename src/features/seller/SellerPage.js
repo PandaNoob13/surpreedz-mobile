@@ -1,4 +1,4 @@
-import { View, Text ,StyleSheet, Button} from 'react-native'
+import { View, Text ,StyleSheet, Button, ScrollView} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
@@ -11,13 +11,15 @@ import OrderDetailInfo from '../../shared/components/OrderDetailInfo';
 import Storage from '../../shared/Storage';
 import { KEY } from '../../shared/constants';
 import useAddEditService from './hookSeller/UseAddEditService';
+import useRequestList from './hookSeller/UseRequestList';
+import RequestListPage from './components/RequestListPage';
 
 const SellerPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
     const [modalVisible, setModalVisible] = useState(false)
     const storage = Storage();
-    // const [modalDetailOrder, setModalDetailOrder] = useState(false)
+
     const getRole = async () => {
       return  await storage.getData(KEY.SERVICE_ROLE);
     }
@@ -66,44 +68,27 @@ const SellerPage = () => {
 
   return (
     <MainContainer>
+      <ScrollView>
        {modalVisible && 
         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} children={
           <CardContainer>
-              <View>
-                  <FormTextInput label={'Role'} value={role} onChangeText={setRole} />
-                  <FormTextInput label={'Description'} value={description} onChangeText={setDescription} />
-                  <FormTextInput label={'Price'} value={price} onChangeText={setPrice} />
-                  <FormButton label={'Submit'} onPress={handleSubmit} />
-              </View>
+            <ScrollView>
+                <View>
+                    <FormTextInput label={'Role'} value={role} onChangeText={setRole} />
+                    <FormTextInput label={'Description'} value={description} onChangeText={setDescription} />
+                    <FormTextInput label={'Price'} value={price} onChangeText={setPrice} />
+                    <FormButton label={'Submit'} onPress={handleSubmit} />
+                </View>
+              </ScrollView>
           </CardContainer>
       
         }
         />}
-
-        {/* { modalDetailOrder &&
-          <ModalDialog visible={modalDetailOrder} onPress={()=> setModalDetailOrder(false)} titleModal={'Order Detail'}>
-              <OrderDetailInfo />
-          </ModalDialog>
-        } */}
-        
-      <View style={{margin:8}}>
-          <View style={{margin:8}}>
-              <FormButton label='Service'  onPress={()=> setModalVisible(true)} />
-          </View>
-
-          <View style={{margin:8}}>
-              <Text style={styles.subtitle}>
-                  Request List
-              </Text>
-              <View style = {styles.lineStyle} />
-          </View>
-
-          
-          {/* <RequestCard openModalDetailOrder={()=> setModalDetailOrder(true)} /> */}
-          <RequestCard />
-          
+      <View style={{margin:16}}>
+          <FormButton label='Service'  onPress={()=> setModalVisible(true)} />
       </View>
-        
+      <RequestListPage />
+      </ScrollView>   
     </MainContainer>
   )
 }
