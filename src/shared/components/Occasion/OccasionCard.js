@@ -61,7 +61,7 @@ const OccasionCard = (props) => {
         <CardContainer style={{marginVertical: 4}}> 
             <View>
                 <Text style={styles.subtitle}>
-                        {props.orderParam.nameSeller} would help you with ...
+                        {props.orderParam.name} would help you with ...
                 </Text>
 
                 <View style={styles.container}>

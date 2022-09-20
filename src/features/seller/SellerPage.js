@@ -8,41 +8,41 @@ import FormTextInput from '../../shared/components/FormTextInput';
 import Storage from '../../shared/Storage';
 import { KEY } from '../../shared/constants';
 import useAddEditService from './hookSeller/UseAddEditService';
+import useRequestList from './hookSeller/UseRequestList';
 import RequestListPage from './components/RequestListPage';
 import { Text } from 'react-native-ui-lib';
-
 
 const SellerPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
     const [modalVisible, setModalVisible] = useState(false)
     const storage = Storage();
-    // const [modalDetailOrder, setModalDetailOrder] = useState(false)
+
     const getRole = async () => {
-      return  await storage.getData(KEY.SERVICE_ROLE);
+        return  await storage.getData(KEY.SERVICE_ROLE);
     }
     const getPrice = async () => {
-      return await storage.getData(KEY.SERVICE_PRICE);
+        return await storage.getData(KEY.SERVICE_PRICE);
     }
     const getDesc = async () => {
-      return await storage.getData(KEY.SERVICE_DESCRIPTION);
+        return await storage.getData(KEY.SERVICE_DESCRIPTION);
     }
     const getIdAccount = async () => {
-     return await storage.getData(KEY.ACCOUNT_ID);
+        return await storage.getData(KEY.ACCOUNT_ID);
     }
     const getAllItem = async () => {
-      const role = await storage.getData(KEY.SERVICE_ROLE);
-      const price = await storage.getData(KEY.SERVICE_PRICE);
-      const desc = await storage.getData(KEY.SERVICE_DESCRIPTION);
-      const accId =  await storage.getData(KEY.ACCOUNT_ID);
-      setRole(role);
-      setPrice(price);
-      setDescription(desc);
-      setAccountId(accId)
+        const role = await storage.getData(KEY.SERVICE_ROLE);
+        const price = await storage.getData(KEY.SERVICE_PRICE);
+        const desc = await storage.getData(KEY.SERVICE_DESCRIPTION);
+        const accId =  await storage.getData(KEY.ACCOUNT_ID);
+        setRole(role);
+        setPrice(price);
+        setDescription(desc);
+        setAccountId(accId)
     }
 
     useEffect(()=>{
-      getAllItem();
+        getAllItem();
     },[role, description, price])
 
     // var accountId = getIdAccount();

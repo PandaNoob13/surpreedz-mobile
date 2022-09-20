@@ -28,9 +28,6 @@ const useAddEditService = () => {
         }
         console.log('servId ',serviceDetailId); 
     },[isError,data])
-    
-
-    
 
    
 
