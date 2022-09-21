@@ -118,15 +118,15 @@ const OrderPage = () => {
         <ScrollView>
             <View style={styles.container}>
                 <ProfileCard 
-                data={dataSeller}
-                    style={{marginVertical: 4}}
+                    data={dataSeller}
+                    style={{marginBottom: 16}}
                 />
 
                 <OccasionCard occasion={occasion} onPress={onChangeOccasion} orderParam={orderParam}></OccasionCard>
 
                 <PersonalisedMessageCard onChangeRecipient={onChangeRecipient} onChangeMessage={onChangeMessage} onChangeDescription={onChangeDescription} recipient={recipient} message={message} description={description} orderParam={orderParam} ></PersonalisedMessageCard>
 
-                <View style={{margin: 8, marginBottom:16}}>
+                <View style={{marginBottom:16}}>
                     <FormButton label={`Send Request`} onPress={handleSendRequest} />
                 </View>
             </View>
@@ -144,7 +144,7 @@ const styling = (theme) => ( StyleSheet.create({
         marginBottom: 8,
     },
     container: {
-        marginVertical: 25,
+        // marginVertical: 25,
         paddingHorizontal: 25,
     },
 }))
