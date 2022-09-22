@@ -102,9 +102,9 @@ const OrderPage = () => {
 
     useEffect(()=>{
       // console.log('addOrderData', addOrderData.serviceDetailId);
-      console.log('addOrderData', addOrderDataResult);
+      // console.log('addOrderData', addOrderDataResult);
       if (addOrderDataResult) {
-        console.log('5. masuk use effect add order');
+        // console.log('5. masuk use effect add order');
         if (token) {
           navigation.replace(ROUTE.PAYMENT)
         }else {

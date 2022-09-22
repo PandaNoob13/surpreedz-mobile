@@ -13,7 +13,7 @@ const PurchaseListPage = () => {
 
     useEffect(() => {
         onGetOrder()
-        console.log('posts');
+        console.log('Purchase List Page posts');
     },[])
 
     return (

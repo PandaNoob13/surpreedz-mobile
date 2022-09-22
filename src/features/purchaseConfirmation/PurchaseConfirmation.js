@@ -20,6 +20,8 @@ const PurchaseConfirmation = () => {
     const storage = Storage();
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
     const handleSubmitPayment = async () => {
+        // console.log('order data dari purchase => ', addOrderDataResult);
+        // console.log('buyerId dr purchase', buyerId);
         const buyerId = await storage.getData(KEY.ACCOUNT_ID)
         console.log('order data dari purchase => ', addOrderDataResult);
         console.log('buyerId dr purchase', buyerId);

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, ScrollView, Image, Button} from 'react-native'
+import { View, StyleSheet, Text, ScrollView, Alert, Button, Image} from 'react-native'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import { KEY, ROUTE } from '../../shared/constants';
@@ -12,8 +12,8 @@ import ModalDialog from '../../shared/components/ModalDialog';
 import FormTextInput from '../../shared/components/FormTextInput';
 import UseEditProfilePage from './UseEditProfilePage';
 import Storage from '../../shared/Storage';
-
-
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 const ProfilPage = () => {
     const storage = Storage();
@@ -22,11 +22,86 @@ const ProfilPage = () => {
     const navigation = useNavigation();
     const {onLogout} = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
-    const [trigger, setTrigger] = useState(false);
     const [data, setData] = useState('');
+  
+
     const [nameUser, setNameUser] = useState('');
     const [locationUser, setLocationUser] = useState('');
-    const {onPutProfile,isLoading}= UseEditProfilePage();
+    const {onPutProfile,isLoading,trigger}= UseEditProfilePage();
+
+    // IMAGE HANDLE
+    const [image, setImage] = useState('');
+    const [base64Image, setbase64Image] = useState('');
+
+    const funcimg = async () => {
+        if (Platform.OS !== 'web') {
+          const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+          console.log('status', status);
+          if (status !== 'granted') {
+              alert('Permission denied !')
+          }
+      }
+      }
+    
+    useEffect(()=>{
+        funcimg();
+    },[])
+
+    const PickImageLibrary = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          base64:true,
+          aspect:[4,3],
+          // quality:1
+        });
+
+        
+        // console.log('result', result);
+        if (!result.cancelled) {
+          setImage(result.uri);
+          setbase64Image(result.base64);
+          // console.log('result base64', result.base64);
+        }
+        // console.log('result base64', result.base64);
+      }
+    
+      const PickImagePhoto = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          allowsEditing: true,
+          base64:true,
+          aspect:[4,3],
+          // quality:1
+        });
+
+        
+        // console.log('result', result);
+        if (!result.cancelled) {
+          setImage(result.uri);
+          setbase64Image(result.base64);
+
+          // console.log('result base64', result.base64);
+        }
+        // console.log('result base64', result.base64);
+      }
+
+      const AlertImageEdit = () => {
+        Alert.alert('Edit Foto', '',[
+          {
+            text:'Pilih Foto',
+            onPress: () => PickImageLibrary(),
+          },
+          {
+            text:'Ambil Foto',
+            onPress: () => PickImagePhoto(),
+          }
+        ])
+      }
+
+      
+    
+    ////////
 
     const serviceCardData = async () => {
           const  picUrl = await storage.getData(KEY.PHOTO_PROFILE)
@@ -45,15 +120,20 @@ const ProfilPage = () => {
       })
       setNameUser(name);
       setLocationUser(location);
+      setImage(dataUrl);
+      setbase64Image(picUrl);
   }
 
-    const imageUrl = 'https://img.okezone.com/content/2022/03/15/33/2561783/musisi-ardhito-pramono-akan-segera-bebas-dari-jerat-hukum-narkoba-PSrk23ID54.jpg'
 
     useEffect(()=>{
-      console.log("Trigger called");
+    //   console.log("Trigger called");
       serviceCardData();
-      console.log('serviceCardData', data);
+
+    //   console.log('serviceCardData', data);
     },[trigger])
+
+
+  
 
     const handleLogout = async () => {
       try {
@@ -68,27 +148,42 @@ const ProfilPage = () => {
     }
 
     const handleSubmitEditProfile = async () => {
-      console.log('changeName', nameUser);
-      console.log('changeLocation', locationUser);
-      setTrigger(!trigger);
-      onPutProfile(nameUser,locationUser,'photo1','photo2',imageUrl,imageUrl)
+    //   console.log('changeName', nameUser);
+    //   console.log('changeLocation', locationUser);
+    // if (image != '' && base64Image != '') {
+      
+    // }
+    const photoNameSplit = image.split('/');
+    console.log('photoNameSplit', photoNameSplit);
+    const lengthPhotoNAmesplit = photoNameSplit.length;
+    console.log('lengthPhotoNAmesplit',lengthPhotoNAmesplit);
+    const photoName = photoNameSplit[lengthPhotoNAmesplit-1]
+    console.log('photoName',photoName);
+
+    onPutProfile(nameUser,locationUser,photoName,image,base64Image)
+    
+    
+    
+    // navigation.replace(ROUTE.MAIN)
     }
 
     return (
         <MainContainer mainPage>
             {modalVisible && 
-                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} children={
-                    <View>
-                        <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
-                        <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
-                        <View style={{width:'50%', marginBottom:32}}>
-                        <Button title='Upload Photo' />
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`}>
+                   <ScrollView>
+                        <View>
+                              <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
+                              <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
+                              <View style={{width:'50%', marginBottom:32}}>
+                              <Button title='Upload Photo' onPress={AlertImageEdit} />
+                              {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
+                              </View>
+                              <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
                         </View>
-                        <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
-                    </View>
-                    
-                }
-            />}
+                  </ScrollView>
+                </ModalDialog>
+            }
             <ScrollView>
                 <View style={{margin: 25}} >            
                     <ProfileCard data={data} style={{marginBottom: 12}}/>

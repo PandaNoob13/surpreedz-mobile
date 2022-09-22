@@ -16,7 +16,7 @@ export const AuthProvider = ({children}) => {
     const dispatch = useDispatch();
 
     useEffect(()=> {
-        console.log('orderData useEffect AuthProvider', addOrderDataResult);
+        // console.log('orderData useEffect AuthProvider', addOrderDataResult);
     },[addOrderDataResult])
 
 
@@ -66,7 +66,7 @@ export const AuthProvider = ({children}) => {
             await storage.deleteData(KEY.SERVICE_PRICE)
             await storage.clearStorage();
             dispatch(addOrder(false));
-            console.log('AuthContext addOrderDataResult terhapus => ',addOrderDataResult);
+            // console.log('AuthContext addOrderDataResult terhapus => ',addOrderDataResult);
             return true;
         } catch (e) {
             return false;

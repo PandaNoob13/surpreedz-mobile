@@ -9,9 +9,9 @@ const ProfileCard = (props) => {
     const styles = styling(theme);
     const {name, location, joinDate, dataUrl} = props.data;
 
-    // useEffect(()=>{
-    //     console.log('name profile card=>', name);
-    // })
+    useEffect(()=>{
+        // console.log('data profile card=>', props.data);
+    },[name,location,dataUrl])
 
   return (
         <CardContainer {...props}>
