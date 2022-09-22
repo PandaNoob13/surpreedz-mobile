@@ -12,6 +12,8 @@ import OccasionCard from '../../shared/components/Occasion/OccasionCard';
 import { addOrder } from './state/OrderDetailAction';
 import useAuth from '../../shared/hook/UseAuth';
 import { ROUTE } from '../../shared/constants';
+import ModalDialog from '../../shared/components/ModalDialog';
+import About from '../../shared/components/About';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -23,6 +25,7 @@ const OrderPage = () => {
     const [dataSeller,setDataSeller] = useState('');
     const {isTokenExist} = useAuth();
     const [token, setToken] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false);
 
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 3);
@@ -129,6 +132,11 @@ const OrderPage = () => {
                 <View style={{marginBottom:16}}>
                     <FormButton label={`Send Request`} onPress={handleSendRequest} />
                 </View>
+                {modalVisible && 
+                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                        <About></About>
+                    </ModalDialog>}
+                <FormButton link style={{color:'white'}} label='about' onPress={()=>setModalVisible(true)}></FormButton>
             </View>
         </ScrollView>
     </MainContainer>
