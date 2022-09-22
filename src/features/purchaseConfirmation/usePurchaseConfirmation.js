@@ -43,8 +43,8 @@ const usePurchaseConfirmation = () => {
             // console.log('Response use order detail : ', response);
             setPosts(response.data)
             setIsError(false);
-            dispatch(addOrder(false));
-            navigation.replace(ROUTE.MAIN)
+            // dispatch(addOrder(false));
+            // navigation.replace(ROUTE.MAIN)
             console.log('PAYMENT SUCCESS');
 
             
