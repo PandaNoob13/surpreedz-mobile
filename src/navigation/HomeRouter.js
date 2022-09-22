@@ -55,7 +55,8 @@ const HomeRouter = () => {
         tabBarActiveTintColor:'#FFFFFF',
         tabBarInactiveTintColor:'#ACACAC',
         tabBarStyle: {
-            backgroundColor: "#000000"
+            backgroundColor: "#000000",
+            borderTopWidth: 0
         }
     })} >
        

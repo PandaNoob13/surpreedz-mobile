@@ -25,10 +25,10 @@ const HomePage = () => {
     },[])
 
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
-                <Text colourTextPrimary text40BO>Welcome home!</Text>
+                    <Text colourTextPrimary text40BO>Welcome home!</Text>
                     <ScrollView
                         style={{marginVertical:10}}
                         horizontal={true}
@@ -42,7 +42,7 @@ const HomePage = () => {
                                 }
                             }
                             }
-                        ])}
+                        ], {useNativeDriver: false})}
                         scrollEventThrottle={1}
                     >
                         {posts ? posts.map((account) => {

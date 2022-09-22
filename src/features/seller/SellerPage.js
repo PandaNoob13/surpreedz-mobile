@@ -65,7 +65,7 @@ const SellerPage = () => {
     }
 
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             <ScrollView>
                 {modalVisible && 
                     <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} modalHeight={'70%'} children={

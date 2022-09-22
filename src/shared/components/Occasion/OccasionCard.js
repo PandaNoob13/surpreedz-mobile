@@ -58,7 +58,7 @@ const OccasionCard = (props) => {
     // }
 
     return (
-        <CardContainer style={{marginVertical: 4}}> 
+        <CardContainer style={{marginBottom: 16}}> 
             <View>
                 <Text style={styles.subtitle}>
                         {props.orderParam.name} would help you with ...

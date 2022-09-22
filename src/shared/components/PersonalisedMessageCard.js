@@ -9,13 +9,13 @@ const PersonalisedMessageCard = (props) => {
     const styles = styling(theme)
     const {recipient, message, description, onChangeRecipient, onChangeMessage, onChangeDescription} = props
     return (
-        <CardContainer style={{marginVertical: 4}}> 
+        <CardContainer style={{marginBottom: 16}}> 
             <View>
                 <Text style={styles.subtitle}>
                         Your Personalised Message
                 </Text>
             </View>
-            <View>
+            <View style={{marginHorizontal:8}}>
                 <FormTextInput 
                     label={'Who is this message for ?'}
                     value={recipient} 
