@@ -14,11 +14,11 @@ const ProtectiveRedirectPage = () => {
 
     return (
         <MainContainer>
-            <ScrollView style={{padding: 16}} contentContainerStyle={styles.centerPage}>
+            <ScrollView contentContainerStyle={[styles.centerPage, {marginHorizontal: 25}]}>
                 <View style={styles.container}>
-                <LottieView autoPlay style={styles.image}
-                    source={require('../../../assets/img/108106-empty-cart.json')}>
-                </LottieView>
+                    <LottieView autoPlay style={styles.image}
+                        source={require('../../../assets/img/108106-empty-cart.json')}>
+                    </LottieView>
                 </View>
                 <Text text50L style={[styles.subtitle, {marginBottom:32}]}>Ready to liberate your expression?</Text>
                 <View style={{margin: 8, marginBottom:16}}>

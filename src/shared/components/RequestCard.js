@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CardContainer from './CardContainer'
 import FormButton from './FormButton'
@@ -7,6 +7,7 @@ import ModalDialog from './ModalDialog'
 import OrderDetailInfo from './OrderDetailInfo'
 import useRequestList from '../../features/seller/hookSeller/UseRequestList'
 import moment from 'moment'
+import FontAwesome, {SolidIcons, RegularIcons, BrandIcons, parseIconFromClassName} from 'react-native-fontawesome';
 
 const RequestCard = (props) => {
     const theme = useTheme();
@@ -69,79 +70,115 @@ const RequestCard = (props) => {
             )
         }
      }
+    const useChooseIcon = (occasion) => {
+        switch (occasion) {
+            case "Birthday":
+                return (
+                    <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
+                        <FontAwesome icon={SolidIcons.birthdayCake} style={{color: 'white', fontSize: 35}} ></FontAwesome>
+                    </View>
+                )
+            case "Graduation":
+                return (
+                    <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
+                        <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.graduationCap}></FontAwesome>
+                    </View>
+                )
+            case "Surprise":
+                return (
+                    <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
+                        <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.surprise}></FontAwesome>
+                    </View>
+                )
+            case "Other":
+                return (
+                    <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
+                        <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.commentDots}></FontAwesome>
+                    </View>
+                )
+            default :
+                return "";
+        }
+    }
 
-  return (
-    <View style={{marginBottom:16}}>
-        {modalVisible && 
-            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`}>
-                <OrderDetailInfo  data={{
-                                    orderRequest: data.orderRequest,
-                                    buyerName: data.name
-                                 }} />
-            </ModalDialog>}
-        <CardContainer>
-            <Text style={styles.textStyle}>{data.occasion}</Text>
-
-            <View style={styles.requestStyle}>
-                <Text style={styles.textStyle}>Message for</Text>
-                <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
-            </View>
-
-            <View style={styles.requestStyle}>
-                <View>
-                    <Text style={styles.textStyle}>Due Date</Text>
+    return (
+        <View style={{marginBottom:12}}>
+            {modalVisible && 
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} modalHeight={'70%'} >
+                    <OrderDetailInfo data={{
+                        orderRequest: data.orderRequest,
+                        buyerName: data.name
+                    }} />
+                </ModalDialog>}
+            <CardContainer>
+                <View style={styles.container}>
+                    {useChooseIcon(data.occasion)}
+                    <Text style={[styles.subtitle,{textAlign:'center'}]}>{data.occasion}</Text>
                 </View>
-                <View>
+
+                <View style={styles.requestStyle}>
+                    <Text text70L style={styles.textDesc}>Message for</Text>
+                    <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
+                </View>
+
+                <View style={styles.requestStyle}>
+                    <Text text70L style={styles.textDesc}>Due Date</Text>
                     <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
                 </View>
-                
-            </View>
 
-            <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
+                <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                    <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                    {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
 
-            </View>
+                </View>
 
-            <View style={{flexDirection:'row'}}>
-                <Text style={styles.textStyle}>Status : </Text>
-                <Text style={styles.textStyle}>{data.status}</Text>
-            </View>
+                <View style={styles.requestStyle}>
+                    <Text text70L style={styles.textDesc}>Status</Text>
+                    <Text style={styles.textStyle}>{data.status}</Text>
+                </View>
 
 
             <View>
                 {StatusCondition(data.status)}
             </View>
 
-        </CardContainer>
-    </View>
-    
-  )
+            </CardContainer>
+        </View>
+        
+    )
 }
 
 const styling = (theme) => ( StyleSheet.create({
+    textStyle :{
+        fontSize:15,
+        color: '#ffffff',
+        textAlign:'left'
+    },
+    textDesc: {fontWeight: '400', color: 'white', opacity: 0.5},
     subtitle:{
         fontSize:15,
         color: '#ffffff',
         fontWeight:'bold'
-     },
-     lineStyle:{
-        borderWidth: 0.5,
-        borderColor:'white',
-        alignItems:'flex-start',
-        marginRight:16,
-        marginTop:8,
-        marginBottom:8
     },
     textStyle :{
         fontSize:15,
         color: '#ffffff',
-     },
-     requestStyle:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      marginTop: 4
-     }
+    },
+    requestStyle:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginTop: 2
+    },
+    container: {
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        // flex: 1,
+        flexDirection:'row',
+        // gap: '1rem',
+        // flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
   }))
 
 export default RequestCard

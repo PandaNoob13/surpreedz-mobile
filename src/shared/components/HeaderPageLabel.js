@@ -23,9 +23,9 @@ const styling = (theme) => StyleSheet.create({
     },
     headerStyle:{
         flexDirection:'row',
-        justifyContent:'flex-end',
+        justifyContent:'center',
         alignItems:'center',
-        backgroundColor:'#000000',
+        // backgroundColor:'#000000',
         height:50,
     }
    })

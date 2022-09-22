@@ -1,14 +1,14 @@
 export const ROUTE = {
     SIGNIN: 'signIn',
     WELCOME: 'welcome',
-    HOME: 'home',
+    HOME: 'Home',
     MAIN: 'main',
     SIGNUP: 'signUp',
     ORDER:'order',
-    SELLER:'seller',
-    BUYER:'buyer',
+    SELLER:'Seller',
+    BUYER:'Buyer',
     PAYMENT:'payment',
-    PROFIL:'profil',
+    PROFIL:'Profile',
     ABOUT:'About'
 }
 

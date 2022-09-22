@@ -52,35 +52,33 @@ const PurchasedCard = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
 
     return (
-        <View style={{marginBottom:16}}>
+        <CardContainer style={{marginBottom: 12}}>
             {modalVisible && 
-            <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
-                    <OrderDetailInfo 
-                    data={{
-                        orderRequest: orderRequest,
-                        buyerName:name
-                     }}
-                     />
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
+                        <OrderDetailInfo 
+                        data={{
+                            orderRequest: orderRequest,
+                            buyerName:name
+                        }}
+                        />
 
-            </ModalDialog>
+                </ModalDialog>
             }
-
-        <CardContainer>
             <View row>
-                <View>
-                    <Image source={{uri:`data:image/jpg;base64,${photoUrl}`}} 
-                    style={styles.imageStyle}
-                    />
+                <View style={styles.container}>
+                    <View>
+                        <Image source={{uri:`data:image/jpg;base64,${photoUrl}`}} 
+                        style={styles.imageStyle}
+                        />
+                    </View>
+                    <View style={{justifyContent: "space-between", alignItems: "center"}}>
+                        <Text style={[styles.subtitle,{textAlign:'center'}]}>{occasion} message from {name}</Text>
+                        <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
+                    </View>
                 </View>
-                <View first>
-                    <Text style={[styles.subtitle,{textAlign:'center', marginBottom: 12}]}>{occasion} message from {name}</Text>
-                    <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
-                    
-                </View>
-
                 <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
+                    <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                    {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
 
                 </View>
                 <View>
@@ -90,7 +88,6 @@ const PurchasedCard = (props) => {
                     <Text style={styles.textStyle}>{orderRequest.message}</Text>
                     <Text text70L style={styles.textDesc}>Due date:</Text>
                     <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
-                    {/* <p className='card-text mb-2'>{moment({dueDate}).format("MMMM Do YYYY")}</p> */}                    
                 </View>
                 <View style={{paddingVertical: 8}}>
                     {StatusCondition(status, props.callback, orderId)}
@@ -99,7 +96,6 @@ const PurchasedCard = (props) => {
 
 
         </CardContainer>
-        </View>
     )
 }
 
@@ -116,12 +112,22 @@ const styling = (theme) => ( StyleSheet.create({
         fontWeight:'bold'
     },
     imageStyle:{
-        width: "100%", 
-        padding: 4, 
-        height: 50, 
+        width: 60, 
+        // padding: 4, 
+        height: 60, 
         objectFit: "cover", 
-        borderRadius: 12
-    }
+        borderRadius: 6
+    },
+    container: {
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        // flex: 1,
+        flexDirection:'row',
+        // gap: '1rem',
+        // flexWrap: "wrap",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
  }))
 
 export default PurchasedCard

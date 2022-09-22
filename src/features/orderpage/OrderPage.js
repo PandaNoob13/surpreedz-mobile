@@ -4,8 +4,6 @@ import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
 import ProfileCard from '../../shared/components/ProfileCard';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import CardContainer from '../../shared/components/CardContainer';
-import FormTextInput from '../../shared/components/FormTextInput';
 import FormButton from '../../shared/components/FormButton';
 import {useDispatch,useSelector} from 'react-redux';
 import UseOrderPage from './UseOrderPage';
@@ -116,7 +114,7 @@ const OrderPage = () => {
     },[addOrderDataResult,dispatch])
 
   return (
-    <MainContainer p>
+    <MainContainer>
         <ScrollView style={{paddingHorizontal: 16}}>
             <ProfileCard 
                data={dataSeller}
