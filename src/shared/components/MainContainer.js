@@ -3,13 +3,16 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {StatusBar} from "expo-status-bar";
 import HeaderPageLabel from './HeaderPageLabel';
 
-const MainContainer = ({children}) => {
+const MainContainer = ({children, mainPage}) => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar translucent style="light"/>
-            <HeaderPageLabel> 
+            {mainPage? <HeaderPageLabel> 
                 <Image source={require('../../../assets/img/surpreedz-logo.png')} style={{height: 20, width:120, objectFit: "cover"}}></Image>
             </HeaderPageLabel>
+            :
+            <></>
+            }
             {children}
         </SafeAreaView>
     );

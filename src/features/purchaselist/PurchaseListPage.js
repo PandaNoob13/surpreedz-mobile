@@ -17,7 +17,7 @@ const PurchaseListPage = () => {
     },[])
 
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             <ScrollView>
                 <View flex paddingH-25 marginV-25 colourText>
                     <Text colourTextPrimary text40BO>Purchased List</Text>

@@ -57,7 +57,7 @@ const Occasion = (props) => {
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
                         <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome icon={SolidIcons.birthdayCake} style={{color: 'white', fontSize: 35}} ></FontAwesome>
+                            <FontAwesome icon={SolidIcons.birthdayCake} style={{color: 'white', fontSize: 32}} ></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
@@ -65,7 +65,7 @@ const Occasion = (props) => {
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
                         <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.graduationCap}></FontAwesome>
+                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.graduationCap}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
@@ -73,7 +73,7 @@ const Occasion = (props) => {
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
                         <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.surprise}></FontAwesome>
+                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.surprise}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
@@ -81,7 +81,7 @@ const Occasion = (props) => {
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
                         <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 35}} icon={SolidIcons.commentDots}></FontAwesome>
+                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.commentDots}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )

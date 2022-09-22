@@ -168,7 +168,7 @@ const ProfilPage = () => {
     }
 
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`}>
                    <ScrollView>

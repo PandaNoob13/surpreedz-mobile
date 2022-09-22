@@ -26,16 +26,16 @@ const AppRouter = () => {
             {/* <Stack.Screen name={ROUTE.MAIN} component={ProtectiveRedirectPage} />  */}
         </Stack.Group>
 
-        <Stack.Screen name={ROUTE.ORDER} component={OrderPage} options={{headerTitle:'',headerStyle: {
-            backgroundColor: '#000000',
+        <Stack.Screen name={ROUTE.ORDER} component={OrderPage} options={{headerTitle:'New request', headerTitleStyle: {color: 'white', fontWeight: '100'}, headerTitleAlign:'center', headerShadowVisible: false, headerStyle: {
+            backgroundColor: '#212121', borderColor: '#212121',
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} /> 
           
-        <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'',headerStyle: {
-            backgroundColor: '#000000',
+        <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'Confirm purchase', headerTitleStyle: {color: 'white', fontWeight: '100'}, headerTitleAlign:'center', headerShadowVisible: false, headerStyle: {
+            backgroundColor: '#212121', borderColor: '#212121',
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} />
 
-        <Stack.Screen name={ROUTE.ABOUT} component={AboutPage} options={{headerTitle:'',headerStyle: {
-            backgroundColor: '#000000',
+        <Stack.Screen name={ROUTE.ABOUT} component={AboutPage} options={{headerTitle:'', headerTitleStyle: {color: 'white', fontWeight: '100'}, headerTitleAlign:'center', headerShadowVisible: false, headerStyle: {
+            backgroundColor: '#212121', borderColor: '#212121',
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} />
     </Stack.Navigator>
   )
