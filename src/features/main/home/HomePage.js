@@ -1,12 +1,16 @@
 import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated} from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ServiceCard from '../../../shared/components/ServiceCard';
 import useHomePage from './UseHomePage';
 import {useSelector} from 'react-redux';
-import { Text } from 'react-native-ui-lib';
+import { Modal, Text } from 'react-native-ui-lib';
+import FormButton from '../../../shared/components/FormButton';
+import ModalDialog from '../../../shared/components/ModalDialog';
+import About from '../../../shared/components/About';
+import {WebView} from 'react-native-webview';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -17,6 +21,8 @@ const HomePage = () => {
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
+    const [modalVisible, setModalVisible] = useState(false);
+    const [WebviewVisible, setWebviewVisible] = useState(false);
 
     useEffect(()=>{
       onGetService();
@@ -24,7 +30,20 @@ const HomePage = () => {
       console.log('AddorderResult Home Page => ', addOrderDataResult);
     },[])
 
+    const webview = () => {
+        console.log('webview clicked');
+        return (
+            <View>
+                {/* <WebView source={{uri: 'https://app.sandbox.midtrans.com/snap/v3/redirection/0902603f-577e-4812-80b7-f6d98e3cc4fd'}} style={{width: '100%', height: '100%'}}></WebView> */}
+                <Text white>lalalalala</Text>
+            </View>
+        )
+    }
+
     return (
+        // <View style={styles.containerView}>
+        // <WebView source={{uri: 'https://google.com'}} style={styles.video}></WebView>
+        // </View>
         <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
@@ -55,6 +74,26 @@ const HomePage = () => {
                         }):
                         <Text style={styles.textTitle}>Empty Data</Text> }
                     </ScrollView>
+                    {modalVisible && 
+                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                            <About></About>
+                        {/* <WebView source={{uri: 'https://google.com'}} style={{width: '100%', height: '100%'}}></WebView> */}
+                        </ModalDialog>}
+                    <FormButton label='about' onPress={()=>setModalVisible(true)}></FormButton>
+
+                    {WebviewVisible &&
+                        <ModalDialog visible={WebviewVisible} onPress={()=> setWebviewVisible(false)} titleModal={`Corfirm payment`} modalHeight={'70%'} >
+                            <ScrollView>
+                            <About></About>
+                            <View style={styles.containerView}>
+                            <WebView source={{uri: 'https://google.com'}} style={styles.video}></WebView>
+                            </View>
+                            </ScrollView>
+                        </ModalDialog>
+                    }
+
+                    <FormButton label='webview' onPress={() => setWebviewVisible(true)}></FormButton>
+
                 </View>
             </ScrollView>
         </MainContainer>
@@ -72,6 +111,19 @@ const styling = (theme) => ( StyleSheet.create({
         marginVertical: 25,
         paddingHorizontal: 25,
     },
+    containerView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    video: {        
+        // height: 320,
+        // marginTop: 20,
+        minHeight: 20,
+        width: 320,
+        flex: 1,
+        elevation:10,
+    }
 }))
 
 export default HomePage
