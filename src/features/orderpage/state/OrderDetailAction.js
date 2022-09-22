@@ -1,7 +1,7 @@
 import { ORDER_ACTION_TYPE } from "../../../shared/constants";
 
 export function addOrder(newOrder) {
-    console.log('addOrder action called');
+    // console.log('addOrder action called');
     return {
         type: ORDER_ACTION_TYPE.ADD_ORDER,
         payload: {

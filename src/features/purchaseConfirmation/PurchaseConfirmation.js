@@ -23,8 +23,8 @@ const PurchaseConfirmation = () => {
 
     const handleSubmitPayment = async () => {
       const buyerId = await storage.getData(KEY.ACCOUNT_ID)
-      console.log('order data dari purchase => ', addOrderDataResult);
-      console.log('buyerId dr purchase', buyerId);
+      // console.log('order data dari purchase => ', addOrderDataResult);
+      // console.log('buyerId dr purchase', buyerId);
 
       onPostService(parseInt(buyerId), addOrderDataResult.serviceDetailId, addOrderDataResult.dueDate, addOrderDataResult.occasion, addOrderDataResult.recipient, addOrderDataResult.message, addOrderDataResult.description);
 

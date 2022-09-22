@@ -8,7 +8,7 @@ const orderInitialState = {
 }
 
 const orderDetailReducer = (state = orderInitialState, action) => {
-    console.log('orderDetailReducer called',action);
+    // console.log('orderDetailReducer called',action);
     switch(action.type){
         case ORDER_ACTION_TYPE.ADD_ORDER:
             return {
