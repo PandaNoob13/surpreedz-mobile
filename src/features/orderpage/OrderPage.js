@@ -23,6 +23,8 @@ const OrderPage = () => {
     const [dataSeller,setDataSeller] = useState('');
     const {isTokenExist} = useAuth();
     const [token, setToken] = useState(false)
+    const [buttonDisabled, setButtonDisabled] = useState(false)
+
 
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 3);
@@ -81,6 +83,14 @@ const OrderPage = () => {
         // console.log('orderParam.locationSeller', orderParam.locationSeller);
     },[orderParam])
 
+    useEffect(() => {
+        if (occasion === '' || recipient === '' || message === '' || description === '') {
+            setButtonDisabled(true)
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [occasion, recipient, message, description])
+
     const handleSendRequest = () => {
       console.log('Send Request Order');
       console.log('Occasion', occasion);
@@ -127,7 +137,7 @@ const OrderPage = () => {
                 <PersonalisedMessageCard onChangeRecipient={onChangeRecipient} onChangeMessage={onChangeMessage} onChangeDescription={onChangeDescription} recipient={recipient} message={message} description={description} orderParam={orderParam} ></PersonalisedMessageCard>
 
                 <View style={{marginBottom:16}}>
-                    <FormButton label={`Send Request`} onPress={handleSendRequest} />
+                    <FormButton disabled={buttonDisabled} label={`Send Request`} onPress={handleSendRequest} />
                 </View>
             </View>
         </ScrollView>
