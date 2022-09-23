@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
 import useDependency from "../../../shared/hook/UseDependency"
 import Storage from "../../../shared/Storage";
-import {KEY} from "../../../shared/constants";
+import {KEY, ROUTE} from "../../../shared/constants";
+import { useNavigation } from "@react-navigation/native";
 
 
 const useAddEditService = () => {
@@ -12,7 +13,8 @@ const useAddEditService = () => {
     const [data, setData] = useState({});
     const [posts, setPosts] = useState({});
     const storage = Storage();
-    const [serviceDetailId, setServiceDetailId] = useState('')
+    const [serviceDetailId, setServiceDetailId] = useState('');
+    const navigation = useNavigation();
 
     useEffect(()=>{
         const serviceDetailIdFunc = async () => {
@@ -62,6 +64,8 @@ const useAddEditService = () => {
                         price: price
                     })
                     setIsError(false)
+                    console.log('DATA SERVICE SELLER SUCCESS DI TAMBAH');
+                    navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);
@@ -85,6 +89,8 @@ const useAddEditService = () => {
                         price: price
                     })
                     setIsError(false)
+                    console.log('DATA SERVICE SELLER SUCCESS DI UBAH');
+                    navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);

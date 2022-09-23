@@ -11,6 +11,7 @@ import FormButton from '../../../shared/components/FormButton';
 import ModalDialog from '../../../shared/components/ModalDialog';
 import About from '../../../shared/components/About';
 import {WebView} from 'react-native-webview';
+import { Feather } from '@expo/vector-icons';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -22,28 +23,14 @@ const HomePage = () => {
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
     const [modalVisible, setModalVisible] = useState(false);
-    const [WebviewVisible, setWebviewVisible] = useState(false);
 
     useEffect(()=>{
       onGetService();
       // console.log('posts',posts);
-      console.log('AddorderResult Home Page => ', addOrderDataResult);
+    //   console.log('AddorderResult Home Page => ', addOrderDataResult);
     },[])
 
-    const webview = () => {
-        console.log('webview clicked');
-        return (
-            <View>
-                {/* <WebView source={{uri: 'https://app.sandbox.midtrans.com/snap/v3/redirection/0902603f-577e-4812-80b7-f6d98e3cc4fd'}} style={{width: '100%', height: '100%'}}></WebView> */}
-                <Text white>lalalalala</Text>
-            </View>
-        )
-    }
-
     return (
-        // <View style={styles.containerView}>
-        // <WebView source={{uri: 'https://google.com'}} style={styles.video}></WebView>
-        // </View>
         <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
@@ -79,21 +66,9 @@ const HomePage = () => {
                             <About></About>
                         {/* <WebView source={{uri: 'https://google.com'}} style={{width: '100%', height: '100%'}}></WebView> */}
                         </ModalDialog>}
-                    <FormButton label='about' onPress={()=>setModalVisible(true)}></FormButton>
-
-                    {WebviewVisible &&
-                        <ModalDialog visible={WebviewVisible} onPress={()=> setWebviewVisible(false)} titleModal={`Corfirm payment`} modalHeight={'70%'} >
-                            <ScrollView>
-                            <About></About>
-                            <View style={styles.containerView}>
-                            <WebView source={{uri: 'https://google.com'}} style={styles.video}></WebView>
-                            </View>
-                            </ScrollView>
-                        </ModalDialog>
-                    }
-
-                    <FormButton label='webview' onPress={() => setWebviewVisible(true)}></FormButton>
-
+                    <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                        <Feather name="info" size={24} color={'white'} />
+                    </FormButton>
                 </View>
             </ScrollView>
         </MainContainer>
