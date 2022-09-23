@@ -14,6 +14,7 @@ import useAuth from '../../shared/hook/UseAuth';
 import { ROUTE } from '../../shared/constants';
 import ModalDialog from '../../shared/components/ModalDialog';
 import About from '../../shared/components/About';
+import { Feather } from '@expo/vector-icons';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -136,7 +137,10 @@ const OrderPage = () => {
                     <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
                         <About></About>
                     </ModalDialog>}
-                <FormButton link style={{color:'white'}} label='about' onPress={()=>setModalVisible(true)}></FormButton>
+                    
+                <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                    <Feather name="info" size={24} color={'white'} />
+                </FormButton>
             </View>
         </ScrollView>
     </MainContainer>
