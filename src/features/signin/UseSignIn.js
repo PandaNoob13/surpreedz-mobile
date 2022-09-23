@@ -21,7 +21,7 @@ const useSignIn = () => {
         Keyboard.dismiss();
         setLoading();
         try {
-            if (email === '' && password === '') {
+            if (email === '' || password === '') {
                 throw new Error('Please input your user name and password');
             } else {
                 const response = await onLogin({email: email,password: password })

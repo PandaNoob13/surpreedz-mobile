@@ -29,6 +29,16 @@ const ProfilPage = () => {
     const [locationUser, setLocationUser] = useState('');
     const {onPutProfile,isLoading,trigger}= UseEditProfilePage();
 
+    const [buttonDisabled, setButtonDisabled] = useState(false)
+
+    useEffect(() => {
+        if (nameUser === '' || locationUser === '') {
+            setButtonDisabled(true)
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [nameUser, locationUser])
+
     // IMAGE HANDLE
     const [image, setImage] = useState('');
     const [base64Image, setbase64Image] = useState('');
@@ -170,7 +180,7 @@ const ProfilPage = () => {
     return (
         <MainContainer mainPage>
             {modalVisible && 
-                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`}>
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'70%'}>
                    <ScrollView>
                         <View>
                               <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
@@ -179,7 +189,7 @@ const ProfilPage = () => {
                               <Button title='Upload Photo' onPress={AlertImageEdit} />
                               {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
                               </View>
-                              <FormButton label={'Submit'} onPress={handleSubmitEditProfile} />
+                              <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
                         </View>
                   </ScrollView>
                 </ModalDialog>

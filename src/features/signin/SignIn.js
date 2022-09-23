@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {View,Text, Colors, Keyboard} from 'react-native-ui-lib';
 import FormButton from '../../shared/components/FormButton';
 import FormPasswordInput from '../../shared/components/FormPasswordInput';
@@ -15,13 +15,22 @@ const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 const SignIn = () => {
     const theme = useTheme();
     const styles = styling(theme);
+    const [buttonDisabled, setButtonDisabled] = useState(false)
     const {viewState, 
         email, 
-        password, 
+        password,
         onChangeEmail, 
         onChangePassword, 
         onPostSignIn} = useSignIn();
     const navigation = useNavigation();
+
+    useEffect(() => {
+        if (email === '' || password === '') {
+            setButtonDisabled(true)
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [email, password])
 
     return (
         <MainContainer>
@@ -45,7 +54,7 @@ const SignIn = () => {
                     ></FormPasswordInput>
                 
                 </View>
-                <FormButton onPress={onPostSignIn} label="Continue"/>
+                <FormButton disabled={buttonDisabled} onPress={onPostSignIn} label="Continue"/>
                 <View center row marginT-60>
                     <Text style={styles.text} >Not a member yet ?  </Text>
                     <TouchableOpacity onPress={()=> {navigation.replace(ROUTE.SIGNUP)}} >
