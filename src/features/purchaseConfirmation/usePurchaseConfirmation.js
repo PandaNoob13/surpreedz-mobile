@@ -23,13 +23,13 @@ const usePurchaseConfirmation = () => {
         setLoading(true);
         console.log("On Get usePurchaseConfirmation Called");
         try {
-            console.log('usePurchaseConfirmation recipient_description',typeof(buyer_id));
-            console.log('usePurchaseConfirmation service_detail_id',typeof(service_detail_id));
-            console.log('usePurchaseConfirmation due_date',due_date);
-            console.log('usePurchaseConfirmation occasion',occasion);
-            console.log('usePurchaseConfirmation recipient_name',recipient_name);
-            console.log('usePurchaseConfirmation',message_to_recipient);
-            console.log('usePurchaseConfirmation',recipient_description);
+            // console.log('usePurchaseConfirmation recipient_description',typeof(buyer_id));
+            // console.log('usePurchaseConfirmation service_detail_id',typeof(service_detail_id));
+            // console.log('usePurchaseConfirmation due_date',due_date);
+            // console.log('usePurchaseConfirmation occasion',occasion);
+            // console.log('usePurchaseConfirmation recipient_name',recipient_name);
+            // console.log('usePurchaseConfirmation',message_to_recipient);
+            // console.log('usePurchaseConfirmation',recipient_description);
             const response = await orderService.postOrderService({
                 buyer_id: buyer_id,
                 service_detail_id: service_detail_id,

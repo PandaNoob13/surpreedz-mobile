@@ -27,7 +27,7 @@ const HomePage = () => {
     useEffect(()=>{
       onGetService();
       // console.log('posts',posts);
-      console.log('AddorderResult Home Page => ', addOrderDataResult);
+    //   console.log('AddorderResult Home Page => ', addOrderDataResult);
     },[])
 
     return (

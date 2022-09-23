@@ -27,7 +27,7 @@ const OrderPage = () => {
     const {isTokenExist} = useAuth();
     const [token, setToken] = useState(false)
     const [modalVisible, setModalVisible] = useState(false);
-
+    const [buttonDisabled, setButtonDisabled] = useState(false)
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 3);
     
@@ -85,6 +85,14 @@ const OrderPage = () => {
         // console.log('orderParam.locationSeller', orderParam.locationSeller);
     },[orderParam])
 
+    useEffect(() => {
+        if (occasion === '' || recipient === '' || message === '' || description === '') {
+            setButtonDisabled(true)
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [occasion, recipient, message, description])
+
     const handleSendRequest = () => {
       console.log('Send Request Order');
       console.log('Occasion', occasion);
@@ -106,9 +114,9 @@ const OrderPage = () => {
 
     useEffect(()=>{
       // console.log('addOrderData', addOrderData.serviceDetailId);
-      console.log('addOrderData', addOrderDataResult);
+      // console.log('addOrderData', addOrderDataResult);
       if (addOrderDataResult) {
-        console.log('5. masuk use effect add order');
+        // console.log('5. masuk use effect add order');
         if (token) {
           navigation.replace(ROUTE.PAYMENT)
         }else {
@@ -131,7 +139,7 @@ const OrderPage = () => {
                 <PersonalisedMessageCard onChangeRecipient={onChangeRecipient} onChangeMessage={onChangeMessage} onChangeDescription={onChangeDescription} recipient={recipient} message={message} description={description} orderParam={orderParam} ></PersonalisedMessageCard>
 
                 <View style={{marginBottom:16}}>
-                    <FormButton label={`Send Request`} onPress={handleSendRequest} />
+                    <FormButton disabled={buttonDisabled} label={`Send Request`} onPress={handleSendRequest} />
                 </View>
                 {modalVisible && 
                     <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >

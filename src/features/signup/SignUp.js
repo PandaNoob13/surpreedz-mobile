@@ -7,7 +7,7 @@ import MainContainer from '../../shared/components/MainContainer';
 import { ROUTE } from '../../shared/constants';
 import { useTheme } from '../../shared/context/ThemeContext';
 import FormButton from '../../shared/components/FormButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import UseSignUp from './UseSignUp';
 
 const SignUp = () => {
@@ -15,6 +15,10 @@ const SignUp = () => {
     const styles = styling(theme)
     const navigation = useNavigation();
     const [step,setStep]= useState(1);
+    const [buttonDisabled, setButtonDisabled] = useState({
+        continue: false,
+        join: false,
+    });
     const {viewState,email,password,name,location,onChangeEmail,onChangePassword,onChangeLocation,onChangeName,onPostSignUp} = UseSignUp();
 
     const handleContinue = () => {
@@ -25,6 +29,21 @@ const SignUp = () => {
         setStep(step - 1);
     }
 
+    useEffect(() => {
+        if (email === '' || password === '') {
+            setButtonDisabled({continue: true})
+        } else {
+            setButtonDisabled({continue: false})
+        }
+    }, [email, password])
+
+    useEffect(() => {
+        if (name === '' || location === '') {
+            setButtonDisabled({join: true})
+        } else {
+            setButtonDisabled({join: false})
+        }
+    }, [name, location])
 
     switch (step) {
         case 1:
@@ -50,7 +69,7 @@ const SignUp = () => {
                             ></FormPasswordInput>
                         </View>
 
-                        <FormButton label={'Continue'} onPress={handleContinue} />
+                        <FormButton disabled={buttonDisabled.continue} label={'Continue'} onPress={handleContinue} />
                         <View marginT-100 center row>
                             <Text style={styles.text}>Already a member ?  </Text>
                             
@@ -88,7 +107,7 @@ const SignUp = () => {
                         </View>
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                             <FormButton style={{width: '45%'}} label={'Back'} onPress={handleBack} />
-                            <FormButton style={{width: '45%'}} label={'Join'} onPress={onPostSignUp} />
+                            <FormButton disabled={buttonDisabled.join} style={{width: '45%'}} label={'Join'} onPress={onPostSignUp} />
                         </View>
                         <View marginT-100 center row>
                             <Text style={styles.text} >Already a member ?  </Text>
