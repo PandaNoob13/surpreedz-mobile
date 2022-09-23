@@ -54,7 +54,8 @@ const SellerPage = () => {
     const [price, setPrice] = useState(serviceDetailPrice);
     const [dataVideo ,setDataVideo] = useState();
     const {onPostService} = useAddEditService();
-    const [accountId, setAccountId] = useState()
+    const [accountId, setAccountId] = useState();
+    const [buttonDisabled, setButtonDisabled] = useState(false)
 
     const handleSubmit = async () => {
         console.log('accountId', accountId);
@@ -63,6 +64,14 @@ const SellerPage = () => {
         console.log('price',price);
         onPostService(parseInt(accountId) ,role, description, parseInt(price),dataVideo)
     }
+
+    useEffect(() => {
+        if (role === '' || description === '' || price === '') {
+            setButtonDisabled(true)
+        } else {
+            setButtonDisabled(false)
+        }
+    }, [role, description, price])
 
     return (
         <MainContainer mainPage>
@@ -73,7 +82,7 @@ const SellerPage = () => {
                             <FormTextInput label={'Role'} value={role} onChangeText={setRole} />
                             <FormTextInput label={'Description'} value={description} onChangeText={setDescription} />
                             <FormTextInput label={'Price'} value={price} onChangeText={setPrice} />
-                            <FormButton label={'Submit'} onPress={handleSubmit} />
+                            <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmit} />
                         </ScrollView>
                 
                     }
