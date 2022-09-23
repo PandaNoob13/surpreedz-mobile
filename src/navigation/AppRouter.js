@@ -23,6 +23,7 @@ const AppRouter = () => {
             <Stack.Screen name={ROUTE.SIGNIN} component={SignIn} />
             <Stack.Screen name={ROUTE.SIGNUP} component={SignUp} ></Stack.Screen>
             <Stack.Screen name={ROUTE.MAIN} component={MainPage} /> 
+            <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} />
             {/* <Stack.Screen name={ROUTE.MAIN} component={ProtectiveRedirectPage} />  */}
         </Stack.Group>
 
@@ -30,9 +31,9 @@ const AppRouter = () => {
             backgroundColor: '#000000',
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} /> 
           
-        <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'',headerStyle: {
+        {/* <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'',headerStyle: {
             backgroundColor: '#000000',
-          }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} />
+          }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} /> */}
 
         <Stack.Screen name={ROUTE.ABOUT} component={AboutPage} options={{headerTitle:'',headerStyle: {
             backgroundColor: '#000000',

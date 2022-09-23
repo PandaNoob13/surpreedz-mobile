@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Storage from '../../shared/Storage';
 import useDependency from '../../shared/hook/UseDependency';
 import { KEY, ROUTE } from '../../shared/constants';
-import { Keyboard } from 'react-native';
+import { Alert, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -70,9 +70,11 @@ const UseEditProfilePage = () => {
             setUploadStatus(!uploadStatus)
             setIsError(false)
             console.log(' finish update');
-            // navigation.replace(ROUTE.MAIN)
+            // navigation.replace(ROUTE.MAIN);
+            Alert.alert('Edit Profile Success')
         } catch (error) {
             setPosts(error);
+            Alert.alert('Edit Profile Failed')
         }finally{
             setLoading(false)
         }

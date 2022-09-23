@@ -14,6 +14,7 @@ import UseEditProfilePage from './UseEditProfilePage';
 import Storage from '../../shared/Storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
+import { useSelector } from 'react-redux';
 
 const ProfilPage = () => {
     const storage = Storage();
@@ -23,6 +24,8 @@ const ProfilPage = () => {
     const {onLogout} = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
     const [data, setData] = useState('');
+    const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
+
   
 
     const [nameUser, setNameUser] = useState('');
@@ -133,6 +136,33 @@ const ProfilPage = () => {
     },[trigger])
 
 
+    const AlertLogout = () => {
+      if (addOrderDataResult) {
+          Alert.alert('Are you sure ?', `If you sign out before completing the payment, \n your order data will be deleted`,[
+          {
+            text:'Cancel',
+            onPress: () => console.log('CANCEL SIGN OUT'),
+          },
+          {
+            text:'Sign Out',
+            onPress: () => handleLogout(),
+          }
+        ])
+        
+      }else{
+        Alert.alert('Are you sure ?', '',[
+          {
+            text:'Cancel',
+            onPress: () => console.log('CANCEL SIGN OUT'),
+          },
+          {
+            text:'Sign Out',
+            onPress: () => handleLogout(),
+          }
+        ])
+      }
+      
+    }
   
 
     const handleLogout = async () => {
@@ -199,7 +229,7 @@ const ProfilPage = () => {
                     </View>
                     
                     <View style={styles.profileItem}>
-                        <FormButton label={`Sign Out as ${nameUser}`} onPress={handleLogout} ></FormButton>
+                        <FormButton label={`Sign Out as ${nameUser}`} onPress={AlertLogout} ></FormButton>
                     </View>
                 </View>
             </ScrollView>

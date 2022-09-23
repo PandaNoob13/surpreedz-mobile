@@ -23,6 +23,10 @@ const SignIn = () => {
         onPostSignIn} = useSignIn();
     const navigation = useNavigation();
 
+    const handleSignIn = async () => {
+        await onPostSignIn(email,password);
+    }
+
     return (
         <MainContainer>
             <ScrollView contentContainerStyle={[styles.container, {marginHorizontal: 25}]}>
@@ -45,7 +49,7 @@ const SignIn = () => {
                     ></FormPasswordInput>
                 
                 </View>
-                <FormButton onPress={onPostSignIn} label="Continue"/>
+                <FormButton onPress={handleSignIn} label="Continue"/>
                 <View center row marginT-60>
                     <Text style={styles.text} >Not a member yet ?  </Text>
                     <TouchableOpacity onPress={()=> {navigation.replace(ROUTE.SIGNUP)}} >
