@@ -12,6 +12,9 @@ import OccasionCard from '../../shared/components/Occasion/OccasionCard';
 import { addOrder } from './state/OrderDetailAction';
 import useAuth from '../../shared/hook/UseAuth';
 import { ROUTE } from '../../shared/constants';
+import ModalDialog from '../../shared/components/ModalDialog';
+import About from '../../shared/components/About';
+import { Feather } from '@expo/vector-icons';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -23,9 +26,8 @@ const OrderPage = () => {
     const [dataSeller,setDataSeller] = useState('');
     const {isTokenExist} = useAuth();
     const [token, setToken] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false)
-
-
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 3);
     
@@ -139,6 +141,14 @@ const OrderPage = () => {
                 <View style={{marginBottom:16}}>
                     <FormButton disabled={buttonDisabled} label={`Send Request`} onPress={handleSendRequest} />
                 </View>
+                {modalVisible && 
+                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                        <About></About>
+                    </ModalDialog>}
+                    
+                <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                    <Feather name="info" size={24} color={'white'} />
+                </FormButton>
             </View>
         </ScrollView>
     </MainContainer>

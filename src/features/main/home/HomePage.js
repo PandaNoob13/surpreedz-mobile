@@ -1,12 +1,17 @@
 import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated} from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ServiceCard from '../../../shared/components/ServiceCard';
 import useHomePage from './UseHomePage';
 import {useSelector} from 'react-redux';
-import { Text } from 'react-native-ui-lib';
+import { Modal, Text } from 'react-native-ui-lib';
+import FormButton from '../../../shared/components/FormButton';
+import ModalDialog from '../../../shared/components/ModalDialog';
+import About from '../../../shared/components/About';
+import {WebView} from 'react-native-webview';
+import { Feather } from '@expo/vector-icons';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -17,6 +22,7 @@ const HomePage = () => {
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
+    const [modalVisible, setModalVisible] = useState(false);
 
     useEffect(()=>{
       onGetService();
@@ -55,6 +61,14 @@ const HomePage = () => {
                         }):
                         <Text style={styles.textTitle}>Empty Data</Text> }
                     </ScrollView>
+                    {modalVisible && 
+                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                            <About></About>
+                        {/* <WebView source={{uri: 'https://google.com'}} style={{width: '100%', height: '100%'}}></WebView> */}
+                        </ModalDialog>}
+                    <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                        <Feather name="info" size={24} color={'white'} />
+                    </FormButton>
                 </View>
             </ScrollView>
         </MainContainer>
@@ -72,6 +86,19 @@ const styling = (theme) => ( StyleSheet.create({
         marginVertical: 25,
         paddingHorizontal: 25,
     },
+    containerView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    video: {        
+        // height: 320,
+        // marginTop: 20,
+        minHeight: 20,
+        width: 320,
+        flex: 1,
+        elevation:10,
+    }
 }))
 
 export default HomePage
