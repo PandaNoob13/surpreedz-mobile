@@ -48,7 +48,7 @@ const useSignIn = () => {
         }
     }
 
-    return {viewState, email, password, buttonDisabled, onChangeEmail, onChangePassword, onPostSignIn}
+    return {viewState, email, password, onChangeEmail, onChangePassword, onPostSignIn}
   
 }
 
