@@ -9,7 +9,8 @@ export const ROUTE = {
     BUYER:'Buyer',
     PAYMENT:'payment',
     PROFIL:'Profile',
-    ABOUT:'About'
+    ABOUT:'About',
+    MIDTRANS: 'midtrans',
 }
 
 export const SERVICE = {

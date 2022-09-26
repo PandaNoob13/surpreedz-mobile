@@ -1,16 +1,20 @@
 import { View ,StyleSheet, ScrollView} from 'react-native'
 import { Text } from 'react-native-ui-lib';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import usePurchaseConfirmation from './usePurchaseConfirmation';
-import { useNavigation } from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import { KEY } from '../../shared/constants';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import { KEY, ROUTE } from '../../shared/constants';
 import FormButton from '../../shared/components/FormButton';
 import Storage from '../../shared/Storage';
 import NumberCurrency from '../../shared/components/CurrencyConverter';
 import FontAwesome, {SolidIcons, RegularIcons, BrandIcons, parseIconFromClassName} from 'react-native-fontawesome';
 import CardContainer from '../../shared/components/CardContainer';
+import WebView from 'react-native-webview';
+import useMidtransService from './useMidtransService';
+import MidtransSnapPage from './MidtransSnapPage';
+import { addOrder } from '../orderpage/state/OrderDetailAction';
 
 const PurchaseConfirmation = () => {
     const theme = useTheme();
@@ -18,14 +22,34 @@ const PurchaseConfirmation = () => {
     const {onPostService, isLoading}  = usePurchaseConfirmation();
     const navigation = useNavigation();
     const storage = Storage();
+    const {onPostMidtrans, midPosts, statMidtrans} = useMidtransService()
+    // const [WebviewVisible, setWebviewVisible] = useState(false);
+
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
+    
+    const route = useRoute();
+
     const handleSubmitPayment = async () => {
-        // console.log('order data dari purchase => ', addOrderDataResult);
-        // console.log('buyerId dr purchase', buyerId);
         const buyerId = await storage.getData(KEY.ACCOUNT_ID)
         console.log('order data dari purchase => ', addOrderDataResult);
         console.log('buyerId dr purchase', buyerId);
-        onPostService(parseInt(buyerId), addOrderDataResult.serviceDetailId, addOrderDataResult.dueDate, addOrderDataResult.occasion, addOrderDataResult.recipient, addOrderDataResult.message, addOrderDataResult.description);
+
+        await onPostService(parseInt(buyerId), addOrderDataResult.serviceDetailId, addOrderDataResult.dueDate, addOrderDataResult.occasion, addOrderDataResult.recipient, addOrderDataResult.message, addOrderDataResult.description);
+        const midtransLink = await onPostMidtrans(addOrderDataResult.price)
+        console.log('midtranslink: ', midtransLink);
+        await navigation.replace(ROUTE.MIDTRANS, {
+            prevPage:route.name,
+            midtransLink: midtransLink,
+        })
+
+        useDispatch(addOrder(false));
+        // if (midtransLink == '') {
+        //     // await Midtrans(midtransLink);
+        //     console.log('error link empty');
+        //     console.error();
+        // } else {
+        //     await MidtransSnapPage({midtransLink:midtransLink})
+        // }
     }
 
     return (

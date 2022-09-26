@@ -9,6 +9,7 @@ import { ROUTE } from "../shared/constants";
 import { AntDesign } from '@expo/vector-icons';
 import AboutPage from "../features/about/AboutPage";
 import ProtectiveRedirectPage from "../features/ProtectiveRedirect/ProtectiveRedirect";
+import MidtransSnapPage from "../features/purchaseConfirmation/MidtransSnapPage";
 
 
 
@@ -31,6 +32,10 @@ const AppRouter = () => {
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} /> 
           
         <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} options={{headerTitle:'Confirm purchase', headerTitleStyle: {color: 'white', fontWeight: '100'}, headerTitleAlign:'center', headerShadowVisible: false, headerStyle: {
+            backgroundColor: '#212121', borderColor: '#212121',
+          }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} />
+        
+        <Stack.Screen name={ROUTE.MIDTRANS} component={MidtransSnapPage} options={{headerTitle:'', headerTitleStyle: {color: 'white', fontWeight: '100'}, headerTitleAlign:'center', headerShadowVisible: false, headerStyle: {
             backgroundColor: '#212121', borderColor: '#212121',
           }, headerBackImage: ()=> <AntDesign name="left" size={24} color="white" />}} />
 

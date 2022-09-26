@@ -7,8 +7,15 @@ const OrderService = ({doPost}) => {
             throw error
         }
     }
-    return {postOrderService}
-  
+    const postMidtrans = async (data) => {
+        console.log("Try Midtrans Post");
+        try {
+            return await doPost({url: '/order/payment', data: data})
+        } catch (error) {
+            throw error
+        }
+    }
+    return {postOrderService, postMidtrans}
 }
 
 export default OrderService

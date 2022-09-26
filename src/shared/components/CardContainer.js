@@ -17,6 +17,7 @@ const styling = (theme) => StyleSheet.create({
         padding: 8,
         backgroundColor: Colors.colourCard,
         borderRadius: 12,
+        flex: 1,
     }
 });
 export default CardContainer;
