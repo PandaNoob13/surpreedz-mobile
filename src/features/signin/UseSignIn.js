@@ -29,10 +29,12 @@ const useSignIn = () => {
                     if (addOrderDataResult) {
                         console.log('orderData 1 ', addOrderDataResult);
                         Alert.alert('Sign In Success',`Have fun on Surpreedz ! \n Please complete your transaction`)
+                        
                         navigation.replace(ROUTE.PAYMENT)
                     } else {
                         console.log('Order Data tidak ada', addOrderDataResult);
-                        Alert.alert('Sign In Success',`Have fun on Surpreedz`)
+                        Alert.alert('Sign In Success',`Have fun on Surpreedz`);
+                        
                         navigation.replace(ROUTE.MAIN)
                     }
                 } else {
@@ -44,7 +46,6 @@ const useSignIn = () => {
             setError(error)
             console.log('eror => ', error);
             Alert.alert('Sign In Failed','Wrong Email or Password !')
-
         }
     }
 
