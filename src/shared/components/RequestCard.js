@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CardContainer from './CardContainer'
 import FormButton from './FormButton'
@@ -8,6 +8,10 @@ import OrderDetailInfo from './OrderDetailInfo'
 import useRequestList from '../../features/seller/hookSeller/UseRequestList'
 import moment from 'moment'
 import FontAwesome, {SolidIcons, RegularIcons, BrandIcons, parseIconFromClassName} from 'react-native-fontawesome';
+import * as ImagePicker from 'expo-image-picker';
+// import * as FileSystem from 'expo-file-system'
+// import { Video } from 'expo-av'
+
 
 const RequestCard = (props) => {
     const theme = useTheme();
@@ -19,14 +23,131 @@ const RequestCard = (props) => {
     const data = props.data;
     const dueDate = data.dueDate;
     const orderRequest = data.orderRequest;
+    const [videoUri, setVideoUri] = useState('');
+    const [base64Video ,setBase64Video] = useState('');
 
-    useEffect(()=>{
-        if (Object.keys(videoData).length != 0) {
-            setButtonDisable(false)
-        }
-    },[videoData])
+    // useEffect(()=>{
+    //     if (Object.keys(videoData).length != 0) {
+    //         setButtonDisable(false)
+    //     }
+    // },[videoData])
 
     useEffect(()=>{}, [buttonDisable])
+
+    const PermissionFunc = async () => {
+        if (Platform.OS != 'web') {
+            const resultPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            // console.log('result', resultPermission.status);
+            if (resultPermission.status !== 'granted') {
+                alert('Permission denied !');
+            }
+        }
+    }
+
+    useEffect(()=>{
+        PermissionFunc()
+    },[]);
+
+    const CreateFormData = (filePath) => {
+        let formData = new FormData();
+        formData.append('file',{
+            name: "SampleVideo.mp4",
+            uri: filePath,
+            type:'video/mp4'
+        });
+        return formData;
+    };
+
+
+    const handleChangeVideo = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            // allowsEditing: true,
+            aspect: [4, 3],
+            base64: true,
+            mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+        });
+        if (!result.cancelled) {
+            setVideoUri(result.uri);
+        }
+        console.log('result.uri ', result.uri);
+        console.log('result ', result);
+        // console.log('result.base64 ', result.base64);
+        console.log('type of result.uri', typeof result.uri);
+
+        const respFetch = fetch(result.uri);
+        const blob = (await respFetch).blob();
+        // // console.log('blob ', blob);
+        // console.log('type of blob ', typeof blob);
+
+
+        let reader = new FileReader();
+            if (result.uri) {
+                console.log('===> ',result.uri);
+                reader.readAsDataURL(blob);
+                console.log('===> 2',result.uri);
+                reader.onload = function() {
+                    // console.log(' data read ', reader);
+                        console.log('===> 3',result.uri);
+
+                }
+                reader.onerror = function() {
+                    // console.log('reader.error ', reader.error);
+                    console.log('===> 4',result.uri);
+
+                }
+            }
+
+        // if (result != null && result != undefined) {
+            // const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            // console.log('status => ', status);
+            // const fsRead = await FileSystem.writeAsStringAsync(result.uri,'',
+            //     {encoding: FileSystem.EncodingType.UTF8
+            // });
+            // const base64Videonya = `data:video/mp4;base64,${fsRead}`;
+            // console.log('fsRead => ', fsRead);
+            // console.log('base64Videonya', base64Videonya);
+
+            // const fsMove = await FileSystem.moveAsync({from:result.uri, to:FileSystem.documentDirectory})
+            // console.log('fsMove ', fsMove);
+        // }
+
+        
+        
+        // if (result.uri != null && result.uri != undefined) {
+        //     const resp = CreateFormData(result.uri)
+        //     console.log('resp => ', resp._parts[0][1]);
+        //     setBase64Video(resp._parts[0][1]);
+
+        //     let reader = new FileReader();
+        //     if (data) {
+        //         reader.readAsDataURL(resp._parts[0][1]);
+        //         reader.onload = function() {
+        //             console.log(' data read ', reader.result);
+        //         }
+        //         reader.onerror = function() {
+        //             console.log('reader.error ', reader.error);
+        //         }
+        //     }
+        // }
+
+
+        // const promiseFetch = [];
+        // const promiseBlob = [];
+        // const promises = [];
+        // let imgUrl = '';
+        // const response = fetch(result.uri);
+        // promiseFetch.push(response);
+        // const blob = (await response).blob()
+        // promiseBlob.push(blob)
+        // // console.log('promiseBlob', promiseBlob);
+        // await Promise.all(promiseBlob);
+        // console.log('promiseBlob', promiseBlob);
+
+
+        
+
+    }
+
 
     const handleSubmit = (value) => {
         if (value == 'Accept'){
@@ -57,7 +178,8 @@ const RequestCard = (props) => {
             return(
                 <View style={{margin:8}}>
                     <View style={{marginBottom:8, alignSelf:'flex-start'}}>
-                        <Button title='Input Video' />
+                        <Button title='Input Video' onPress={handleChangeVideo} />
+                        {/* { videoUri !== '' ? <Video style={{width: 100,height: 100}} source={{uri:`${videoUri}`}} /> : <Text>Video kosong</Text>} */}
                     </View>
                     <View style={{marginTop:8,width:'50%',alignSelf:'center'}}>
                         <FormButton label={'Submit Video'} />
