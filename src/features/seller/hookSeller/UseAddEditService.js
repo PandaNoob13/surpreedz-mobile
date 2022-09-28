@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Keyboard } from "react-native";
+import { Alert, Keyboard } from "react-native";
 import useDependency from "../../../shared/hook/UseDependency"
 import Storage from "../../../shared/Storage";
 import {KEY, ROUTE} from "../../../shared/constants";
@@ -65,10 +65,12 @@ const useAddEditService = () => {
                     })
                     setIsError(false)
                     console.log('DATA SERVICE SELLER SUCCESS DI TAMBAH');
+                    Alert.alert('Submit Your Service Success','')
                     navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);
+                    Alert.alert('Submit Your Service Failed','Something wrong , Try again!')
                 }finally{
                     setLoading(false)
                 }
@@ -90,10 +92,12 @@ const useAddEditService = () => {
                     })
                     setIsError(false)
                     console.log('DATA SERVICE SELLER SUCCESS DI UBAH');
+                    Alert.alert('Your service has been changed successfully','')
                     navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);
+                    Alert.alert('Your Service Change Failed','Something wrong , Try again!')
                 }finally{
                     console.log('service updated');
                     setLoading(false)

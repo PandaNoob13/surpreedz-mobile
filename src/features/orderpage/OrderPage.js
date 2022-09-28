@@ -1,4 +1,4 @@
-import { View, Text ,StyleSheet, ScrollView} from 'react-native'
+import { View, Text ,StyleSheet, ScrollView, Alert} from 'react-native'
 import { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
@@ -110,6 +110,7 @@ const OrderPage = () => {
       }))
       console.log('Send Request SUCCESS');
       console.log('addOrderDataResult', addOrderDataResult);
+      Alert.alert('Your request has been saved successfully','Please complete the transaction !')
     }
 
     useEffect(()=>{
