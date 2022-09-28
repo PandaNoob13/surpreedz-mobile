@@ -62,6 +62,17 @@ const HomePage = () => {
                         <Text style={styles.textTitle}>Empty Data</Text> }
                     </ScrollView>
                     {modalVisible && 
+                        <ModalAlert visible={modalVisible} onPress={()=> setModalVisible(false)} title={`OOPS ...`} subtitle={'Something is missing'} warning
+                        buttons={[
+                            {label: 'oh no', onPress: () => setModalVisible(false)},
+                            {label: 'oh yeah', onPress: () => setModalVisible(false)},
+                        ]}
+                    />}
+                    <View style={{margin: 25}}>
+                        <Text colourTextPrimary text40BO>Serve your audence!</Text>
+                        <FormButton label='Alet trial' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>                        
+                    </View>
+                    {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
                             <About></About>
                         {/* <WebView source={{uri: 'https://google.com'}} style={{width: '100%', height: '100%'}}></WebView> */}
