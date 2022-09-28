@@ -24,7 +24,6 @@ const AppRouter = () => {
             <Stack.Screen name={ROUTE.SIGNIN} component={SignIn} />
             <Stack.Screen name={ROUTE.SIGNUP} component={SignUp} ></Stack.Screen>
             <Stack.Screen name={ROUTE.MAIN} component={MainPage} /> 
-            <Stack.Screen name={ROUTE.PAYMENT} component={PurchaseConfirmation} />
             {/* <Stack.Screen name={ROUTE.MAIN} component={ProtectiveRedirectPage} />  */}
         </Stack.Group>
 
