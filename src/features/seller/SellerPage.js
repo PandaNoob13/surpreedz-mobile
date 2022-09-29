@@ -11,12 +11,15 @@ import useAddEditService from './hookSeller/UseAddEditService';
 import useRequestList from './hookSeller/UseRequestList';
 import RequestListPage from './components/RequestListPage';
 import { Text } from 'react-native-ui-lib';
+import SpinnerLoading from '../../shared/components/SpinnerLoading';
 
 const SellerPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
     const [modalVisible, setModalVisible] = useState(false)
     const storage = Storage();
+    const {isLoading} = useAddEditService();
+    const {isLoading2} = useRequestList();
 
     const getRole = async () => {
         return  await storage.getData(KEY.SERVICE_ROLE);
@@ -100,6 +103,8 @@ const SellerPage = () => {
                     <RequestListPage></RequestListPage>
                 </View>
             </ScrollView>
+            {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
+            {isLoading2 ? <SpinnerLoading onShowSpinner={isLoading2}></SpinnerLoading>:<></>}
         </MainContainer>
     )
 }

@@ -12,6 +12,7 @@ import ModalDialog from '../../../shared/components/ModalDialog';
 import About from '../../../shared/components/About';
 import {WebView} from 'react-native-webview';
 import { Feather } from '@expo/vector-icons';
+import SpinnerLoading from '../../../shared/components/SpinnerLoading';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -71,6 +72,7 @@ const HomePage = () => {
                     </FormButton>
                 </View>
             </ScrollView>
+            {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
         </MainContainer>
     )
 }

@@ -9,6 +9,7 @@ import MainContainer from '../../shared/components/MainContainer';
 import { ROUTE } from '../../shared/constants';
 import { useTheme } from '../../shared/context/ThemeContext';
 import useSignIn from './UseSignIn';
+import SpinnerLoading from '../../shared/components/SpinnerLoading';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
@@ -21,7 +22,8 @@ const SignIn = () => {
         password,
         onChangeEmail, 
         onChangePassword, 
-        onPostSignIn} = useSignIn();
+        onPostSignIn,
+        loading} = useSignIn();
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -62,6 +64,7 @@ const SignIn = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            {loading ? <SpinnerLoading onShowSpinner={loading} /> : <></>}
         </MainContainer>
     );
 }

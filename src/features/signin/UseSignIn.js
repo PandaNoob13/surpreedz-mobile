@@ -9,17 +9,18 @@ import {useDispatch,useSelector} from 'react-redux';
 const useSignIn = () => {
     const [email,onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('')
-    const {viewState, setLoading, setError} = useViewState();
+    const {viewState, setError} = useViewState();
     const {onLogin} = useAuth();
     const navigation = useNavigation();
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
     const dispatch = useDispatch();
+    const [loading , setIsLoading] = useState(false)
 
 
 
     const onPostSignIn = async () => {
         Keyboard.dismiss();
-        setLoading();
+        setIsLoading(true);
         try {
             if (email === '' || password === '') {
                 throw new Error('Please input your user name and password');
@@ -45,10 +46,12 @@ const useSignIn = () => {
             setError(error)
             console.log('eror => ', error);
 
+        }finally{
+            setIsLoading(false)
         }
     }
 
-    return {viewState, email, password, onChangeEmail, onChangePassword, onPostSignIn}
+    return {viewState, email, password, onChangeEmail, onChangePassword, onPostSignIn,loading}
   
 }
 
