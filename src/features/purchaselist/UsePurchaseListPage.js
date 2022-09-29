@@ -7,6 +7,8 @@ const usePurchaseListPage = () => {
     const [isError, setIsError] = useState(false);
     const [posts, setPosts] = useState([]);
     const [video, setVideo] = useState('');
+    const [modalVisible, setModalVisible] = useState(false)
+
 
     useEffect(() => { 
         if (posts != null ){
@@ -16,7 +18,7 @@ const usePurchaseListPage = () => {
 
     useEffect(() => { 
         if (video !== '') {
-           
+        //    console.log('Video',video);
         }
     }, [video])
 
@@ -41,30 +43,40 @@ const usePurchaseListPage = () => {
         console.log("On get video result called");
         try {
             const response = await purchaseListService.getVideoResult(orderId)
-            // console.log('Response: ', response);
-            const data = response.data
-            setVideo(data)
+            console.log('Response onGetVideoResult: ', response);
+            // const data = response.data
+            // setVideo(data)
+
             setIsError(false)
         } catch (error) {
             setPosts(error)
-            console.log(error);
-            swal({
-                title:'Download Failed!',
-                text:'An error occured while getting video..',
-                icon:'success'
-            })
+            console.log('error onGetVideoResult', error);
         } finally {
             setLoading(false)
-            swal({
-                title:'Download Started!',
-                text:'Your download should have been started by now!',
-                icon:'success'
-            })
+        }
+    }
+
+    const onPlayVideoResult = async (orderId) => {
+        setModalVisible(true)
+        setLoading(true)
+        console.log("On Play video result called");
+        try {
+            const response = await purchaseListService.playVideoResult(orderId)
+            // console.log('Response onGetVideoResult: ', response.data.data_url);
+            const data = response.data
+            setVideo(data.data_url)
+            setIsError(false)
+        } catch (error) {
+            setPosts(error)
+            console.log('error onGetVideoResult', error);
+            
+        } finally {
+            setLoading(false)
         }
     }
 
     return {
-        posts, onGetOrder, onGetVideoResult,isLoading
+        posts, onGetOrder, onGetVideoResult,isLoading,onPlayVideoResult,video,modalVisible, setModalVisible,setVideo
     }
   
 }

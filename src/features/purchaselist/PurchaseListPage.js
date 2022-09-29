@@ -1,23 +1,47 @@
-import { StyleSheet, ScrollView} from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity} from 'react-native'
 import React, { useEffect } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
 import { Text, View } from 'react-native-ui-lib';
 import PurchasedCard from '../../shared/components/PurchasedCard';
 import usePurchaseListPage from './UsePurchaseListPage';
+import { useState } from 'react';
+import ModalDialog from '../../shared/components/ModalDialog';
+import VideoPlayer from 'expo-video-player';
+import { ResizeMode } from 'expo-av'
 
 const PurchaseListPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
-	const {posts, onGetOrder, onGetVideoResult, isLoading} = usePurchaseListPage();
-
+	const {posts, onGetOrder, onGetVideoResult, isLoading, onPlayVideoResult,video,modalVisible, setModalVisible, setVideo} = usePurchaseListPage();
     useEffect(() => {
         onGetOrder()
         console.log('Purchase List Page posts');
     },[])
 
+   
+    const handleCloseModal = () => {
+        setModalVisible(false);
+        setVideo('');
+    }
+
     return (
         <MainContainer mainPage>
+            {modalVisible == true && video != '' ? <View>
+                    <TouchableOpacity onPress={handleCloseModal}>
+                        <Text style={styles.subtitle}>Close Video</Text>
+                    </TouchableOpacity>
+                    <VideoPlayer 
+                    videoProps={{
+                        shouldPlay: true,
+                        resizeMode:ResizeMode.CONTAIN,
+                        source:{
+                            uri:`data:video/mp4;base64,${video}`
+                        },
+                    }}
+                    />
+                </View> : <></>}
+
             <ScrollView>
                 <View flex paddingH-25 marginV-25 colourText>
                     <Text colourTextPrimary text40BO>Purchased List</Text>
@@ -38,7 +62,8 @@ const PurchaseListPage = () => {
                                     orderRequest: order.OrderRequest,
                                     photoUrl: data.data_url
                                 }
-                                return <PurchasedCard data={sentaccount} callback={(orderId) => onGetVideoResult(orderId)}/>
+                                return <PurchasedCard data={sentaccount} callback={(orderId) => onGetVideoResult(orderId)} callPlayVideo={(orderId) => onPlayVideoResult(orderId)} />
+                                
                             })
                             return orders
                         }) : <Text style={styles.subtitle}>Empty Data</Text>}
