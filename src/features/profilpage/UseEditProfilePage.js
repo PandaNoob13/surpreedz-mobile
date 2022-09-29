@@ -4,6 +4,7 @@ import useDependency from '../../shared/hook/UseDependency';
 import { KEY, ROUTE } from '../../shared/constants';
 import { Alert, Keyboard } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import ModalAlert from '../../shared/components/ModalAlert';
 
 
 const UseEditProfilePage = () => {
@@ -16,6 +17,10 @@ const UseEditProfilePage = () => {
     const [uploadStatus, setUploadStatus] = useState(false);
     const navigation = useNavigation();
     const [trigger, setTrigger] = useState(false);
+    const [alertShow, setAlertShow] = useState({
+        success: false,
+        failed: false,
+    }) 
 
     const handleSetItem = async () => {
         await storage.setData(KEY.ACCOUNTNAME, data.name);
@@ -71,17 +76,21 @@ const UseEditProfilePage = () => {
             setIsError(false)
             console.log(' finish update');
             // navigation.replace(ROUTE.MAIN);
-            Alert.alert('Edit Profile Success')
+            // Alert.alert('Edit Profile Success')
+            // setAlertShow({success:true})
+            // return <ModalAlert success title={'Edit Profile Success'}/>
         } catch (error) {
             setPosts(error);
-            Alert.alert('Edit Profile Failed')
+            // return <ModalAlert failed title={'Edit Profile Failed'}/>
+            // setAlertShow({failed:true})
+            // Alert.alert('Edit Profile Failed')
         }finally{
             setLoading(false)
         }
     }
 
     return {
-        onPutProfile, isLoading,trigger
+        onPutProfile, isLoading, trigger, isError
     }
     
   

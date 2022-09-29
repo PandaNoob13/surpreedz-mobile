@@ -15,6 +15,7 @@ import { ROUTE } from '../../shared/constants';
 import ModalDialog from '../../shared/components/ModalDialog';
 import About from '../../shared/components/About';
 import { Feather } from '@expo/vector-icons';
+import ModalAlert from '../../shared/components/ModalAlert';
 
 const OrderPage = () => {
     const theme = useTheme();
@@ -30,7 +31,9 @@ const OrderPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false)
     const dueDate = new Date();
     dueDate.setDate(dueDate.getDate() + 3);
-    
+    const [alertShow, setAlertShow] = useState({
+        success: false,
+    }) 
 
     const dispatch = useDispatch();
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
@@ -94,29 +97,30 @@ const OrderPage = () => {
     }, [occasion, recipient, message, description])
 
     const handleSendRequest = () => {
-      console.log('Send Request Order');
-      console.log('Occasion', occasion);
-      console.log('recepient',recipient);
-      console.log('message', message);
-      console.log('desc',description);
-      dispatch(addOrder({
-        serviceDetailId: orderParam.serviceDetailId,
-        dueDate: dueDate,
-        occasion: occasion,
-        recipient: recipient,
-        message: message,
-        description: description,
-        price: orderParam.price
-      }))
-      console.log('Send Request SUCCESS');
-      console.log('addOrderDataResult', addOrderDataResult);
-      Alert.alert('Your request has been saved successfully','Please complete the transaction !')
+        console.log('Send Request Order');
+        console.log('Occasion', occasion);
+        console.log('recepient',recipient);
+        console.log('message', message);
+        console.log('desc',description);
+        dispatch(addOrder({
+            serviceDetailId: orderParam.serviceDetailId,
+            dueDate: dueDate,
+            occasion: occasion,
+            recipient: recipient,
+            message: message,
+            description: description,
+            price: orderParam.price
+        }))
+        console.log('Send Request SUCCESS');
+        console.log('addOrderDataResult', addOrderDataResult);
+        // Alert.alert('Your request has been saved successfully','Please complete the transaction !')
+        setAlertShow({success:true});
     }
 
     useEffect(()=>{
       // console.log('addOrderData', addOrderData.serviceDetailId);
       // console.log('addOrderData', addOrderDataResult);
-      if (addOrderDataResult) {
+      if (addOrderDataResult && !alertShow.success) {
         // console.log('5. masuk use effect add order');
         if (token) {
           navigation.replace(ROUTE.PAYMENT)
@@ -124,7 +128,11 @@ const OrderPage = () => {
           navigation.replace(ROUTE.SIGNIN)
         }
       }
-    },[addOrderDataResult,dispatch])
+    },[addOrderDataResult,alertShow.success,dispatch])
+
+    const handleAlert = async () => {
+        setAlertShow({success:false})
+    }
 
   return (
     <MainContainer>
@@ -151,6 +159,9 @@ const OrderPage = () => {
                     <Feather name="info" size={24} color={'white'} />
                 </FormButton>
             </View>
+            {alertShow.success && 
+                <ModalAlert visible={alertShow.success} title={`Your request has been saved successfully`} subtitle={'Please complete the transaction !'} success onPress={() => handleAlert()}/>
+            }
         </ScrollView>
     </MainContainer>
   )

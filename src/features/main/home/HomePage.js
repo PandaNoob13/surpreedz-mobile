@@ -12,6 +12,7 @@ import ModalDialog from '../../../shared/components/ModalDialog';
 import About from '../../../shared/components/About';
 import {WebView} from 'react-native-webview';
 import { Feather } from '@expo/vector-icons';
+import ModalAlert from '../../../shared/components/ModalAlert';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -23,6 +24,7 @@ const HomePage = () => {
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
     const [modalVisible, setModalVisible] = useState(false);
+    const [alertVisible, setAlertVisible] = useState(false);
 
     useEffect(()=>{
       onGetService();
@@ -61,16 +63,16 @@ const HomePage = () => {
                         }):
                         <Text style={styles.textTitle}>Empty Data</Text> }
                     </ScrollView>
-                    {modalVisible && 
-                        <ModalAlert visible={modalVisible} onPress={()=> setModalVisible(false)} title={`OOPS ...`} subtitle={'Something is missing'} warning
+                    {alertVisible && 
+                        <ModalAlert visible={alertVisible} onPress={()=> setAlertVisible(false)} title={`OOPS ...`} subtitle={'Something is missing'} warning
                         buttons={[
-                            {label: 'oh no', onPress: () => setModalVisible(false)},
-                            {label: 'oh yeah', onPress: () => setModalVisible(false)},
+                            {label: 'oh no', onPress: () => setAlertVisible(false)},
+                            {label: 'oh yeah', onPress: () => setAlertVisible(false)},
                         ]}
                     />}
                     <View style={{margin: 25}}>
                         <Text colourTextPrimary text40BO>Serve your audence!</Text>
-                        <FormButton label='Alet trial' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>                        
+                        <FormButton label='Alet trial' onPress={()=> setAlertVisible(true)} style={{marginVertical:10}}/>                        
                     </View>
                     {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >

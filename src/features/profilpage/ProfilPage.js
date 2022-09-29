@@ -15,6 +15,8 @@ import Storage from '../../shared/Storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 import { useSelector } from 'react-redux';
+import ModalAlert from '../../shared/components/ModalAlert';
+import { set } from 'react-native-reanimated';
 
 const ProfilPage = () => {
     const storage = Storage();
@@ -25,13 +27,16 @@ const ProfilPage = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const [data, setData] = useState('');
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
-
-  
-
+    const [alertShow, setAlertShow] = useState({
+        editPhoto: false,
+        signOutPayment: false,
+        signOut: false,
+        submitSuccess: false,
+        submitFailed: false,
+    })
     const [nameUser, setNameUser] = useState('');
     const [locationUser, setLocationUser] = useState('');
-    const {onPutProfile,isLoading,trigger}= UseEditProfilePage();
-
+    const {onPutProfile,isLoading,trigger, isError}= UseEditProfilePage();
     const [buttonDisabled, setButtonDisabled] = useState(false)
 
     useEffect(() => {
@@ -97,22 +102,7 @@ const ProfilPage = () => {
           // console.log('result base64', result.base64);
         }
         // console.log('result base64', result.base64);
-      }
-
-      const AlertImageEdit = () => {
-        Alert.alert('Edit Foto', '',[
-          {
-            text:'Pilih Foto',
-            onPress: () => PickImageLibrary(),
-          },
-          {
-            text:'Ambil Foto',
-            onPress: () => PickImagePhoto(),
-          }
-        ])
-      }
-
-      
+      }      
     
     ////////
 
@@ -145,36 +135,7 @@ const ProfilPage = () => {
     //   console.log('serviceCardData', data);
     },[trigger])
 
-
-    const AlertLogout = () => {
-      if (addOrderDataResult) {
-          Alert.alert('Are you sure ?', `If you sign out before completing the payment, \n your order data will be deleted`,[
-          {
-            text:'Cancel',
-            onPress: () => console.log('CANCEL SIGN OUT'),
-          },
-          {
-            text:'Sign Out',
-            onPress: () => handleLogout(),
-          }
-        ])
-        
-      }else{
-        Alert.alert('Are you sure ?', '',[
-          {
-            text:'Cancel',
-            onPress: () => console.log('CANCEL SIGN OUT'),
-          },
-          {
-            text:'Sign Out',
-            onPress: () => handleLogout(),
-          }
-        ])
-      }
-      
-    }
-  
-
+    
     const handleLogout = async () => {
       try {
         const response = await onLogout();
@@ -188,25 +149,43 @@ const ProfilPage = () => {
     }
 
     const handleSubmitEditProfile = async () => {
-    //   console.log('changeName', nameUser);
-    //   console.log('changeLocation', locationUser);
-    // if (image != '' && base64Image != '') {
-      
-    // }
-    const photoNameSplit = image.split('/');
-    console.log('photoNameSplit', photoNameSplit);
-    const lengthPhotoNAmesplit = photoNameSplit.length;
-    console.log('lengthPhotoNAmesplit',lengthPhotoNAmesplit);
-    const photoName = photoNameSplit[lengthPhotoNAmesplit-1]
-    console.log('photoName',photoName);
+        //   console.log('changeName', nameUser);
+        //   console.log('changeLocation', locationUser);
+        // if (image != '' && base64Image != '') {
+        
+        // }
+        const photoNameSplit = image.split('/');
+        console.log('photoNameSplit', photoNameSplit);
+        const lengthPhotoNAmesplit = photoNameSplit.length;
+        console.log('lengthPhotoNAmesplit',lengthPhotoNAmesplit);
+        const photoName = photoNameSplit[lengthPhotoNAmesplit-1]
+        console.log('photoName',photoName);
 
-    onPutProfile(nameUser,locationUser,photoName,image,base64Image)
-    
-    
-    
-    // navigation.replace(ROUTE.MAIN)
+        await onPutProfile(nameUser,locationUser,photoName,image,base64Image)
+        if (isError) {
+             setAlertShow({submitFailed:true})
+                // const timeout = setTimeout(() => setAlertShow({submitFailed:true}), 3000)
+                console.log('failed alert show');
+        } else {
+             setAlertShow({submitSuccess:true})
+            // useEffect(() => {
+                // const timeout = setTimeout(() => setAlertShow({submitSuccess:true}), 3000)
+                console.log('success alert show');
+        }
+        
+        
+        // await navigation.replace(ROUTE.MAIN)
     }
 
+    const handleAlert = () => {
+        if (isError) {
+            setAlertShow({submitFailed:false})
+
+        } else {
+            setAlertShow({submitSuccess:false})
+            navigation.replace(ROUTE.MAIN)
+        }
+    }
     return (
         <MainContainer mainPage>
             {modalVisible && 
@@ -216,9 +195,36 @@ const ProfilPage = () => {
                               <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
                               <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
                               <View style={{width:'50%', marginBottom:32}}>
-                              <Button title='Upload Photo' onPress={AlertImageEdit} />
+                              {alertShow.editPhoto && 
+                                    <ModalAlert visible={alertShow.editPhoto} title={'Edit Foto'} 
+                                    onPress={() => setAlertShow({editPhoto:false})}
+                                    buttons={[
+                                        {
+                                            label:'Pilih Foto',
+                                            onPress: () => {
+                                                setAlertShow({editPhoto:false});
+                                                PickImageLibrary();
+                                            },
+                                        },
+                                        {
+                                            label:'Ambil Foto',
+                                            onPress: () => {
+                                                setAlertShow({editPhoto:false});
+                                                PickImagePhoto();
+                                            }
+                                        }
+                                    ]}/>
+                                }
+                              <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
                               {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
                               </View>
+                                {(alertShow.submitFailed || alertShow.submitSuccess) && 
+                                    <>
+                                        {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
+                                        : 
+                                        <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
+                                    </>
+                                }  
                               <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
                         </View>
                   </ScrollView>
@@ -233,13 +239,49 @@ const ProfilPage = () => {
                             <Text style={styles.textStyle2}>Email : {data.email}</Text>
                         </View>
                     </CardContainer>
-
-                    <View style={styles.profileItem}>
-                        <FormButton label="Edit Profile"  onPress={()=> setModalVisible(true)} ></FormButton>
-                    </View>
                     
                     <View style={styles.profileItem}>
-                        <FormButton label={`Sign Out as ${nameUser}`} onPress={AlertLogout} ></FormButton>
+                        <FormButton label="Edit Profile"  onPress={() => setModalVisible(true)} ></FormButton>
+                    </View>
+                    {(alertShow.signOut || alertShow.signOutPayment) && 
+                        <>
+                            {addOrderDataResult ? 
+                                <ModalAlert warning visible={alertShow.signOutPayment} title={'Are you sure ?'} 
+                                subtitle={'If you sign out before completing the payment, \n your order data will be deleted'}
+                                buttons={[
+                                    {
+                                        label:'Cancel',
+                                        onPress: () => {
+                                            console.log('CANCEL SIGN OUT')
+                                            setAlertShow({signOut: false})
+                                        },
+                                    },
+                                    {
+                                        label:'Sign Out',
+                                        onPress: () => handleLogout(),
+                                    }
+                                ]}/>
+                                :
+                                <ModalAlert warning visible={alertShow.signOut} title={'Are you sure ?'} 
+                                onPress={() => setAlertShow({signOut:false})}
+                                buttons={[
+                                    {
+                                        label:'Cancel',
+                                        onPress: () => {
+                                            console.log('CANCEL SIGN OUT')
+                                            setAlertShow({signOut: false})
+                                        },
+                                    },
+                                    {
+                                        label:'Sign Out',
+                                        onPress: () => handleLogout(),
+                                    }
+                                ]}/>
+                            }
+                        </>
+                    }
+                    <View style={styles.profileItem}>
+                        <FormButton label={`Sign Out as ${nameUser}`} onPress={() => setAlertShow({signOutPayment: true, signOut: true})} ></FormButton>
                     </View>
                 </View>
             </ScrollView>

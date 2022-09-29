@@ -4,6 +4,7 @@ import useDependency from "../../../shared/hook/UseDependency"
 import Storage from "../../../shared/Storage";
 import {KEY, ROUTE} from "../../../shared/constants";
 import { useNavigation } from "@react-navigation/native";
+import ModalAlert from "../../../shared/components/ModalAlert";
 
 
 const useAddEditService = () => {
@@ -15,6 +16,12 @@ const useAddEditService = () => {
     const storage = Storage();
     const [serviceDetailId, setServiceDetailId] = useState('');
     const navigation = useNavigation();
+    const [alertShow, setAlertShow] = useState({
+        editSuccess: false,
+        editFailed: false,
+        submitSuccess: false,
+        submitFailed: false,
+    })
 
     useEffect(()=>{
         const serviceDetailIdFunc = async () => {
@@ -65,12 +72,14 @@ const useAddEditService = () => {
                     })
                     setIsError(false)
                     console.log('DATA SERVICE SELLER SUCCESS DI TAMBAH');
-                    Alert.alert('Submit Your Service Success','')
-                    navigation.replace(ROUTE.MAIN)
+                    setAlertShow({submitSuccess:true})
+                    // Alert.alert('Submit Your Service Success','')
+                    // navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);
-                    Alert.alert('Submit Your Service Failed','Something wrong , Try again!')
+                    setAlertShow({submitFailed:true})
+                    // Alert.alert('Submit Your Service Failed','Something wrong , Try again!')
                 }finally{
                     setLoading(false)
                 }
@@ -92,12 +101,14 @@ const useAddEditService = () => {
                     })
                     setIsError(false)
                     console.log('DATA SERVICE SELLER SUCCESS DI UBAH');
-                    Alert.alert('Your service has been changed successfully','')
-                    navigation.replace(ROUTE.MAIN)
+                    setAlertShow({editSuccess:true})
+                    // Alert.alert('Your service has been changed successfully','')
+                    // navigation.replace(ROUTE.MAIN)
                 } catch (error) {
                     setPosts(error)
                     console.log(error);
-                    Alert.alert('Your Service Change Failed','Something wrong , Try again!')
+                    setAlertShow({editFailed:true})
+                    // Alert.alert('Your Service Change Failed','Something wrong , Try again!')
                 }finally{
                     console.log('service updated');
                     setLoading(false)
@@ -108,7 +119,7 @@ const useAddEditService = () => {
     }
 
     return {
-        onPostService,isLoading
+        onPostService,isLoading,alertShow,setAlertShow
     }
 
 }

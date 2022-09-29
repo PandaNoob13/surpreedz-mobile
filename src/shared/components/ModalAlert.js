@@ -1,9 +1,7 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {StyleSheet, TouchableOpacity, View, Text, ScrollView} from "react-native";
+import {StyleSheet, View, Text} from "react-native";
 import Modal from "react-native-modal";
 import { Colors } from "react-native-ui-lib";
 import { useTheme } from '../context/ThemeContext';
-import CardContainer from './CardContainer';
 import LottieView from 'lottie-react-native';
 import FormButton from './FormButton';
 
@@ -55,6 +53,7 @@ const ModalAlert = (props) => {
             {...props}
             isVisible={visible}
             onBackdropPress={onPress}
+            onBackButtonPress={onPress}
             animationIn="zoomInDown"
             animationOut="zoomOutUp"
             animationInTiming={600}
@@ -63,17 +62,16 @@ const ModalAlert = (props) => {
             backdropTransitionOutTiming={600}
         >
             <View style={styles.modalView}>
-                <CardContainer style={{alignItems: 'center'}}>
+                <View style={{alignItems:'center'}}>
                     <View style={styles.container} >
                         {modalStyle()}
                         <Text style={styles.title}>{props.title}</Text>
                         <Text style={styles.subtitle}>{props.subtitle}</Text>
                     </View>
-                </CardContainer>
+                </View>
                 <View style={styles.buttonContainer}>
                     <View style={{flexDirection:'row'}}>
                         {alertButtons()}
-                        {/* {createdButtons} */}
                     </View>
                 </View>
             </View>
@@ -91,15 +89,14 @@ const styling = ({theme, props}) => StyleSheet.create({
     modalView: {
         backgroundColor: "#373535",
         color: Colors.colourTextPrimary,
-        // alignItems: 'center',
-        alignSelf: 'stretch',
-        height: props.modalHeight,
+        justifyContent: "center",
         borderRadius: 12,
         shadowRadius: 10,
-        elevation: 5,
+        elevation: 100,
         padding:8,
     },
     title:{
+        marginTop:8,
         fontSize:20,
         color: '#ffffff',
         fontWeight:'bold'
@@ -111,7 +108,7 @@ const styling = ({theme, props}) => StyleSheet.create({
         // fontWeight:'bold'
     },
     container: {
-        marginBottom: 16,
+        marginVertical: 16,
         paddingHorizontal: 8,
         // flex: 1,
         // flexDirection:'row',
