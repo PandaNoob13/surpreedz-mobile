@@ -8,7 +8,7 @@ import moment from 'moment';
 import ModalDialog from './ModalDialog';
 import OrderDetailInfo from './OrderDetailInfo';
 
-const StatusCondition = (status, callback, orderId) => {
+const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     const theme = useTheme();
     const styles = styling(theme)
     switch (status) {
@@ -33,7 +33,13 @@ const StatusCondition = (status, callback, orderId) => {
                 <View>
                     <Text style={styles.textStyle}>DONE</Text>
                     <View>
-                        <FormButton onPress={()=>{callback(orderId)}} label={'Get Video'} />
+                        <View style={{margin:5}}>
+                            <FormButton label={'Play Video'} onPress={()=>{callPlayVideo(orderId)}} />
+                            
+                        </View>
+                        <View style={{margin:5}}>
+                            <FormButton onPress={()=>{callback(orderId)}} label={'Get Video'} />
+                        </View>
                     </View>
                 </View>
             )
@@ -49,11 +55,11 @@ const PurchasedCard = (props) => {
     const theme = useTheme();
     const styles = styling(theme)
     const {occasion, name, price, dueDate, status, orderId, orderRequest, photoUrl} = props.data
-    const [modalVisible, setModalVisible] = useState(false)
+    // const [modalVisible, setModalVisible] = useState(false)
 
     return (
         <CardContainer style={{marginBottom: 12}}>
-            {modalVisible && 
+            {/* {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
                         <OrderDetailInfo 
                         data={{
@@ -63,7 +69,7 @@ const PurchasedCard = (props) => {
                         />
 
                 </ModalDialog>
-            }
+            } */}
             <View row>
                 <View style={styles.container}>
                     <View>
@@ -76,11 +82,11 @@ const PurchasedCard = (props) => {
                         <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
                     </View>
                 </View>
-                <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                {/* <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
                     <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                    {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
+                    <FormButton label='Detail' onPress={openModalDetailOrder} />
 
-                </View>
+                </View> */}
                 <View>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
                     <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
@@ -90,7 +96,7 @@ const PurchasedCard = (props) => {
                     <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
                 </View>
                 <View style={{paddingVertical: 8}}>
-                    {StatusCondition(status, props.callback, orderId)}
+                    {StatusCondition(status, props.callback, orderId, props.callPlayVideo)}
                 </View>
             </View>    
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { KEY } from "../shared/constants";
 import Storage from "../shared/Storage";
 
-const purchaseListService = ({doGet}) => {
+const purchaseListService = ({doGet,doDownloadVideo}) => {
     const storage = Storage();
     // const [accountId, setAccountId]= useState(0)
 
@@ -42,12 +42,23 @@ const purchaseListService = ({doGet}) => {
         console.log("Order id in service purchase : ", orderId);
 
         try {
+            return await doDownloadVideo({url: `/video-result/get-video-result-by-order-id/?orderId=${orderId}`})
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const playVideoResult = async (orderId) => {
+        console.log("Trying to get video result");
+        console.log("Order id in service purchase : ", orderId);
+
+        try {
             return await doGet({url: `/video-result/get-video-result-by-order-id/?orderId=${orderId}`})
         } catch (error) {
             throw error
         }
     }
-    return {getService, getVideoResult}
+    return {getService, getVideoResult, playVideoResult}
   
 }
 

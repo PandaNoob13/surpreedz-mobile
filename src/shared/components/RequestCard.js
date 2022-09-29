@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Button } from 'react-native'
+import { View, Text, StyleSheet, Button, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CardContainer from './CardContainer'
 import FormButton from './FormButton'
@@ -8,6 +8,10 @@ import OrderDetailInfo from './OrderDetailInfo'
 import useRequestList from '../../features/seller/hookSeller/UseRequestList'
 import moment from 'moment'
 import FontAwesome, {SolidIcons, RegularIcons, BrandIcons, parseIconFromClassName} from 'react-native-fontawesome';
+import * as ImagePicker from 'expo-image-picker';
+// import * as FileSystem from 'expo-file-system'
+// import { Video } from 'expo-av'
+
 
 const RequestCard = (props) => {
     const theme = useTheme();
@@ -19,6 +23,8 @@ const RequestCard = (props) => {
     const data = props.data;
     const dueDate = data.dueDate;
     const orderRequest = data.orderRequest;
+    const [videoUri, setVideoUri] = useState('');
+    const [base64Video ,setBase64Video] = useState('');
 
     useEffect(()=>{
         if (Object.keys(videoData).length != 0) {
@@ -27,6 +33,87 @@ const RequestCard = (props) => {
     },[videoData])
 
     useEffect(()=>{}, [buttonDisable])
+
+    const PermissionFunc = async () => {
+        if (Platform.OS != 'web') {
+            const resultPermission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            // console.log('result', resultPermission.status);
+            if (resultPermission.status !== 'granted') {
+                alert('Permission denied !');
+            }
+        }
+    }
+
+    useEffect(()=>{
+        PermissionFunc()
+    },[]);
+
+    const ConvertFiletoBlob = async (data) => {
+        try {
+        //   const promiseFetch = [];
+        //   const promiseBlob = [];
+          
+          const response = fetch(data);
+          console.log('data => ', data);
+        //   promiseFetch.push(response);
+
+
+          const blob = (await response).blob();
+        //   promiseBlob.push(blob);
+
+
+        //   await Promise.all(promiseFetch);
+        //   await Promise.all(promiseBlob);
+
+          return blob
+
+          
+        } catch (error) {
+          console.log('error ConvertFiletoBlob', error);
+        }
+        
+      }
+
+    const handleChangeVideo = async () => {
+        try {
+            const respVideo = await ImagePicker.launchImageLibraryAsync({
+              base64: true,
+              mediaTypes: ImagePicker.MediaTypeOptions.Videos
+            });
+            if (!respVideo.cancelled) {
+                setVideoUri(respVideo.uri);
+                // console.log('respVideo', respVideo);
+
+                // if (respVideo.uri != null && respVideo.uri != undefined) {
+                    const arrayVideoResp = respVideo.uri.split('/');
+                    // console.log('arrayVideoResp ', arrayVideoResp);
+                    const videoName = arrayVideoResp[arrayVideoResp.length - 1];
+                    // console.log('videoName ', videoName);
+                    const blob = await ConvertFiletoBlob(respVideo.uri);
+                    let reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = function() {
+                    // console.log('reader result', reader.result);
+                        setBase64Video(reader.result);
+                        setVideoData({
+                            videoFile : respVideo,
+                            videoName : videoName,
+                            videoUrl : respVideo.uri,
+                            dataUrl : reader.result
+                        })
+                    }
+                    reader.onerror = function() {
+                    // console.log('reader error', reader.error);
+                    console.log('error');
+                    }
+                // }
+            }
+          } catch (error) {
+            console.log('error handleChange Video', error);
+          }
+
+    }
+
 
     const handleSubmit = (value) => {
         if (value == 'Accept'){
@@ -57,10 +144,13 @@ const RequestCard = (props) => {
             return(
                 <View style={{margin:8}}>
                     <View style={{marginBottom:8, alignSelf:'flex-start'}}>
-                        <Button title='Input Video' />
+                        <Button title='Input Video' onPress={handleChangeVideo} />
+                        { videoUri !== '' && base64Video == '' ? <Text>Process Upload</Text> : <></>}
+                        { videoUri !== '' && base64Video !== '' ? <Text>Upload Video Success</Text> : <></>}
+                        { videoUri == '' && base64Video == '' ? <Text>No Video</Text> : <></>}
                     </View>
                     <View style={{marginTop:8,width:'50%',alignSelf:'center'}}>
-                        <FormButton label={'Submit Video'} />
+                        <FormButton label={'Submit Video'} onPress={()=>handleSubmit('Submit')} />
                     </View>
                 </View>
             )

@@ -35,7 +35,7 @@ const useRequestList = () => {
                 order_id: order_id,
                 status: status
             })
-            console.log('Response: ', response.data);
+            console.log('Response onPostService: ', response);
             setPosts(response.data)
             setIsError(false)
         } catch (error) {
@@ -52,7 +52,7 @@ const useRequestList = () => {
                 order_id: orderId,
                 data_url: dataUrl
             })
-            console.log('Response: ', response.data);
+            console.log('Response onPostVideoResult: ', response);
             setPosts(response.data)
             
             setIsError(false)
