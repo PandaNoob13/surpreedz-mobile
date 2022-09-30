@@ -13,7 +13,7 @@ const ProtectiveRedirectPage = () => {
     const navigation = useNavigation();
 
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             <ScrollView contentContainerStyle={[styles.centerPage, {marginHorizontal: 25}]}>
                 <View style={styles.container}>
                     <LottieView autoPlay style={styles.image}

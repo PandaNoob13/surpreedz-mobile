@@ -142,17 +142,19 @@ const RequestCard = (props) => {
             )
         } else if(status == 'On progress'){
             return(
-                <View style={{margin:8}}>
-                    <View style={{marginBottom:8, alignSelf:'flex-start'}}>
+                <>
+                {/* <View style={{alignSelf: 'center'}}> */}
+                    <View style={[{marginBottom:8, justifyContent:'space-between'}, styles.requestStyle]}>
+                        { videoUri !== '' && base64Video == '' ? <Text style={styles.textDesc}>Process Upload</Text> : <></>}
+                        { videoUri !== '' && base64Video !== '' ? <Text style={styles.textDesc}>Upload Video Success</Text> : <></>}
+                        { videoUri == '' && base64Video == '' ? <Text style={styles.textDesc}>No Video</Text> : <></>}
                         <Button title='Input Video' onPress={handleChangeVideo} />
-                        { videoUri !== '' && base64Video == '' ? <Text>Process Upload</Text> : <></>}
-                        { videoUri !== '' && base64Video !== '' ? <Text>Upload Video Success</Text> : <></>}
-                        { videoUri == '' && base64Video == '' ? <Text>No Video</Text> : <></>}
                     </View>
-                    <View style={{marginTop:8,width:'50%',alignSelf:'center'}}>
+                    <View style={{marginVertical:8,width:'50%',alignSelf:'center'}}>
                         <FormButton label={'Submit Video'} onPress={()=>handleSubmit('Submit')} />
                     </View>
-                </View>
+                {/* </View> */}
+                </>
             )
         } else{
             return (
@@ -203,7 +205,13 @@ const RequestCard = (props) => {
             <CardContainer>
                 <View style={styles.container}>
                     {useChooseIcon(data.occasion)}
-                    <Text style={[styles.subtitle,{textAlign:'center'}]}>{data.occasion}</Text>
+                    <View style={{flex:1, alignSelf: 'center'}}>
+                        <Text style={[styles.textTitle,{textAlign:'center'}]}>{data.occasion}</Text>
+                    </View>
+                    <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                        <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                        {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
+                    </View>
                 </View>
 
                 <View style={styles.requestStyle}>
@@ -216,21 +224,14 @@ const RequestCard = (props) => {
                     <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
                 </View>
 
-                <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                    <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                    {/* <FormButton label='Detail' onPress={openModalDetailOrder} /> */}
-
-                </View>
-
                 <View style={styles.requestStyle}>
                     <Text text70L style={styles.textDesc}>Status</Text>
                     <Text style={styles.textStyle}>{data.status}</Text>
                 </View>
 
-
-            <View>
-                {StatusCondition(data.status)}
-            </View>
+                <View>
+                    {StatusCondition(data.status)}
+                </View>
 
             </CardContainer>
         </View>
@@ -239,8 +240,8 @@ const RequestCard = (props) => {
 }
 
 const styling = (theme) => ( StyleSheet.create({
-    textStyle :{
-        fontSize:15,
+    textTitle :{
+        fontSize:20,
         color: '#ffffff',
         textAlign:'left'
     },

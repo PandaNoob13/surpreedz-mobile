@@ -99,13 +99,16 @@ const styling = ({theme, props}) => StyleSheet.create({
         marginTop:8,
         fontSize:20,
         color: '#ffffff',
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center',
     },
     subtitle:{
         fontSize:16,
         color: '#ffffff',
         opacity: 0.5,
         // fontWeight:'bold'
+        textAlign: 'center',
+
     },
     container: {
         marginVertical: 16,

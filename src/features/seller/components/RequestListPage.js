@@ -4,9 +4,10 @@ import { Text } from 'react-native-ui-lib';
 import { useTheme } from '../../../shared/context/ThemeContext';
 import RequestCard from '../../../shared/components/RequestCard';
 import useRequestList from '../hookSeller/UseRequestList';
+import SpinnerLoading from '../../../shared/components/SpinnerLoading';
 
 const RequestListPage = () => {
-    const {posts, onGetService, isLoading} = useRequestList();
+    const {posts, onGetService, isLoading2} = useRequestList();
     const [trigger, setTrigger] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const theme = useTheme();
@@ -59,7 +60,9 @@ const RequestListPage = () => {
                     return orders
                 }) 
                 : <Text style={styles.textStyle}>Empty request</Text>}
-            </View>            
+            </View>
+            {isLoading2 ? <SpinnerLoading onShowSpinner={isLoading2}></SpinnerLoading>:<></>}
+
         </View>        
     )
 }

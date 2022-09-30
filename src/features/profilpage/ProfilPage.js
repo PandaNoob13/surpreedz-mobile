@@ -13,7 +13,7 @@ import FormTextInput from '../../shared/components/FormTextInput';
 import UseEditProfilePage from './UseEditProfilePage';
 import Storage from '../../shared/Storage';
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
+import SpinnerLoading from '../../shared/components/SpinnerLoading';
 import { useSelector } from 'react-redux';
 import ModalAlert from '../../shared/components/ModalAlert';
 import { set } from 'react-native-reanimated';
@@ -59,10 +59,21 @@ const ProfilPage = () => {
               alert('Permission denied !')
           }
       }
-      }
+    }
+
+    const funcimg2 = async () => {
+      if (Platform.OS !== 'web') {
+        const {status} = await ImagePicker.requestCameraPermissionsAsync();
+        console.log('status 2', status);
+        if (status !== 'granted') {
+            alert('Permission denied !')
+        }
+    }
+  }
     
     useEffect(()=>{
         funcimg();
+        funcimg2();
     },[])
 
     const PickImageLibrary = async () => {
@@ -179,19 +190,22 @@ const ProfilPage = () => {
 
     const handleAlert = () => {
         if (isError) {
-            setAlertShow({submitFailed:false})
+            setAlertShow(false,false,false,false,false)
 
         } else {
-            setAlertShow({submitSuccess:false})
+            setAlertShow(false,false,false,false,false)
             navigation.replace(ROUTE.MAIN)
         }
     }
     return (
         <MainContainer mainPage>
+            {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
+
             {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'70%'}>
-                   <ScrollView>
+                  
                         <View>
+                              <ScrollView>
                               <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
                               <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
                               <View style={{width:'50%', marginBottom:32}}>
@@ -218,6 +232,8 @@ const ProfilPage = () => {
                               <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
                               {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
                               </View>
+                              </ScrollView>
+
                                 {(alertShow.submitFailed || alertShow.submitSuccess) && 
                                     <>
                                         {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
@@ -227,7 +243,7 @@ const ProfilPage = () => {
                                 }  
                               <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
                         </View>
-                  </ScrollView>
+                  
                 </ModalDialog>
             }
             <ScrollView>
@@ -247,7 +263,7 @@ const ProfilPage = () => {
                         <>
                             {addOrderDataResult ? 
                                 <ModalAlert warning visible={alertShow.signOutPayment} title={'Are you sure ?'} 
-                                subtitle={'If you sign out before completing the payment, \n your order data will be deleted'}
+                                subtitle={'If you sign out before completing the payment, your order data will be deleted'}
                                 buttons={[
                                     {
                                         label:'Cancel',

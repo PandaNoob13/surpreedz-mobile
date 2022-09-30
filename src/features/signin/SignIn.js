@@ -9,6 +9,7 @@ import MainContainer from '../../shared/components/MainContainer';
 import { ROUTE } from '../../shared/constants';
 import { useTheme } from '../../shared/context/ThemeContext';
 import useSignIn from './UseSignIn';
+import SpinnerLoading from '../../shared/components/SpinnerLoading';
 import ModalAlert from '../../shared/components/ModalAlert';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
@@ -24,7 +25,8 @@ const SignIn = () => {
         setAlertShow,
         onChangeEmail, 
         onChangePassword, 
-        onPostSignIn} = useSignIn();
+        onPostSignIn,
+        loading} = useSignIn();
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -39,8 +41,20 @@ const SignIn = () => {
         await onPostSignIn(email,password);
     }
 
+    const handleAlert = () => {
+        if (alertShow.signIn) {
+            setAlertShow(false,false,false)
+            navigation.replace(ROUTE.MAIN)
+        } else if (alertShow.signInPayment) {
+            setAlertShow(false,false,false)
+            navigation.replace(ROUTE.PAYMENT)
+        } else {
+            setAlertShow(false,false,false)
+        }
+    }
+
     return (
-        <MainContainer>
+        <MainContainer mainPage>
             <ScrollView contentContainerStyle={[styles.container, {marginHorizontal: 25}]}>
                 <Text colourTextPrimary text20 marginV-10>Welcome Back</Text>
                 <View useSafeArea marginV-10>
@@ -51,6 +65,7 @@ const SignIn = () => {
                     validationMessage={['Email is required', 'Email is invalid']} 
                     value={email}
                     onChangeText={onChangeEmail}
+                    autoCapitalize='none'
                     ></FormTextInput>
 
                     <FormPasswordInput 
@@ -63,17 +78,15 @@ const SignIn = () => {
                 </View>
                 {(alertShow.signIn) &&
                 <>
-                    <ModalAlert visible={alertShow.signIn} onPress={() => setAlertShow(false,false,false)} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz !`}/>
-                    {navigation.replace(ROUTE.MAIN)}
+                    <ModalAlert visible={alertShow.signIn} onPress={() => handleAlert()} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz !`}/>
                 </>
                 }
                 {alertShow.signInFailed &&
-                    <ModalAlert visible={alertShow.signInFailed} onPress={() => setAlertShow(false,false,false)} error title={'Sign In Failed'} subtitle={'Wrong Email or Password !'}/>
+                    <ModalAlert visible={alertShow.signInFailed} onPress={() => handleAlert()} error title={'Sign In Failed'} subtitle={'Wrong Email or Password !'}/>
                 }
                 {alertShow.signInPayment &&
                 <>
-                    <ModalAlert visible={alertShow.signInPayment} onPress={() => setAlertShow(false,false,false)} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz ! \n Please complete your transaction`}/>
-                    {navigation.replace(ROUTE.PAYMENT)}
+                    <ModalAlert visible={alertShow.signInPayment} onPress={() => handleAlert()} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz !\nPlease complete your transaction`}/>
                 </>
                 }
                 <FormButton disabled={buttonDisabled} onPress={handleSignIn} label="Continue"/>
@@ -84,6 +97,7 @@ const SignIn = () => {
                     </TouchableOpacity>
                 </View>
             </ScrollView>
+            {loading ? <SpinnerLoading onShowSpinner={loading} /> : <></>}
         </MainContainer>
     );
 }

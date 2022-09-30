@@ -77,8 +77,8 @@ const PurchasedCard = (props) => {
                         style={styles.imageStyle}
                         />
                     </View>
-                    <View style={{justifyContent: "space-between", alignItems: "center"}}>
-                        <Text style={[styles.subtitle,{textAlign:'center'}]}>{occasion} message from {name}</Text>
+                    <View style={{flex:1, justifyContent: "space-between", alignItems: "center", alignSelf:'center'}}>
+                        <Text style={[styles.subtitle,{textAlign:'center', flexShrink:1, flexWrap: 'wrap'}]}>{occasion} message from {name}</Text>
                         <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
                     </View>
                 </View>

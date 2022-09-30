@@ -10,11 +10,12 @@ import ModalAlert from '../../shared/components/ModalAlert';
 const useSignIn = () => {
     const [email,onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('')
-    const {viewState, setLoading, setError} = useViewState();
+    const {viewState, setError} = useViewState();
     const {onLogin} = useAuth();
     const navigation = useNavigation();
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer);
     const dispatch = useDispatch();
+    const [loading , setIsLoading] = useState(false)
     const [alertShow, setAlertShow] = useState({
         signInFailed: false,
         signInPayment: false,
@@ -23,7 +24,7 @@ const useSignIn = () => {
 
     const onPostSignIn = async (emailUser ,passwordUser) => {
         Keyboard.dismiss();
-        setLoading();
+        setIsLoading(true);
         try {
             const response = await onLogin({email: emailUser,password: passwordUser })
 
@@ -48,10 +49,12 @@ const useSignIn = () => {
             console.log('eror => ', error);
             // Alert.alert('Sign In Failed','Wrong Email or Password !')
             setAlertShow({signInFailed: true})
+        }finally{
+            setIsLoading(false)
         }
     }
     console.log(alertShow);
-    return {viewState, email, password, alertShow, setAlertShow, onChangeEmail, onChangePassword, onPostSignIn}
+    return {viewState, email, password, alertShow, setAlertShow, onChangeEmail, onChangePassword, onPostSignIn,loading}
   
 }
 

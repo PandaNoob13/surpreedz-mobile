@@ -51,10 +51,19 @@ const SignUp = () => {
         navigation.replace(ROUTE.MAIN)
     }
 
+    const handleAlert = () => {
+        if (alertShow.signUpPayment) {
+            setAlertShow(false,false,false)
+            navigation.replace(ROUTE.PAYMENT)
+        } else {
+            setAlertShow(false,false,false)
+        }
+    }
+
     switch (step) {
         case 1:
             return (
-                <MainContainer>
+                <MainContainer mainPage>
                     <ScrollView contentContainerStyle={[styles.container, {marginHorizontal: 25}]}>
                         <Text colourTextPrimary text20 marginV-10>Welcome</Text>
                         <View useSafeArea marginV-10>
@@ -65,6 +74,7 @@ const SignUp = () => {
                             validationMessage={['Email is required', 'Email is invalid']} 
                             value={email}
                             onChangeText={onChangeEmail}
+                            autoCapitalize='none'
                             ></FormTextInput>
     
                             <FormPasswordInput 
@@ -88,7 +98,7 @@ const SignUp = () => {
             )
       case 2:
             return (
-                <MainContainer>
+                <MainContainer mainPage>
                     <ScrollView contentContainerStyle={[styles.container, {marginHorizontal: 25}]}>
                         <Text colourTextPrimary text20 marginV-10>Welcome</Text>
                         <View useSafeArea marginV-10>
@@ -113,7 +123,7 @@ const SignUp = () => {
                         </View>
                         {(alertShow.signUp) &&
                         <>
-                            <ModalAlert visible={alertShow.signUp} onPress={() => setAlertShow(false,false,false)} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz !`} buttons={[
+                            <ModalAlert visible={alertShow.signUp} onPress={() => handleAlert()} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz !`} buttons={[
                                 {
                                     label:'Sign In',
                                     onPress:  () => handleSignIn()
@@ -126,12 +136,11 @@ const SignUp = () => {
                         </>
                         }
                         {alertShow.signUpFailed &&
-                            <ModalAlert visible={alertShow.signUpFailed} onPress={() => setAlertShow(false,false,false)} error title={'Sign Up Failed'} subtitle={'Something wrong !'}/>
+                            <ModalAlert visible={alertShow.signUpFailed} onPress={() => handleAlert()} error title={'Sign Up Failed'} subtitle={'Something wrong !'}/>
                         }
                         {alertShow.signUpPayment &&
                         <>
-                            <ModalAlert visible={alertShow.signUpPayment} onPress={() => setAlertShow(false,false,false)} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz ! \n Please complete your transaction`}/>
-                            {navigation.replace(ROUTE.PAYMENT)}
+                            <ModalAlert visible={alertShow.signUpPayment} onPress={() => handleAlert()} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz !\nPlease complete your transaction`}/>
                         </>
                         }
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>

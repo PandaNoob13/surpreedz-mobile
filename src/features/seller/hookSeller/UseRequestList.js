@@ -4,7 +4,7 @@ import useDependency from '../../../shared/hook/UseDependency';
 
 const useRequestList = () => {
     const {requestListService} = useDependency();
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading2, setLoading2] = useState(false);
     const [isError, setIsError] = useState(false);
     const [posts, setPosts] = useState([]);
 
@@ -13,7 +13,7 @@ const useRequestList = () => {
     },[posts])
 
     const onGetService = async () => {
-        setLoading(true);
+        setLoading2(true);
         // console.log("On Get Request List Service");
         try {
             const response = await requestListService.getService()
@@ -24,12 +24,13 @@ const useRequestList = () => {
             setPosts(error)
             console.log('error onGetService useRequest List', error);
         }finally{
-            setLoading(false)
+            setLoading2(false)
         }
     }
 
     const onPostService = async (order_id, status) => {
         console.log("On Get Request List Called");
+        setLoading2(true)
         try {
             const response = await requestListService.postService({
                 order_id: order_id,
@@ -41,11 +42,13 @@ const useRequestList = () => {
         } catch (error) {
             setPosts(error)
             console.log('error onPostService useRequest List', error);
-        }finally{}   
+        }finally{
+            setLoading2(false)
+        }   
     }
 
     const onPostVideoResult = async (orderId, dataUrl) => {
-        setLoading(true)
+        setLoading2(true)
         console.log("On post video result called");
         try {
             const response = await requestListService.postVideoResult({
@@ -60,13 +63,13 @@ const useRequestList = () => {
             setPosts(error)
             console.log('error onPostVideoResult useRequest List', error);
         }finally{
-            setLoading(false)
+            setLoading2(false)
             
         }   
     }  
 
     return {
-        posts, onGetService, onPostService, onPostVideoResult, isLoading
+        posts, onGetService, onPostService, onPostVideoResult, isLoading2
     }
 }
 

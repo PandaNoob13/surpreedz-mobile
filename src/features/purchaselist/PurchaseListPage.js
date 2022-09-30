@@ -8,7 +8,8 @@ import usePurchaseListPage from './UsePurchaseListPage';
 import { useState } from 'react';
 import ModalDialog from '../../shared/components/ModalDialog';
 import VideoPlayer from 'expo-video-player';
-import { ResizeMode } from 'expo-av'
+import { ResizeMode } from 'expo-av';
+import SpinnerLoading from '../../shared/components/SpinnerLoading';
 
 const PurchaseListPage = () => {
     const theme = useTheme();
@@ -70,6 +71,7 @@ const PurchaseListPage = () => {
                     </View>
                 </View>
             </ScrollView>
+            {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
         </MainContainer>
     )
 }
