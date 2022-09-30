@@ -12,6 +12,7 @@ import ModalDialog from '../../../shared/components/ModalDialog';
 import About from '../../../shared/components/About';
 import {WebView} from 'react-native-webview';
 import { Feather } from '@expo/vector-icons';
+import LoadingServiceCard from '../../../shared/components/LoadingServiceCard';
 import SpinnerLoading from '../../../shared/components/SpinnerLoading';
 
 const HomePage = () => {
@@ -52,15 +53,26 @@ const HomePage = () => {
                         ], {useNativeDriver: false})}
                         scrollEventThrottle={1}
                     >
-                        {posts ? posts.map((account) => {
-                            const data = account.account
-                            // console.log('data',data);
-                            // console.log('data.ServiceDetail.id',data.ServiceDetail.id);
-                            if (data.ServiceDetail.id !== 0) {
-                                return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
-                            }
-                        }):
-                        <Text style={styles.textTitle}>Empty Data</Text> }
+                        {isLoading ? 
+                            <>
+                                <LoadingServiceCard></LoadingServiceCard>
+                                <LoadingServiceCard></LoadingServiceCard>
+                                <LoadingServiceCard></LoadingServiceCard>
+                            </> 
+                        :
+                            <>
+                                {posts ? posts.map((account) => {
+                                    const data = account.account
+                                    // console.log('data',data);
+                                    // console.log('data.ServiceDetail.id',data.ServiceDetail.id);
+                                    if (data.ServiceDetail.id !== 0) {
+                                        return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
+                                    }
+                                }):
+                                <Text style={styles.textTitle}>Empty Data</Text> }
+                            </>
+                        }
+                        
                     </ScrollView>
                     {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
