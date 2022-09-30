@@ -30,8 +30,6 @@ const HomePage = () => {
 
     useEffect(()=>{
       onGetService();
-      // console.log('posts',posts);
-    //   console.log('AddorderResult Home Page => ', addOrderDataResult);
     },[])
 
     return (
@@ -65,8 +63,6 @@ const HomePage = () => {
                             <>
                                 {posts ? posts.map((account) => {
                                     const data = account.account
-                                    // console.log('data',data);
-                                    // console.log('data.ServiceDetail.id',data.ServiceDetail.id);
                                     if (data.ServiceDetail.id !== 0) {
                                         return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
                                     }
@@ -76,28 +72,16 @@ const HomePage = () => {
                         }
                         
                     </ScrollView>
-                    {alertVisible && 
-                        <ModalAlert visible={alertVisible} onPress={()=> setAlertVisible(false)} title={`OOPS ...`} subtitle={'Something is missing'} warning
-                        buttons={[
-                            {label: 'oh no', onPress: () => setAlertVisible(false)},
-                            {label: 'oh yeah', onPress: () => setAlertVisible(false)},
-                        ]}
-                    />}
-                    <View style={{margin: 25}}>
-                        <Text colourTextPrimary text40BO>Serve your audence!</Text>
-                        <FormButton label='Alet trial' onPress={()=> setAlertVisible(true)} style={{marginVertical:10}}/>                        
-                    </View>
                     {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
                             <About></About>
-                        {/* <WebView source={{uri: 'https://google.com'}} style={{width: '100%', height: '100%'}}></WebView> */}
                         </ModalDialog>}
-                    <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                    <FormButton link style={{marginVertical:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
                         <Feather name="info" size={24} color={'white'} />
                     </FormButton>
                 </View>
             </ScrollView>
-            {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
+            {/* {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>} */}
         </MainContainer>
     )
 }

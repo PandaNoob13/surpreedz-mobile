@@ -75,7 +75,7 @@ const PurchaseConfirmation = () => {
                     <View style={{padding:8}}>
                         <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>
-                            <Text>1 revision</Text>
+                            <Text>1 video</Text>
                         </View>
                         <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>

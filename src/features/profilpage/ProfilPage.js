@@ -190,10 +190,10 @@ const ProfilPage = () => {
 
     const handleAlert = () => {
         if (isError) {
-            setAlertShow({submitFailed:false})
+            setAlertShow(false,false,false,false,false)
 
         } else {
-            setAlertShow({submitSuccess:false})
+            setAlertShow(false,false,false,false,false)
             navigation.replace(ROUTE.MAIN)
         }
     }
@@ -263,7 +263,7 @@ const ProfilPage = () => {
                         <>
                             {addOrderDataResult ? 
                                 <ModalAlert warning visible={alertShow.signOutPayment} title={'Are you sure ?'} 
-                                subtitle={'If you sign out before completing the payment, \n your order data will be deleted'}
+                                subtitle={'If you sign out before completing the payment, your order data will be deleted'}
                                 buttons={[
                                     {
                                         label:'Cancel',
