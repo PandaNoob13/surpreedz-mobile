@@ -9,6 +9,7 @@ import { useTheme } from '../../shared/context/ThemeContext';
 import FormButton from '../../shared/components/FormButton';
 import { useEffect, useState } from 'react';
 import UseSignUp from './UseSignUp';
+import ModalAlert from '../../shared/components/ModalAlert';
 
 const SignUp = () => {
     const theme = useTheme();
@@ -19,7 +20,7 @@ const SignUp = () => {
         continue: false,
         join: false,
     });
-    const {viewState,email,password,name,location,onChangeEmail,onChangePassword,onChangeLocation,onChangeName,onPostSignUp} = UseSignUp();
+    const {viewState,email,password,name,location,alertShow,onChangeEmail,onChangePassword,onChangeLocation,onChangeName,onPostSignUp,onPostSignIn,setAlertShow} = UseSignUp();
 
     const handleContinue = () => {
       setStep(step + 1);
@@ -44,6 +45,11 @@ const SignUp = () => {
             setButtonDisabled({join: false})
         }
     }, [name, location])
+
+    const handleSignIn = async () => {
+        await onPostSignIn(email,password);
+        navigation.replace(ROUTE.MAIN)
+    }
 
     switch (step) {
         case 1:
@@ -105,6 +111,29 @@ const SignUp = () => {
                             onChangeText={onChangeLocation}
                             ></FormTextInput>
                         </View>
+                        {(alertShow.signUp) &&
+                        <>
+                            <ModalAlert visible={alertShow.signUp} onPress={() => setAlertShow(false,false,false)} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz !`} buttons={[
+                                {
+                                    label:'Sign In',
+                                    onPress:  () => handleSignIn()
+                                },
+                                {
+                                    label:'Cancel',
+                                    onPress: () => navigation.replace(ROUTE.MAIN),
+                                }
+                            ]}/>
+                        </>
+                        }
+                        {alertShow.signUpFailed &&
+                            <ModalAlert visible={alertShow.signUpFailed} onPress={() => setAlertShow(false,false,false)} error title={'Sign Up Failed'} subtitle={'Something wrong !'}/>
+                        }
+                        {alertShow.signUpPayment &&
+                        <>
+                            <ModalAlert visible={alertShow.signUpPayment} onPress={() => setAlertShow(false,false,false)} success title={'Sign Up Success'} subtitle={`Have fun on Surpreedz ! \n Please complete your transaction`}/>
+                            {navigation.replace(ROUTE.PAYMENT)}
+                        </>
+                        }
                         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                             <FormButton style={{width: '45%'}} label={'Back'} onPress={handleBack} />
                             <FormButton disabled={buttonDisabled.join} style={{width: '45%'}} label={'Join'} onPress={onPostSignUp} />

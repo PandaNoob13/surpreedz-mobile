@@ -10,6 +10,7 @@ import { ROUTE } from '../../shared/constants';
 import { useTheme } from '../../shared/context/ThemeContext';
 import useSignIn from './UseSignIn';
 import SpinnerLoading from '../../shared/components/SpinnerLoading';
+import ModalAlert from '../../shared/components/ModalAlert';
 
 const KeyboardTrackingView = Keyboard.KeyboardTrackingView;
 
@@ -20,6 +21,8 @@ const SignIn = () => {
     const {viewState, 
         email, 
         password,
+        alertShow,
+        setAlertShow,
         onChangeEmail, 
         onChangePassword, 
         onPostSignIn,
@@ -33,6 +36,10 @@ const SignIn = () => {
             setButtonDisabled(false)
         }
     }, [email, password])
+
+    const handleSignIn = async () => {
+        await onPostSignIn(email,password);
+    }
 
     return (
         <MainContainer>
@@ -56,7 +63,22 @@ const SignIn = () => {
                     ></FormPasswordInput>
                 
                 </View>
-                <FormButton disabled={buttonDisabled} onPress={onPostSignIn} label="Continue"/>
+                {(alertShow.signIn) &&
+                <>
+                    <ModalAlert visible={alertShow.signIn} onPress={() => setAlertShow(false,false,false)} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz !`}/>
+                    {navigation.replace(ROUTE.MAIN)}
+                </>
+                }
+                {alertShow.signInFailed &&
+                    <ModalAlert visible={alertShow.signInFailed} onPress={() => setAlertShow(false,false,false)} error title={'Sign In Failed'} subtitle={'Wrong Email or Password !'}/>
+                }
+                {alertShow.signInPayment &&
+                <>
+                    <ModalAlert visible={alertShow.signInPayment} onPress={() => setAlertShow(false,false,false)} success title={'Sign In Success'} subtitle={`Have fun on Surpreedz ! \n Please complete your transaction`}/>
+                    {navigation.replace(ROUTE.PAYMENT)}
+                </>
+                }
+                <FormButton disabled={buttonDisabled} onPress={handleSignIn} label="Continue"/>
                 <View center row marginT-60>
                     <Text style={styles.text} >Not a member yet ?  </Text>
                     <TouchableOpacity onPress={()=> {navigation.replace(ROUTE.SIGNUP)}} >

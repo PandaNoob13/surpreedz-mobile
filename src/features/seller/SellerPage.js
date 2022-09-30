@@ -6,18 +6,21 @@ import FormButton from '../../shared/components/FormButton';
 import ModalDialog from '../../shared/components/ModalDialog';
 import FormTextInput from '../../shared/components/FormTextInput';
 import Storage from '../../shared/Storage';
-import { KEY } from '../../shared/constants';
+import { KEY, ROUTE } from '../../shared/constants';
 import useAddEditService from './hookSeller/UseAddEditService';
 import useRequestList from './hookSeller/UseRequestList';
 import RequestListPage from './components/RequestListPage';
 import { Text } from 'react-native-ui-lib';
 import SpinnerLoading from '../../shared/components/SpinnerLoading';
+import ModalAlert from '../../shared/components/ModalAlert';
+import { useNavigation } from '@react-navigation/native';
 
 const SellerPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
     const [modalVisible, setModalVisible] = useState(false)
     const storage = Storage();
+    const navigation = useNavigation();
     const {isLoading} = useAddEditService();
     const {isLoading2} = useRequestList();
 
@@ -56,7 +59,7 @@ const SellerPage = () => {
     const [description, setDescription] = useState(serviceDetailDesc)
     const [price, setPrice] = useState(serviceDetailPrice);
     const [dataVideo ,setDataVideo] = useState();
-    const {onPostService} = useAddEditService();
+    const {onPostService,alertShow,setAlertShow} = useAddEditService();
     const [accountId, setAccountId] = useState();
     const [buttonDisabled, setButtonDisabled] = useState(false)
 
@@ -75,6 +78,15 @@ const SellerPage = () => {
             setButtonDisabled(false)
         }
     }, [role, description, price])
+
+    const handleAlert = () => {
+        if (alertShow.editSuccess || alertShow.submitSuccess) {
+            setAlertShow(false,false,false,false)
+            navigation.replace(ROUTE.MAIN)
+        } else if (alertShow.editFailed || alertShow.submitFailed) {
+            setAlertShow(false,false,false,false)
+        }
+    }
 
     return (
         <MainContainer mainPage>
@@ -102,6 +114,24 @@ const SellerPage = () => {
                     
                     <RequestListPage></RequestListPage>
                 </View>
+                {(alertShow.submitSuccess) &&
+                <>
+                    <ModalAlert visible={alertShow.signUp} onPress={() => handleAlert()} success title={'Submit Your Service Success'}/>
+                </>
+                }
+                {alertShow.submitFailed &&
+                    <ModalAlert visible={alertShow.signUpFailed} onPress={() => handleAlert()} error title={'Submit Your Service Failed'} subtitle={'Something wrong, Try again!'}/>
+                }
+                {alertShow.editSuccess &&
+                <>
+                    <ModalAlert visible={alertShow.signUp} onPress={() => handleAlert()} success title={'Your service has been changed successfully'}/>
+                </>
+                }
+                {alertShow.editFailed &&
+                <>
+                    <ModalAlert visible={alertShow.signUpPayment} onPress={() => handleAlert()} error title={'Your Service Change Failed'} subtitle={'Something wrong, Try again!'}/>
+                </>
+                }
             </ScrollView>
             {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
             {isLoading2 ? <SpinnerLoading onShowSpinner={isLoading2}></SpinnerLoading>:<></>}

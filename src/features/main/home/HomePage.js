@@ -12,6 +12,7 @@ import ModalDialog from '../../../shared/components/ModalDialog';
 import About from '../../../shared/components/About';
 import {WebView} from 'react-native-webview';
 import { Feather } from '@expo/vector-icons';
+import ModalAlert from '../../../shared/components/ModalAlert';
 import LoadingServiceCard from '../../../shared/components/LoadingServiceCard';
 import SpinnerLoading from '../../../shared/components/SpinnerLoading';
 
@@ -25,6 +26,7 @@ const HomePage = () => {
     const scrollX = useRef(new Animated.Value(0)).current;
     const { width: windowWidth } = useWindowDimensions();
     const [modalVisible, setModalVisible] = useState(false);
+    const [alertVisible, setAlertVisible] = useState(false);
 
     useEffect(()=>{
       onGetService();
@@ -74,6 +76,17 @@ const HomePage = () => {
                         }
                         
                     </ScrollView>
+                    {alertVisible && 
+                        <ModalAlert visible={alertVisible} onPress={()=> setAlertVisible(false)} title={`OOPS ...`} subtitle={'Something is missing'} warning
+                        buttons={[
+                            {label: 'oh no', onPress: () => setAlertVisible(false)},
+                            {label: 'oh yeah', onPress: () => setAlertVisible(false)},
+                        ]}
+                    />}
+                    <View style={{margin: 25}}>
+                        <Text colourTextPrimary text40BO>Serve your audence!</Text>
+                        <FormButton label='Alet trial' onPress={()=> setAlertVisible(true)} style={{marginVertical:10}}/>                        
+                    </View>
                     {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
                             <About></About>
