@@ -58,7 +58,7 @@ const PurchaseConfirmation = () => {
 
                     <CardContainer style={{backgroundColor:'#F8F9FA', marginVertical:12}}>
                     <View style={{padding:8}}>
-                        <View style={styles.textRow}>
+                        {/* <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>
                             <Text>1 video</Text>
                         </View>
@@ -69,7 +69,7 @@ const PurchaseConfirmation = () => {
                         <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>
                             <Text>high quality video file</Text>
-                        </View>
+                        </View> */}
                     </View>
                     </CardContainer>
 

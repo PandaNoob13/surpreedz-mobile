@@ -3,15 +3,16 @@ import React, { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import WebView from 'react-native-webview';
 import useMidtransService from './useMidtransService';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { ROUTE } from '../../shared/constants';
 
 const MidtransSnapPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
+    const navigation = useNavigation();
     const {midPosts} = useMidtransService();
     const route = useRoute();
     const [midtransParams, setmidtransParams] = useState({})
-
 
     useEffect(()=>{
       if (route.params?.prevPage && route.params?.midtransLink ) {
@@ -22,8 +23,19 @@ const MidtransSnapPage = () => {
       }
     },[route.params])
 
+    const  getWebviewUrl = (webViewState) => {
+        if (webViewState.url.includes("http://surpreedz.koreacentral.cloudapp.azure.com/")){
+            console.log("Payment finished");
+            navigation.replace(ROUTE.MAIN);
+        }
+    }
+
     return (
-        <WebView source={{uri: midtransParams.midtransLink}} style={styles.video}></WebView>
+        <WebView 
+            source={{uri: midtransParams.midtransLink}} 
+            style={styles.video}
+            onNavigationStateChange={getWebviewUrl}
+        ></WebView>
     );
 }
 
