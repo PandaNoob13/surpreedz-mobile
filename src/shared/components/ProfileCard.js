@@ -3,15 +3,27 @@ import React, { useEffect } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import CardContainer from './CardContainer';
 import moment from 'moment';
+import { useState } from 'react';
+import Storage from '../Storage';
+import { KEY } from '../constants';
+import UseEditProfilePage from '../../features/profilpage/UseEditProfilePage';
 
 const ProfileCard = (props) => {
+    const storage = Storage();
     const theme = useTheme();
     const styles = styling(theme);
     const {name, location, joinDate, dataUrl} = props.data;
+    // const [dataUrl, setDataUrl] = useState('');
+    // const {changedPhotoProf} = UseEditProfilePage();
+    // const getPicUrl = async () => {
+    //     const picUrl = await storage.getData(KEY.PHOTO_PROFILE)
+    //     setDataUrl(picUrl)
+    // }
+    // getPicUrl()
 
     useEffect(()=>{
-        // console.log('data profile card=>', props.data);
-    },[name,location,dataUrl])
+        console.log("Data url in prof card: ", dataUrl);
+    },[dataUrl])
 
   return (
         <CardContainer {...props}>
@@ -28,7 +40,7 @@ const ProfileCard = (props) => {
                 
 
                 <View>
-                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since  {moment({joinDate}).format("MMMM Do YYYY")}</Text>
+                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since {moment({joinDate}).format("MMMM Do YYYY")}</Text>
                 </View>
             </View>
 
