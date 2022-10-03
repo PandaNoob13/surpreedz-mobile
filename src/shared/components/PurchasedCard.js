@@ -5,8 +5,11 @@ import CardContainer from './CardContainer';
 import NumberCurrency from './CurrencyConverter';
 import FormButton from './FormButton';
 import moment from 'moment';
-import ModalDialog from './ModalDialog';
-import OrderDetailInfo from './OrderDetailInfo';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     const theme = useTheme();
@@ -14,11 +17,18 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     switch (status) {
         case "On progress":
             return (
-                <Text style={styles.textStyle}>ON PROGRESS</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Entypo name="dots-three-horizontal" size={16} color="yellow" />
+                    <Text style={styles.textStyle}> Processing your video ...</Text>
+                </View>
             )
         case "Rejected":
             return (
-                <Text style={styles.textStyle}>REJECTED</Text>
+                <View style={{flexDirection:'row'}}>
+                    <MaterialIcons name="error-outline" size={16} color="red" />
+                    <Text style={styles.textStyle}> Sorry, it's rejected</Text>
+                </View>
+
             )
         // case "Cancelled":
         //     return (
@@ -31,21 +41,30 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
         case "Submitted":
             return (
                 <View>
-                    <Text style={styles.textStyle}>DONE</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <FontAwesome name="check-circle" size={16} color="green" />
+                        <Text style={styles.textStyle}> Video is ready!</Text>
+                    </View>
                     <View>
                         <View style={{margin:5}}>
-                            <FormButton label={'Play Video'} onPress={()=>{callPlayVideo(orderId)}} />
-                            
+                            <FormButton label={'Play'} onPress={()=>{callPlayVideo(orderId)}}>
+                                <Feather name="play" size={16} color="black" />
+                            </FormButton>
                         </View>
                         <View style={{margin:5}}>
-                            <FormButton onPress={()=>{callback(orderId)}} label={'Get Video'} />
+                            <FormButton onPress={()=>{callback(orderId)}} label={'Download Video'}>
+                                <Feather name="download-cloud" size={16} color="black" />
+                            </FormButton>
                         </View>
                     </View>
                 </View>
             )
         default:
             return (
-                <Text style={styles.textStyle}>Waiting for confirmation</Text>
+                <View style={{flexDirection:'row'}}>
+                    <FontAwesome5 name="comment-dots" size={16} color="yellow" />
+                    <Text style={styles.textStyle}> Waiting for confirmation</Text>
+                </View>
             );
             
     }

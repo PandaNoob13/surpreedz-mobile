@@ -93,28 +93,27 @@ const HomePage = () => {
                     </View>
                     : 
                     <>
-                        {posts ? 
-                        <View style={{alignItems: 'center', marginVertical:10}}>
-                            <View style={styles.containerWrap}>
-                                {posts.map((account) => {
-                                    const data = account.account
-                                    if (data.ServiceDetail.id !== 0) {
-                                        return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
-                                    }
-                                })}
+                    <View style={{alignItems: 'center', marginVertical:10}}>
+                        <View style={styles.containerWrap}>
+                            {posts ? posts.map((account) => {
+                                const data = account.account
+                                if (data.ServiceDetail.id !== 0) {
+                                    return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
+                                }
+                            })
+                            :
+                            <View style={{marginVertical:16}}>
+                                <View style={styles.container}>
+                                    <LottieView autoPlay style={styles.image}
+                                        source={require('../../../../assets/img/51382-astronaut-light-theme.json')}>
+                                    </LottieView>
+                                </View>
+                                <Text text60L style={[styles.subtitle]}>The space is empty</Text>
+                                <Text text80L style={[styles.subtitle, {marginBottom:32}]}>Let's fill it with your charm!</Text>
                             </View>
+                            }
                         </View>
-                        :
-                        <View style={{marginVertical:16}}>
-                            <View style={styles.container}>
-                                <LottieView autoPlay style={styles.image}
-                                    source={require('../../../../assets/img/51382-astronaut-light-theme.json')}>
-                                </LottieView>
-                            </View>
-                            <Text text60L style={[styles.subtitle]}>The space is empty</Text>
-                            <Text text80L style={[styles.subtitle, {marginBottom:32}]}>Let's fill it with your charm!</Text>
-                        </View>
-                        }
+                    </View>
                     </>
                     }
                     {modalVisible && 
