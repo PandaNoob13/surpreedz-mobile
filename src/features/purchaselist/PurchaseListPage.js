@@ -5,11 +5,10 @@ import MainContainer from '../../shared/components/MainContainer';
 import { Text, View } from 'react-native-ui-lib';
 import PurchasedCard from '../../shared/components/PurchasedCard';
 import usePurchaseListPage from './UsePurchaseListPage';
-import { useState } from 'react';
-import ModalDialog from '../../shared/components/ModalDialog';
 import VideoPlayer from 'expo-video-player';
 import { ResizeMode } from 'expo-av';
 import SpinnerLoading from '../../shared/components/SpinnerLoading';
+import LottieView from 'lottie-react-native';
 
 const PurchaseListPage = () => {
     const theme = useTheme();
@@ -67,7 +66,17 @@ const PurchaseListPage = () => {
                                 
                             })
                             return orders
-                        }) : <Text style={styles.subtitle}>Empty Data</Text>}
+                        }) : 
+                        <View style={{marginVertical:16}}>
+                            <View style={styles.container}>
+                                <LottieView autoPlay style={styles.image}
+                                    source={require('../../../assets/img/51382-astronaut-light-theme.json')}>
+                                </LottieView>
+                            </View>
+                            <Text text60L style={[styles.subtitle]}>The space is empty</Text>
+                            <Text text80L style={[styles.subtitle, {marginBottom:32}]}>Let's fill it with the celebrities!</Text>
+                        </View>
+                        }
                     </View>
                 </View>
             </ScrollView>
@@ -81,8 +90,8 @@ const styling = (theme) => ( StyleSheet.create({
         fontSize:15,
         color: '#ffffff',
         fontWeight:'bold'
-     },
-     lineStyle:{
+    },
+    lineStyle:{
         borderWidth: 0.5,
         borderColor:'white',
         alignItems:'flex-start',
@@ -93,12 +102,29 @@ const styling = (theme) => ( StyleSheet.create({
     textStyle :{
         fontSize:15,
         color: '#ffffff',
-     },
-     requestStyle:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      marginTop: 2
-     }
+    },
+    subtitle:{
+        textAlign:'center',
+        color: 'rgba(255,255,255,0.6)',
+        // marginBottom: 8,
+    },
+    requestStyle:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        marginTop: 2
+    },
+    container: {
+        marginBottom: 24,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    image: {
+        width: 120,
+        height: 120,
+        alignItems: 'center',
+        justifyContent: "center",
+        resizeMode: "cover",
+    },
   }))
 
 export default PurchaseListPage
