@@ -14,7 +14,7 @@ import {WebView} from 'react-native-webview';
 import { Feather } from '@expo/vector-icons';
 import ModalAlert from '../../../shared/components/ModalAlert';
 import LoadingServiceCard from '../../../shared/components/LoadingServiceCard';
-import SpinnerLoading from '../../../shared/components/SpinnerLoading';
+import LottieView from 'lottie-react-native';
 
 const HomePage = () => {
     const theme = useTheme();
@@ -36,8 +36,8 @@ const HomePage = () => {
         <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
-                    <Text colourTextPrimary text40BO>Welcome home!</Text>
-                    <ScrollView
+                    <Text colourTextPrimary text40BO>Liberate your expression!</Text>
+                    {/* <ScrollView
                         style={{marginVertical:10}}
                         horizontal={true}
                         // pagingEnabled
@@ -67,11 +67,55 @@ const HomePage = () => {
                                         return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
                                     }
                                 }):
-                                <Text style={styles.textTitle}>Empty Data</Text> }
+                                <View style={{marginVertical:16}}>
+                                    <View style={styles.container}>
+                                        <LottieView autoPlay style={styles.image}
+                                            source={require('../../../../assets/img/51382-astronaut-light-theme.json')}>
+                                        </LottieView>
+                                    </View>
+                                    <Text text60L style={[styles.subtitle]}>The space is empty</Text>
+                                    <Text text80L style={[styles.subtitle, {marginBottom:32}]}>Let's fill it with your charm!</Text>
+                                </View>
+                                }
                             </>
                         }
-                        
-                    </ScrollView>
+                    </ScrollView> */}
+                    {isLoading ? 
+                    <View style={{alignItems: 'center', marginVertical:10}}>
+                        <View style={styles.containerWrap}>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                        </View>
+                    </View>
+                    : 
+                    <>
+                    <View style={{alignItems: 'center', marginVertical:10}}>
+                        <View style={styles.containerWrap}>
+                            {posts ? posts.map((account) => {
+                                const data = account.account
+                                if (data.ServiceDetail.id !== 0) {
+                                    return ( <ServiceCard data={data} pic={account.data_url} date={account.string_join_date} />)
+                                }
+                            })
+                            :
+                            <View style={{marginVertical:16}}>
+                                <View style={styles.container}>
+                                    <LottieView autoPlay style={styles.image}
+                                        source={require('../../../../assets/img/51382-astronaut-light-theme.json')}>
+                                    </LottieView>
+                                </View>
+                                <Text text60L style={[styles.subtitle]}>The space is empty</Text>
+                                <Text text80L style={[styles.subtitle, {marginBottom:32}]}>Let's fill it with your charm!</Text>
+                            </View>
+                            }
+                        </View>
+                    </View>
+                    </>
+                    }
                     {modalVisible && 
                         <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
                             <About></About>
@@ -102,6 +146,13 @@ const styling = (theme) => ( StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    containerWrap: {
+        // flex: 1,
+        flexDirection:'row',
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+    },
     video: {        
         // height: 320,
         // marginTop: 20,
@@ -109,7 +160,24 @@ const styling = (theme) => ( StyleSheet.create({
         width: 320,
         flex: 1,
         elevation:10,
-    }
+    },
+    subtitle:{
+        textAlign:'center',
+        color: 'rgba(255,255,255,0.6)',
+        // marginBottom: 8,
+    },
+    containerEmpty: {
+        marginBottom: 24,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    image: {
+        width: 120,
+        height: 120,
+        alignItems: 'center',
+        justifyContent: "center",
+        resizeMode: "cover",
+    },
 }))
 
 export default HomePage

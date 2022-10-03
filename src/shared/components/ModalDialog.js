@@ -5,6 +5,7 @@ import { Colors } from "react-native-ui-lib";
 import { useTheme } from '../context/ThemeContext';
 import CardContainer from './CardContainer';
 import FormButton from "./FormButton";
+import MainContainer from './MainContainer';
 
 const ModalDialog = (props) => {
     const theme = useTheme();
@@ -17,6 +18,7 @@ const ModalDialog = (props) => {
     const {visible, onPress, children, titleModal} = props;
 
     return (
+        <MainContainer>
         <Modal
             {...props}
             style={{ margin: 0 }}
@@ -26,6 +28,7 @@ const ModalDialog = (props) => {
             onSwipeComplete={onPress}
             swipeDirection='down'
         >
+            
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <View style={styles.container} >
@@ -34,12 +37,14 @@ const ModalDialog = (props) => {
                             <MaterialCommunityIcons name="close" size={24} color="white" />
                         </TouchableOpacity>
                     </View>
-                    <CardContainer style={{paddingBottom: 64}}>
+                    <CardContainer>
                         {children}
                     </CardContainer>
                 </View>
-            </View>            
-        </Modal>        
+            </View>
+            
+        </Modal> 
+        </MainContainer>       
     );
 }
 

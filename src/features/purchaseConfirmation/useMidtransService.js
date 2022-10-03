@@ -16,31 +16,31 @@ const useMidtransService = () => {
 
     useEffect(() => {
         onGetOrder();
-
     }, [])
 
-    const onPostMidtrans = async (amount) => {
+    const onPostMidtrans = async (order_id, email, amount) => {
         setLoading(true);
         console.log("On Post Midtrans Service Called");
-        console.log('post', posts);
+        // console.log('post', posts);
 
-        const arr = posts.map((data) => { 
-            const account = data.account  
-            const orders = account.Orders.map((order) => {
-                return {...order, CreatedAt: new Date(order.CreatedAt)}
-            })
-            return orders
-        })
+        // const arr = posts.map((data) => { 
+        //     const account = data.account  
+        //     const orders = account.Orders.map((order) => {
+        //         return {...order, CreatedAt: new Date(order.CreatedAt)}
+        //     })
+        //     return orders
+        // })
 
-        const sortedDesc = arr.flat().sort(
-            (objA, objB) => Number(objB.CreatedAt) - Number(objA.CreatedAt)
-        )
-        console.log('sortedDesc', sortedDesc);
+        // const sortedDesc = arr.flat().sort(
+        //     (objA, objB) => Number(objB.CreatedAt) - Number(objA.CreatedAt)
+        // )
+        // console.log('sortedDesc', sortedDesc);
 
         try {
+            console.log("Email in midtrans post service : ", email);
             const response = await orderService.postMidtrans({
-                email: 'email@google.com',
-                order_id: String(sortedDesc[0].id),
+                email: email,
+                order_id: order_id,
                 amount: amount,
             })
             console.log('Response: ', response);

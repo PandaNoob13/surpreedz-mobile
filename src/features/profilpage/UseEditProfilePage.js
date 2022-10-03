@@ -21,6 +21,7 @@ const UseEditProfilePage = () => {
         success: false,
         failed: false,
     }) 
+    const [changedPhotoProf, setChangedPhotoProf] = useState('');
 
     const handleSetItem = async () => {
         await storage.setData(KEY.ACCOUNTNAME, data.name);
@@ -31,6 +32,7 @@ const UseEditProfilePage = () => {
     const handleSetPhotoProfile = async () => {
         // const dataUrlSeparated = data.dataUrl.split(',')
         await storage.setData(KEY.PHOTO_PROFILE, data.dataUrl);
+        setChangedPhotoProf(data.dataUrl)
         setTrigger(!trigger);
     }
 
@@ -63,8 +65,9 @@ const UseEditProfilePage = () => {
                 url: url,
                 data_url: 'data:image/jpg;base64,' + dataUrl
             })
+            await storage.setData(KEY.PHOTO_PROFILE, dataUrl);
             setPosts(response.status);
-            console.log('response on put profile)', response);
+            console.log('response on put profile: ', response);
             setData({
                 name: name,
                 location: location,
@@ -75,6 +78,7 @@ const UseEditProfilePage = () => {
             setUploadStatus(!uploadStatus)
             setIsError(false)
             console.log(' finish update');
+            
             // navigation.replace(ROUTE.MAIN);
             // Alert.alert('Edit Profile Success')
             // setAlertShow({success:true})
@@ -90,7 +94,7 @@ const UseEditProfilePage = () => {
     }
 
     return {
-        onPutProfile, isLoading, trigger, isError
+        onPutProfile, isLoading, trigger, isError, changedPhotoProf
     }
     
   

@@ -28,7 +28,7 @@ const HomeRouter = () => {
                 setLogin(false)
               }
             } catch (e) {
-              console.log('error from Home Router',e);
+              console.log('error from Home Router', e);
               setLogin(false)
             }
           }
@@ -75,7 +75,11 @@ const HomeRouter = () => {
           <Tab.Group>
             <Tab.Screen name={ROUTE.SELLER} component={SellerPage} options={{headerShown: false}} />
             <Tab.Screen name={ROUTE.BUYER} component={PurchaseListPage} options={{headerShown: false}} />
-            <Tab.Screen name={ROUTE.PROFIL} component={ProfilPage} options={{headerShown: false}} />
+            <Tab.Screen name={ROUTE.PROFIL} component={ProfilPage} options={
+              {
+                headerShown: false
+              }
+            } />
           </Tab.Group> 
           :
           <Tab.Group>

@@ -5,7 +5,11 @@ import CardContainer from './CardContainer';
 import NumberCurrency from './CurrencyConverter';
 import FormButton from './FormButton';
 import moment from 'moment';
-import ModalDialog from './ModalDialog';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import OrderDetailInfo from './OrderDetailInfo';
 
 const StatusCondition = (status, callback, orderId,callPlayVideo) => {
@@ -14,11 +18,18 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     switch (status) {
         case "On progress":
             return (
-                <Text style={styles.textStyle}>ON PROGRESS</Text>
+                <View style={{flexDirection:'row'}}>
+                    <Entypo name="dots-three-horizontal" size={16} color="yellow" />
+                    <Text style={styles.textStyle}> Processing your video ...</Text>
+                </View>
             )
         case "Rejected":
             return (
-                <Text style={styles.textStyle}>REJECTED</Text>
+                <View style={{flexDirection:'row'}}>
+                    <MaterialIcons name="error-outline" size={16} color="red" />
+                    <Text style={styles.textStyle}> Sorry, it's rejected</Text>
+                </View>
+
             )
         // case "Cancelled":
         //     return (
@@ -31,21 +42,30 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
         case "Submitted":
             return (
                 <View>
-                    <Text style={styles.textStyle}>DONE</Text>
+                    <View style={{flexDirection:'row'}}>
+                        <FontAwesome name="check-circle" size={16} color="green" />
+                        <Text style={styles.textStyle}> Video is ready!</Text>
+                    </View>
                     <View>
                         <View style={{margin:5}}>
-                            <FormButton label={'Play Video'} onPress={()=>{callPlayVideo(orderId)}} />
-                            
+                            <FormButton label={'Play'} onPress={()=>{callPlayVideo(orderId)}}>
+                                <Feather name="play" size={16} color="black" />
+                            </FormButton>
                         </View>
                         <View style={{margin:5}}>
-                            <FormButton onPress={()=>{callback(orderId)}} label={'Get Video'} />
+                            <FormButton onPress={()=>{callback(orderId)}} label={'Download Video'}>
+                                <Feather name="download-cloud" size={16} color="black" />
+                            </FormButton>
                         </View>
                     </View>
                 </View>
             )
         default:
             return (
-                <Text style={styles.textStyle}>Waiting for confirmation</Text>
+                <View style={{flexDirection:'row'}}>
+                    <FontAwesome5 name="comment-dots" size={16} color="yellow" />
+                    <Text style={styles.textStyle}> Waiting for confirmation</Text>
+                </View>
             );
             
     }
@@ -55,11 +75,11 @@ const PurchasedCard = (props) => {
     const theme = useTheme();
     const styles = styling(theme)
     const {occasion, name, price, dueDate, status, orderId, orderRequest, photoUrl} = props.data
-    // const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
     return (
         <CardContainer style={{marginBottom: 12}}>
-            {/* {modalVisible && 
+            {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
                         <OrderDetailInfo 
                         data={{
@@ -67,9 +87,8 @@ const PurchasedCard = (props) => {
                             buyerName:name
                         }}
                         />
-
                 </ModalDialog>
-            } */}
+            }
             <View row>
                 <View style={styles.container}>
                     <View>
@@ -81,12 +100,11 @@ const PurchasedCard = (props) => {
                         <Text style={[styles.subtitle,{textAlign:'center', flexShrink:1, flexWrap: 'wrap'}]}>{occasion} message from {name}</Text>
                         <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
                     </View>
+                    <View style={{marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                        <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                    </View>
                 </View>
-                {/* <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                    <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                    <FormButton label='Detail' onPress={openModalDetailOrder} />
-
-                </View> */}
+                
                 <View>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
                     <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
@@ -98,9 +116,7 @@ const PurchasedCard = (props) => {
                 <View style={{paddingVertical: 8}}>
                     {StatusCondition(status, props.callback, orderId, props.callPlayVideo)}
                 </View>
-            </View>    
-
-
+            </View>
         </CardContainer>
     )
 }

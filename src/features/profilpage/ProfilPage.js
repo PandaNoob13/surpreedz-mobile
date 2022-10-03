@@ -2,7 +2,7 @@ import { View, StyleSheet, Text, ScrollView, Alert, Button, Image} from 'react-n
 import { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import { KEY, ROUTE } from '../../shared/constants';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import useAuth from '../../shared/hook/UseAuth';
 import MainContainer from '../../shared/components/MainContainer';
 import FormButton from '../../shared/components/FormButton';
@@ -23,6 +23,9 @@ const ProfilPage = () => {
     const theme = useTheme();
     const styles = styling(theme)
     const navigation = useNavigation();
+
+    const isFocused = useIsFocused()
+
     const {onLogout} = useAuth();
     const [modalVisible, setModalVisible] = useState(false);
     const [data, setData] = useState('');
@@ -36,7 +39,7 @@ const ProfilPage = () => {
     })
     const [nameUser, setNameUser] = useState('');
     const [locationUser, setLocationUser] = useState('');
-    const {onPutProfile,isLoading,trigger, isError}= UseEditProfilePage();
+    const {onPutProfile, isLoading, trigger, isError, changedPhotoProf}= UseEditProfilePage();
     const [buttonDisabled, setButtonDisabled] = useState(false)
 
     useEffect(() => {
@@ -50,6 +53,7 @@ const ProfilPage = () => {
     // IMAGE HANDLE
     const [image, setImage] = useState('');
     const [base64Image, setbase64Image] = useState('');
+
 
     const funcimg = async () => {
         if (Platform.OS !== 'web') {
@@ -68,12 +72,19 @@ const ProfilPage = () => {
         if (status !== 'granted') {
             alert('Permission denied !')
         }
+        }
     }
-  }
+    const forceUpdate = useState({})[1].bind(null, {})  // see NOTE above
     
     useEffect(()=>{
+        // console.log("Is focused: ", isFocused);
+        // if (isFocused == true){
+        //     serviceCardData()
+        //     console.log("Is focused == true");
+        // }
         funcimg();
         funcimg2();
+        // Return the function to unsubscribe from the event so it gets removed on unmount
     },[])
 
     const PickImageLibrary = async () => {
@@ -115,36 +126,42 @@ const ProfilPage = () => {
         // console.log('result base64', result.base64);
       }      
     
-    ////////
-
     const serviceCardData = async () => {
-          const  picUrl = await storage.getData(KEY.PHOTO_PROFILE)
-          const  name = await storage.getData(KEY.ACCOUNTNAME)
-          const  email = await storage.getData(KEY.ACCOUNT_EMAIL)
-          const  location = await storage.getData(KEY.ACCOUNT_LOCATION)
-          const  joinDate = await storage.getData(KEY.ACCOUNT_JOINDATE)
-          const dataUrl= await storage.getData(KEY.PHOTO_PROFILE)
-      setData({
-        name : name,
-        location :location,
-        email :email,
-        joinDate:joinDate,
-        picUrl: picUrl,
-        dataUrl :dataUrl
-      })
-      setNameUser(name);
-      setLocationUser(location);
-      setImage(dataUrl);
-      setbase64Image(picUrl);
+        const picUrl = await storage.getData(KEY.PHOTO_PROFILE)
+        const name = await storage.getData(KEY.ACCOUNTNAME)
+        const email = await storage.getData(KEY.ACCOUNT_EMAIL)
+        const location = await storage.getData(KEY.ACCOUNT_LOCATION)
+        const joinDate = await storage.getData(KEY.ACCOUNT_JOINDATE)
+        const dataUrl= await storage.getData(KEY.PHOTO_PROFILE)
+        setData({
+            name : name,
+            location :location,
+            email :email,
+            joinDate:joinDate,
+            picUrl: picUrl,
+            dataUrl :dataUrl
+        })
+        setNameUser(name);
+        setLocationUser(location);
+        setImage(dataUrl);
+        setbase64Image(picUrl);
   }
 
 
     useEffect(()=>{
     //   console.log("Trigger called");
       serviceCardData();
+      
 
     //   console.log('serviceCardData', data);
     },[trigger])
+
+    useEffect(() => {
+        console.log("Data change in profile page");
+        if (changedPhotoProf != ''){
+            console.log("Photo profile has changed");
+        }
+    }, [data])
 
     
     const handleLogout = async () => {
@@ -203,47 +220,43 @@ const ProfilPage = () => {
 
             {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'70%'}>
-                  
-                        <View>
-                              <ScrollView>
-                              <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
-                              <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
-                              <View style={{width:'50%', marginBottom:32}}>
-                              {alertShow.editPhoto && 
-                                    <ModalAlert visible={alertShow.editPhoto} title={'Edit Foto'} 
-                                    onPress={() => setAlertShow({editPhoto:false})}
-                                    buttons={[
-                                        {
-                                            label:'Pilih Foto',
-                                            onPress: () => {
-                                                setAlertShow({editPhoto:false});
-                                                PickImageLibrary();
-                                            },
+                    <ScrollView>
+                        <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
+                        <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
+                        <View style={{width:'50%'}}>
+                            {alertShow.editPhoto && 
+                                <ModalAlert visible={alertShow.editPhoto} title={'Edit Foto'} 
+                                onPress={() => setAlertShow({editPhoto:false})}
+                                buttons={[
+                                    {
+                                        label:'Pilih Foto',
+                                        onPress: () => {
+                                            setAlertShow({editPhoto:false});
+                                            PickImageLibrary();
                                         },
-                                        {
-                                            label:'Ambil Foto',
-                                            onPress: () => {
-                                                setAlertShow({editPhoto:false});
-                                                PickImagePhoto();
-                                            }
+                                    },
+                                    {
+                                        label:'Ambil Foto',
+                                        onPress: () => {
+                                            setAlertShow({editPhoto:false});
+                                            PickImagePhoto();
                                         }
-                                    ]}/>
-                                }
-                              <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
-                              {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
-                              </View>
-                              </ScrollView>
-
-                                {(alertShow.submitFailed || alertShow.submitSuccess) && 
-                                    <>
-                                        {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
-                                        : 
-                                        <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
-                                    </>
-                                }  
-                              <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
+                                    }
+                                ]}/>
+                            }
+                            <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
+                            {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
                         </View>
-                  
+
+                        {(alertShow.submitFailed || alertShow.submitSuccess) && 
+                            <>
+                                {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
+                                : 
+                                <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
+                            </>
+                        }  
+                        <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
+                    </ScrollView>                  
                 </ModalDialog>
             }
             <ScrollView>
