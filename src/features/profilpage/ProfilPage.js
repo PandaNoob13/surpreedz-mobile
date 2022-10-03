@@ -220,47 +220,43 @@ const ProfilPage = () => {
 
             {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'70%'}>
-                  
-                        <View>
-                              <ScrollView>
-                              <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
-                              <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
-                              <View style={{width:'50%', marginBottom:32}}>
-                              {alertShow.editPhoto && 
-                                    <ModalAlert visible={alertShow.editPhoto} title={'Edit Foto'} 
-                                    onPress={() => setAlertShow({editPhoto:false})}
-                                    buttons={[
-                                        {
-                                            label:'Pilih Foto',
-                                            onPress: () => {
-                                                setAlertShow({editPhoto:false});
-                                                PickImageLibrary();
-                                            },
+                    <ScrollView>
+                        <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
+                        <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />
+                        <View style={{width:'50%'}}>
+                            {alertShow.editPhoto && 
+                                <ModalAlert visible={alertShow.editPhoto} title={'Edit Foto'} 
+                                onPress={() => setAlertShow({editPhoto:false})}
+                                buttons={[
+                                    {
+                                        label:'Pilih Foto',
+                                        onPress: () => {
+                                            setAlertShow({editPhoto:false});
+                                            PickImageLibrary();
                                         },
-                                        {
-                                            label:'Ambil Foto',
-                                            onPress: () => {
-                                                setAlertShow({editPhoto:false});
-                                                PickImagePhoto();
-                                            }
+                                    },
+                                    {
+                                        label:'Ambil Foto',
+                                        onPress: () => {
+                                            setAlertShow({editPhoto:false});
+                                            PickImagePhoto();
                                         }
-                                    ]}/>
-                                }
-                              <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
-                              {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
-                              </View>
-                              </ScrollView>
-
-                                {(alertShow.submitFailed || alertShow.submitSuccess) && 
-                                    <>
-                                        {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
-                                        : 
-                                        <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
-                                    </>
-                                }  
-                              <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
+                                    }
+                                ]}/>
+                            }
+                            <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
+                            {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
                         </View>
-                  
+
+                        {(alertShow.submitFailed || alertShow.submitSuccess) && 
+                            <>
+                                {isError ? <ModalAlert visible={alertShow.submitFailed} failed title={'Edit Profile Failed'} onPress={() => handleAlert()}/> 
+                                : 
+                                <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
+                            </>
+                        }  
+                        <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
+                    </ScrollView>                  
                 </ModalDialog>
             }
             <ScrollView>
