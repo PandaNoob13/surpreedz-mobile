@@ -10,6 +10,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import OrderDetailInfo from './OrderDetailInfo';
 
 const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     const theme = useTheme();
@@ -74,11 +75,11 @@ const PurchasedCard = (props) => {
     const theme = useTheme();
     const styles = styling(theme)
     const {occasion, name, price, dueDate, status, orderId, orderRequest, photoUrl} = props.data
-    // const [modalVisible, setModalVisible] = useState(false)
+    const [modalVisible, setModalVisible] = useState(false)
 
     return (
         <CardContainer style={{marginBottom: 12}}>
-            {/* {modalVisible && 
+            {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
                         <OrderDetailInfo 
                         data={{
@@ -86,9 +87,8 @@ const PurchasedCard = (props) => {
                             buyerName:name
                         }}
                         />
-
                 </ModalDialog>
-            } */}
+            }
             <View row>
                 <View style={styles.container}>
                     <View>
@@ -100,12 +100,11 @@ const PurchasedCard = (props) => {
                         <Text style={[styles.subtitle,{textAlign:'center', flexShrink:1, flexWrap: 'wrap'}]}>{occasion} message from {name}</Text>
                         <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
                     </View>
+                    <View style={{marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                        <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                    </View>
                 </View>
-                {/* <View style={{width:100, marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                    <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
-                    <FormButton label='Detail' onPress={openModalDetailOrder} />
-
-                </View> */}
+                
                 <View>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
                     <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
@@ -117,9 +116,7 @@ const PurchasedCard = (props) => {
                 <View style={{paddingVertical: 8}}>
                     {StatusCondition(status, props.callback, orderId, props.callPlayVideo)}
                 </View>
-            </View>    
-
-
+            </View>
         </CardContainer>
     )
 }
