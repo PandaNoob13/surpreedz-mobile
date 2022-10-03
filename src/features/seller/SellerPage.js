@@ -103,9 +103,9 @@ const SellerPage = () => {
                     }
                 />}
                 <View style={{margin: 25}}>
-                    <Text colourTextPrimary text40BO>Serve your audence!</Text>
+                    <Text colourTextPrimary text40BO>Serve your audience!</Text>
                     <FormButton label='Register your Service' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>
-
+                    {/* need to change button label when user registered as verified seller */}
                     {/* { modalDetailOrder &&
                     <ModalDialog visible={modalDetailOrder} onPress={()=> setModalDetailOrder(false)} titleModal={'Order Detail'}>
                         <OrderDetailInfo />
