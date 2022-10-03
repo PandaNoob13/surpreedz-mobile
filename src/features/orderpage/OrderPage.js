@@ -48,7 +48,7 @@ const OrderPage = () => {
                 setToken(false)
               }
             } catch (e) {
-              console.log('error onValidToken from orderpage',e);
+              console.log('error onValid Token from orderpage',e);
               setToken(false)
             }
           }

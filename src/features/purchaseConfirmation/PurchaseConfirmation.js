@@ -19,37 +19,22 @@ import { addOrder } from '../orderpage/state/OrderDetailAction';
 const PurchaseConfirmation = () => {
     const theme = useTheme();
     const styles = styling(theme);
+    const dispatch = useDispatch()
     const {onPostService, isLoading}  = usePurchaseConfirmation();
     const navigation = useNavigation();
     const storage = Storage();
-    const {onPostMidtrans, midPosts, statMidtrans} = useMidtransService()
     // const [WebviewVisible, setWebviewVisible] = useState(false);
 
     const {addOrderDataResult} = useSelector((state)=> state.orderDetailReducer)
-    
-    const route = useRoute();
-
     const handleSubmitPayment = async () => {
         const buyerId = await storage.getData(KEY.ACCOUNT_ID)
+        const buyerEmail = await storage.getData(KEY.ACCOUNT_EMAIL)
         console.log('order data dari purchase => ', addOrderDataResult);
         console.log('buyerId dr purchase', buyerId);
+        console.log('buyerEmail dr purchase', buyerEmail);
 
-        await onPostService(parseInt(buyerId), addOrderDataResult.serviceDetailId, addOrderDataResult.dueDate, addOrderDataResult.occasion, addOrderDataResult.recipient, addOrderDataResult.message, addOrderDataResult.description);
-        const midtransLink = await onPostMidtrans(addOrderDataResult.price)
-        console.log('midtranslink: ', midtransLink);
-        await navigation.replace(ROUTE.MIDTRANS, {
-            prevPage:route.name,
-            midtransLink: midtransLink,
-        })
-
-        useDispatch(addOrder(false));
-        // if (midtransLink == '') {
-        //     // await Midtrans(midtransLink);
-        //     console.log('error link empty');
-        //     console.error();
-        // } else {
-        //     await MidtransSnapPage({midtransLink:midtransLink})
-        // }
+        await onPostService(parseInt(buyerId), buyerEmail, addOrderDataResult.serviceDetailId, addOrderDataResult.dueDate, addOrderDataResult.occasion, addOrderDataResult.recipient, addOrderDataResult.message, addOrderDataResult.description);
+        dispatch(addOrder(false));
     }
 
     return (
@@ -73,7 +58,7 @@ const PurchaseConfirmation = () => {
 
                     <CardContainer style={{backgroundColor:'#F8F9FA', marginVertical:12}}>
                     <View style={{padding:8}}>
-                        <View style={styles.textRow}>
+                        {/* <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>
                             <Text>1 video</Text>
                         </View>
@@ -84,7 +69,7 @@ const PurchaseConfirmation = () => {
                         <View style={styles.textRow}>
                             <FontAwesome icon={SolidIcons.checkCircle} style={{color: 'green', fontSize: 20}} ></FontAwesome>
                             <Text>high quality video file</Text>
-                        </View>
+                        </View> */}
                     </View>
                     </CardContainer>
 
