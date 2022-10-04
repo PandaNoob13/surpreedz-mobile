@@ -36,7 +36,10 @@ const HomePage = () => {
         <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
-                    <Text colourTextPrimary text40BO>Liberate your expression!</Text>
+                    <FormButton link style={{marginTop:2, marginBottom: 10}} labelStyle={{color:'#fff'}} label='  How Surpreedz works?' onPress={()=>setModalVisible(true)}>
+                        <Feather name="info" size={24} color={'white'} />
+                    </FormButton>
+                    {/* <Text colourTextPrimary text40BO>Liberate your expression!</Text> */}
                     {/* <ScrollView
                         style={{marginVertical:10}}
                         horizontal={true}
@@ -123,12 +126,9 @@ const HomePage = () => {
                     </>
                     }
                     {modalVisible && 
-                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'40%'} >
                             <About></About>
                         </ModalDialog>}
-                    <FormButton link style={{marginVertical:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
-                        <Feather name="info" size={24} color={'white'} />
-                    </FormButton>
                 </View>
             </ScrollView>
             {/* {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>} */}
@@ -158,6 +158,7 @@ const styling = (theme) => ( StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
+        paddingBottom: 5000,
     },
     video: {        
         // height: 320,

@@ -2,12 +2,16 @@ import { Alert, Keyboard } from 'react-native'
 import  { useEffect, useState } from 'react'
 import useViewState from '../../shared/hook/UseViewState';
 import useAuth from '../../shared/hook/UseAuth';
-import { ROUTE } from '../../shared/constants';
+import { KEY, ROUTE } from '../../shared/constants';
 import { useNavigation } from '@react-navigation/native';
 import {useDispatch,useSelector} from 'react-redux';
 import ModalAlert from '../../shared/components/ModalAlert';
+import Storage from '../../shared/Storage';
+import { acc } from 'react-native-reanimated';
 
 const useSignIn = () => {
+    const storage = Storage()
+
     const [email,onChangeEmail] = useState('');
     const [password, onChangePassword] = useState('')
     const {viewState, setError} = useViewState();
@@ -21,21 +25,21 @@ const useSignIn = () => {
         signInPayment: false,
         signIn: false,
     })
-
     const onPostSignIn = async (emailUser ,passwordUser) => {
         Keyboard.dismiss();
         setIsLoading(true);
         try {
-            const response = await onLogin({email: emailUser,password: passwordUser })
-
+            const response = await onLogin({email: emailUser, password: passwordUser })
             console.log('Response Login',response);
             if (response) {
+                const account = response.account
                 console.log('SIGN IN SUCCESS');
                 if (addOrderDataResult) {
                     console.log('orderData 1 ', addOrderDataResult);
                     // Alert.alert('Sign In Success',`Have fun on Surpreedz ! \n Please complete your transaction`)
-                    
                     // navigation.replace(ROUTE.PAYMENT)
+                    await storage.setData(KEY.ACCOUNT_ID, account.id)
+                    await storage.setData(KEY.ACCOUNT_EMAIL, account.email)
                     setAlertShow({signInPayment: true})
                 } else {
                     console.log('Order Data tidak ada', addOrderDataResult);

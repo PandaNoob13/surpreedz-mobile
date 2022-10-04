@@ -19,7 +19,7 @@ const RequestCard = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [videoData, setVideoData] = useState({});
     const [buttonDisable, setButtonDisable] = useState(true);
-    const {onPostService, onPostVideoResult, isLoading} = useRequestList();
+    const {onPostService, onPostVideoResult, isLoading2} = useRequestList();
     const data = props.data;
     const dueDate = data.dueDate;
     const orderRequest = data.orderRequest;

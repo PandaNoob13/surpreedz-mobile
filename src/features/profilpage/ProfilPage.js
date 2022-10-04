@@ -219,7 +219,7 @@ const ProfilPage = () => {
             {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>}
 
             {modalVisible && 
-                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'70%'}>
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Edit Profile`} modalHeight={'60%'}>
                     <ScrollView>
                         <FormTextInput label={'Name'} value={nameUser} onChangeText={setNameUser} />
                         <FormTextInput label={'Location'} value={locationUser} onChangeText={setLocationUser} />

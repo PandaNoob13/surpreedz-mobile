@@ -27,14 +27,14 @@ const About = (props) => {
             <View style={styles.iconContainer}>
                 <FontAwesome icon={SolidIcons.fileVideo} style={styles.icon} ></FontAwesome>
             </View>
-            <Text style={styles.textStyle}>When your request is completed, we’ll put the link to view, share, or download your Surpreedz video there</Text>
+            <Text style={styles.textStyle}>When your request is completed, we’ll put the link to view or download your Surpreedz video</Text>
         </View>
-        <View style={styles.textRow}>
+        {/* <View style={styles.textRow}>
             <View style={styles.iconContainer}>
                 <FontAwesome icon={SolidIcons.moneyBillWave} style={styles.icon} ></FontAwesome>
             </View>
             <Text style={styles.textStyle}>If for some reason your video isn’t completed, ...</Text>
-        </View>
+        </View> */}
 
     </ScrollView>
   )

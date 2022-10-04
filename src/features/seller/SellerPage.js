@@ -92,7 +92,7 @@ const SellerPage = () => {
         <MainContainer mainPage>
             <ScrollView>
                 {modalVisible && 
-                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} modalHeight={'70%'} children={
+                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} modalHeight={'60%'} children={
                         <ScrollView>
                             <FormTextInput label={'Role'} value={role} onChangeText={setRole} />
                             <FormTextInput label={'Description'} value={description} onChangeText={setDescription} />
@@ -103,8 +103,10 @@ const SellerPage = () => {
                     }
                 />}
                 <View style={{margin: 25}}>
-                    <Text colourTextPrimary text40BO>Serve your audience!</Text>
-                    <FormButton label='Register your Service' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>
+                    <Text style={{marginBottom: 15}} colourTextPrimary text40BO>Bring joy to your audience!</Text>
+                    {role == '' ? <FormButton label='Register your Service' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>
+                    : <FormButton label='Edit your Service' onPress={()=> setModalVisible(true)} style={{marginVertical:10}}/>
+}
                     {/* need to change button label when user registered as verified seller */}
                     {/* { modalDetailOrder &&
                     <ModalDialog visible={modalDetailOrder} onPress={()=> setModalDetailOrder(false)} titleModal={'Order Detail'}>
