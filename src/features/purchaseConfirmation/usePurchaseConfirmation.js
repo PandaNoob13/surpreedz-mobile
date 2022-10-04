@@ -70,7 +70,7 @@ const usePurchaseConfirmation = () => {
             
         } catch (error) {
             setPosts(error)
-            console.log(error);
+            console.log("Error in purchase confirmation: ", error);
         }finally{
             setLoading(false)
         }   

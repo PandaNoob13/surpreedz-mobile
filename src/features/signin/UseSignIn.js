@@ -32,14 +32,12 @@ const useSignIn = () => {
             const response = await onLogin({email: emailUser, password: passwordUser })
             console.log('Response Login',response);
             if (response) {
-                const account = response.account
                 console.log('SIGN IN SUCCESS');
                 if (addOrderDataResult) {
                     console.log('orderData 1 ', addOrderDataResult);
                     // Alert.alert('Sign In Success',`Have fun on Surpreedz ! \n Please complete your transaction`)
                     // navigation.replace(ROUTE.PAYMENT)
-                    await storage.setData(KEY.ACCOUNT_ID, account.id)
-                    await storage.setData(KEY.ACCOUNT_EMAIL, account.email)
+
                     setAlertShow({signInPayment: true})
                 } else {
                     console.log('Order Data tidak ada', addOrderDataResult);

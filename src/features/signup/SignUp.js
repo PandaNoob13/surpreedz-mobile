@@ -51,9 +51,10 @@ const SignUp = () => {
         navigation.replace(ROUTE.MAIN)
     }
 
-    const handleAlert = () => {
+    const handleAlert = async () => {
         if (alertShow.signUpPayment) {
             setAlertShow(false,false,false)
+            await onPostSignIn(email, password);
             navigation.replace(ROUTE.PAYMENT)
         } else {
             setAlertShow(false,false,false)

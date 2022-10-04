@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
 import { Alert, Keyboard } from 'react-native';
+import { acc } from 'react-native-reanimated';
 import { useSelector } from 'react-redux';
 import ModalAlert from '../../shared/components/ModalAlert';
 import { ROUTE } from '../../shared/constants';
@@ -41,6 +42,7 @@ const UseSignUp = () => {
             })
             // console.log('response useSignUp => ', response);
             console.log('SIGN UP SUCCESS');
+            const account = response.account
             if (response) {
                 console.log('addOrderDataResult di useSignUp', addOrderDataResult);
                 if (addOrderDataResult) {
