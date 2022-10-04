@@ -11,6 +11,7 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import OrderDetailInfo from './OrderDetailInfo';
+import ModalDialog from './ModalDialog';
 
 const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     const theme = useTheme();
@@ -18,14 +19,14 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
     switch (status) {
         case "On progress":
             return (
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
                     <Entypo name="dots-three-horizontal" size={16} color="yellow" />
                     <Text style={styles.textStyle}> Processing your video ...</Text>
                 </View>
             )
         case "Rejected":
             return (
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
                     <MaterialIcons name="error-outline" size={16} color="red" />
                     <Text style={styles.textStyle}> Sorry, it's rejected</Text>
                 </View>
@@ -42,7 +43,7 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
         case "Submitted":
             return (
                 <View>
-                    <View style={{flexDirection:'row'}}>
+                    <View style={{flexDirection:'row', alignItems:'center'}}>
                         <FontAwesome name="check-circle" size={16} color="green" />
                         <Text style={styles.textStyle}> Video is ready!</Text>
                     </View>
@@ -62,7 +63,7 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
             )
         default:
             return (
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
                     <FontAwesome5 name="comment-dots" size={16} color="yellow" />
                     <Text style={styles.textStyle}> Waiting for confirmation</Text>
                 </View>
@@ -78,46 +79,49 @@ const PurchasedCard = (props) => {
     const [modalVisible, setModalVisible] = useState(false)
 
     return (
-        <CardContainer style={{marginBottom: 12}}>
+        <View style={{marginBottom: 12}}>
             {modalVisible && 
-                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
+                <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} modalHeight={'70%'} >
                         <OrderDetailInfo 
                         data={{
                             orderRequest: orderRequest,
-                            buyerName:name
                         }}
                         />
                 </ModalDialog>
             }
-            <View row>
-                <View style={styles.container}>
+            <CardContainer>
+                <View row>
+                    <View style={styles.container}>
+                        <View>
+                            <Image source={{uri:`data:image/jpg;base64,${photoUrl}`}} 
+                            style={styles.imageStyle}
+                            />
+                        </View>
+                        <View style={{flex:1, justifyContent: "space-between", alignItems: "center", alignSelf:'center'}}>
+                            <Text style={[styles.subtitle,{textAlign:'center', flexShrink:1, flexWrap: 'wrap'}]}>{occasion} message from {name}</Text>
+                            <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
+                        </View>
+                        <View style={{marginTop:16, marginBottom:16, alignSelf:'center'}}>
+                            <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                        </View>
+                    </View>
+                    
                     <View>
-                        <Image source={{uri:`data:image/jpg;base64,${photoUrl}`}} 
-                        style={styles.imageStyle}
-                        />
+                        <Text text70L style={styles.textDesc}>Message for:</Text>
+                        <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
+                        <Text text70L style={styles.textDesc}>Description:</Text>
+                        <View row>
+                            <Text numberOfLines={1} style={[styles.textStyle, {flex: 1}]}>{orderRequest.message}</Text>
+                        </View>
+                        <Text text70L style={styles.textDesc}>Due date:</Text>
+                        <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
                     </View>
-                    <View style={{flex:1, justifyContent: "space-between", alignItems: "center", alignSelf:'center'}}>
-                        <Text style={[styles.subtitle,{textAlign:'center', flexShrink:1, flexWrap: 'wrap'}]}>{occasion} message from {name}</Text>
-                        <NumberCurrency price={price} currency={"Rp"}></NumberCurrency>
-                    </View>
-                    <View style={{marginTop:16, marginBottom:16, alignSelf:'center'}}>
-                        <FormButton label='Detail' onPress={()=>setModalVisible(true)} />
+                    <View style={{paddingVertical: 8}}>
+                        {StatusCondition(status, props.callback, orderId, props.callPlayVideo)}
                     </View>
                 </View>
-                
-                <View>
-                    <Text text70L style={styles.textDesc}>Message for:</Text>
-                    <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
-                    <Text text70L style={styles.textDesc}>Description:</Text>
-                    <Text style={styles.textStyle}>{orderRequest.message}</Text>
-                    <Text text70L style={styles.textDesc}>Due date:</Text>
-                    <Text style={styles.textStyle}>{moment({dueDate}).format("MMMM Do YYYY")}</Text>
-                </View>
-                <View style={{paddingVertical: 8}}>
-                    {StatusCondition(status, props.callback, orderId, props.callPlayVideo)}
-                </View>
-            </View>
-        </CardContainer>
+            </CardContainer>
+        </View>
     )
 }
 

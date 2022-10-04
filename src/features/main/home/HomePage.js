@@ -81,8 +81,14 @@ const HomePage = () => {
                         }
                     </ScrollView> */}
                     {isLoading ? 
-                    <View style={{alignItems: 'center', marginVertical:10}}>
+                    <View style={{alignItems: 'center', marginVertical:20}}>
                         <View style={styles.containerWrap}>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
+                            <LoadingServiceCard></LoadingServiceCard>
                             <LoadingServiceCard></LoadingServiceCard>
                             <LoadingServiceCard></LoadingServiceCard>
                             <LoadingServiceCard></LoadingServiceCard>
@@ -93,7 +99,7 @@ const HomePage = () => {
                     </View>
                     : 
                     <>
-                    <View style={{alignItems: 'center', marginVertical:10}}>
+                    <View style={{alignItems: 'center', marginVertical:20}}>
                         <View style={styles.containerWrap}>
                             {posts ? posts.map((account) => {
                                 const data = account.account
