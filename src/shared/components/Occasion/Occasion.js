@@ -56,32 +56,32 @@ const Occasion = (props) => {
             case "Birthday":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
-                            <FontAwesome icon={SolidIcons.birthdayCake} style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} ></FontAwesome>
+                        <View style={props.disabled ? styles.circle : styles.circleDisabled}>
+                            <FontAwesome icon={SolidIcons.birthdayCake} style={props.disabled ? styles.fontAwesome : styles.fontAwesomeDisabled} ></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Graduation":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
-                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.graduationCap}></FontAwesome>
+                        <View style={props.disabled ? styles.circle : styles.circleDisabled}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesome : styles.fontAwesomeDisabled} icon={SolidIcons.graduationCap}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Surprise":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
-                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.surprise}></FontAwesome>
+                        <View style={props.disabled ? styles.circle : styles.circleDisabled}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesome : styles.fontAwesomeDisabled} icon={SolidIcons.surprise}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Other":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
-                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.commentDots}></FontAwesome>
+                        <View style={props.disabled ? styles.circle : styles.circleDisabled}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesome : styles.fontAwesomeDisabled} icon={SolidIcons.commentDots}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
@@ -93,7 +93,7 @@ const Occasion = (props) => {
     return (
         <View style={styles.square}>
             {useChooseIcon(props.occasion)}
-            <Text style={props.disabled ? styles.subtitleDisabled : styles.subtitle}>{props.occasion}</Text>
+            <Text style={props.disabled ? styles.subtitle : styles.subtitleDisabled}>{props.occasion}</Text>
         </View>
     )
 }

@@ -22,7 +22,7 @@ const ProfileCard = (props) => {
     // getPicUrl()
 
     useEffect(()=>{
-        console.log("Data url in prof card: ", dataUrl);
+        // console.log("Data url in prof card: ", dataUrl);
     },[dataUrl])
 
   return (
