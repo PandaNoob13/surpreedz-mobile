@@ -56,32 +56,32 @@ const Occasion = (props) => {
             case "Birthday":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome icon={SolidIcons.birthdayCake} style={{color: 'white', fontSize: 32}} ></FontAwesome>
+                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
+                            <FontAwesome icon={SolidIcons.birthdayCake} style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} ></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Graduation":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.graduationCap}></FontAwesome>
+                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.graduationCap}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Surprise":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.surprise}></FontAwesome>
+                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.surprise}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
             case "Other":
                 return (
                     <TouchableOpacity disabled={props.disabled} onPress={props.onPress} style={styles.square}>
-                        <View style={{width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"}}>
-                            <FontAwesome style={{color: 'white', fontSize: 32}} icon={SolidIcons.commentDots}></FontAwesome>
+                        <View style={props.disabled ? styles.circleDisabled : styles.circle}>
+                            <FontAwesome style={props.disabled ? styles.fontAwesomeDisabled : styles.fontAwesome} icon={SolidIcons.commentDots}></FontAwesome>
                         </View>
                     </TouchableOpacity>
                 )
@@ -93,7 +93,7 @@ const Occasion = (props) => {
     return (
         <View style={styles.square}>
             {useChooseIcon(props.occasion)}
-            <Text style={styles.subtitle}>{props.occasion}</Text>
+            <Text style={props.disabled ? styles.subtitleDisabled : styles.subtitle}>{props.occasion}</Text>
         </View>
     )
 }
@@ -106,7 +106,11 @@ const styling = (theme) => ( StyleSheet.create({
         color: '#ffffff',
         marginVertical: 8,
     },
-    // {padding: 16, flex: 1, backgroundColor: 'blue', flexWrap: 'wrap', flexDirecton: 'column'}
+    subtitleDisabled:{
+        textAlign:'center',
+        color: 'rgba(255,255,255,0.6)',
+        marginVertical: 8,
+    },
     container: {
         padding: 16,
         flex: 1,
@@ -125,4 +129,9 @@ const styling = (theme) => ( StyleSheet.create({
         // height: 100,
         // margin: 4,
     },
+    circle: {width: 60, height: 60, borderColor: 'white', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"},
+    circleDisabled: {width: 60, height: 60, borderColor: 'rgba(255,255,255,0.6)', borderWidth: 1, borderRadius: 60/2, alignItems: 'center', justifyContent: 'center', overflow: "hidden"},
+    fontAwesome: {color: 'white', fontSize: 32},
+    fontAwesomeDisabled: {color: 'rgba(255,255,255,0.6)', fontSize: 32},
+
 }))

@@ -6,11 +6,15 @@ const UseOrderPage = () => {
     const [recipient, onChangeRecipient] = useState('')
     const [message, onChangeMessage] = useState('')
     const [description, onChangeDescription] = useState('')
-    
-
+    const [buttonDisable, setButtonDisable] = useState({
+        birthday: false,
+        graduation: false,
+        surprise: false,
+        other: false,
+    })
 
     return {
-        occasion, onChangeOccasion,recipient, onChangeRecipient,message, onChangeMessage,description, onChangeDescription
+        occasion, onChangeOccasion,recipient, onChangeRecipient,message, onChangeMessage,description, onChangeDescription, buttonDisable, setButtonDisable
     }
 }
 

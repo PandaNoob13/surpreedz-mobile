@@ -22,7 +22,7 @@ const OrderPage = () => {
     const styles = styling(theme)
     const route = useRoute();
     const navigation = useNavigation();
-    const {occasion, onChangeOccasion,recipient, onChangeRecipient,message, onChangeMessage,description, onChangeDescription} = UseOrderPage();
+    const {occasion, onChangeOccasion,recipient, onChangeRecipient,message, onChangeMessage,description, onChangeDescription, buttonDisable, setButtonDisable} = UseOrderPage();
     const [orderParam, setOrderParam] = useState({});
     const [dataSeller,setDataSeller] = useState('');
     const {isTokenExist} = useAuth();
@@ -134,6 +134,42 @@ const OrderPage = () => {
         setAlertShow({success:false})
     }
 
+    const handleButtonPressed = (occ) => {
+        onChangeOccasion(occ)
+        console.log(occ);
+        console.log(occasion);
+        console.log(buttonDisable);
+        
+        switch (occ) {
+            case 'Birthday' :
+                console.log('aet birthday disabled');
+                setButtonDisable({birthday:true, graduation:false, surprise:false, other:false})
+                // setButtonDisable(true, false, false, false);
+                break;
+            case 'Graduation' :
+                console.log('aet grad disabled');
+                setButtonDisable({birthday:false, graduation:true, surprise:false, other:false})
+                // setButtonDisable(false, true, false, false);
+                break;
+            case 'Surprise' :
+                console.log('aet surp disabled');
+                setButtonDisable({birthday:false, graduation:false, surprise:true, other:false})
+                // setButtonDisable(false, false, true, false);
+                break;
+            case 'Other' :
+                console.log('aet oth disabled');
+                setButtonDisable({birthday:false, graduation:false, surprise:false, other:true})
+                // setButtonDisable(false, false, false, true);
+                break;
+            default :
+            console.log('else');
+                setButtonDisable({birthday:false, graduation:false, surprise:false, other:false})
+                // setButtonDisable(false, false, false, false)
+                break;
+        }
+        console.log(buttonDisable.birthday);
+    }
+
   return (
     <MainContainer>
         <ScrollView>
@@ -143,7 +179,7 @@ const OrderPage = () => {
                     style={{marginBottom: 16}}
                 />
 
-                <OccasionCard occasion={occasion} onPress={onChangeOccasion} orderParam={orderParam}></OccasionCard>
+                <OccasionCard occasion={occasion} onPress={handleButtonPressed} disabled={buttonDisable} orderParam={orderParam}></OccasionCard>
 
                 <PersonalisedMessageCard onChangeRecipient={onChangeRecipient} onChangeMessage={onChangeMessage} onChangeDescription={onChangeDescription} recipient={recipient} message={message} description={description} orderParam={orderParam} ></PersonalisedMessageCard>
 
