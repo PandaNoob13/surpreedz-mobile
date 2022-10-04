@@ -47,11 +47,13 @@ const useSignIn = () => {
                     
                     setAlertShow({signIn: true})
                 }
-            }            
+            } else {
+                setAlertShow({signInFailed: true})
+            }
         } catch (error) {
             setError(error)
             console.log('eror => ', error);
-            // Alert.alert('Sign In Failed','Wrong Email or Password !')
+            Alert.alert('Sign In Failed','Wrong Email or Password !')
             setAlertShow({signInFailed: true})
         }finally{
             setIsLoading(false)
