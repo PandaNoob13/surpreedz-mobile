@@ -36,9 +36,14 @@ const HomePage = () => {
         <MainContainer mainPage>
             <ScrollView>
                 <View style={styles.container}>
+                    {modalVisible && 
+                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'50%'} >
+                            <About></About>
+                        </ModalDialog>}
                     <FormButton link style={{marginTop:2, marginBottom: 10}} labelStyle={{color:'#fff'}} label='  How Surpreedz works?' onPress={()=>setModalVisible(true)}>
                         <Feather name="info" size={24} color={'white'} />
                     </FormButton>
+                </View>
                     {/* <Text colourTextPrimary text40BO>Liberate your expression!</Text> */}
                     {/* <ScrollView
                         style={{marginVertical:10}}
@@ -84,7 +89,7 @@ const HomePage = () => {
                         }
                     </ScrollView> */}
                     {isLoading ? 
-                    <View style={{alignItems: 'center', marginVertical:20}}>
+                    <View style={{alignItems: 'center', marginBottom:20}}>
                         <View style={styles.containerWrap}>
                             <LoadingServiceCard></LoadingServiceCard>
                             <LoadingServiceCard></LoadingServiceCard>
@@ -102,7 +107,7 @@ const HomePage = () => {
                     </View>
                     : 
                     <>
-                    <View style={{alignItems: 'center', marginVertical:20}}>
+                    <View style={{alignItems: 'center', marginBottom:20}}>
                         <View style={styles.containerWrap}>
                             {posts ? posts.map((account) => {
                                 const data = account.account
@@ -125,11 +130,7 @@ const HomePage = () => {
                     </View>
                     </>
                     }
-                    {modalVisible && 
-                        <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'40%'} >
-                            <About></About>
-                        </ModalDialog>}
-                </View>
+                {/* </View> */}
             </ScrollView>
             {/* {isLoading ? <SpinnerLoading onShowSpinner={isLoading}></SpinnerLoading>:<></>} */}
         </MainContainer>
@@ -158,7 +159,7 @@ const styling = (theme) => ( StyleSheet.create({
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "center",
-        paddingBottom: 5000,
+        // paddingBottom: 5000,
     },
     video: {        
         // height: 320,
