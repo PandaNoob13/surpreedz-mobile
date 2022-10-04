@@ -1,4 +1,4 @@
-import { View ,StyleSheet, ScrollView} from 'react-native'
+import { View ,StyleSheet, ScrollView, RefreshControl} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
@@ -22,7 +22,7 @@ const SellerPage = () => {
     const storage = Storage();
     const navigation = useNavigation();
     const {isLoading} = useAddEditService();
-    const {isLoading2} = useRequestList();
+    const {isLoading2, onGetService} = useRequestList();
 
     const getRole = async () => {
         return  await storage.getData(KEY.SERVICE_ROLE);
@@ -62,6 +62,7 @@ const SellerPage = () => {
     const {onPostService,alertShow,setAlertShow} = useAddEditService();
     const [accountId, setAccountId] = useState();
     const [buttonDisabled, setButtonDisabled] = useState(false)
+    const [refreshing, setRefreshing] = useState(false);
 
     const handleSubmit = async () => {
         console.log('accountId', accountId);
@@ -88,9 +89,19 @@ const SellerPage = () => {
         }
     }
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        onGetService().then(() => setRefreshing(false));
+    }, []);
+
     return (
         <MainContainer mainPage>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 {modalVisible && 
                     <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Your Service`} modalHeight={'60%'} children={
                         <ScrollView>

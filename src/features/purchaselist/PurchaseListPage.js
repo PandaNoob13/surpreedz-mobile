@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, TouchableOpacity} from 'react-native'
+import { StyleSheet, ScrollView, TouchableOpacity, RefreshControl} from 'react-native'
 import React, { useEffect } from 'react'
 import { useTheme } from '../../shared/context/ThemeContext';
 import MainContainer from '../../shared/components/MainContainer';
@@ -9,11 +9,14 @@ import VideoPlayer from 'expo-video-player';
 import { ResizeMode } from 'expo-av';
 import SpinnerLoading from '../../shared/components/SpinnerLoading';
 import LottieView from 'lottie-react-native';
+import { useState } from 'react';
 
 const PurchaseListPage = () => {
     const theme = useTheme();
     const styles = styling(theme);
 	const {posts, onGetOrder, onGetVideoResult, isLoading, onPlayVideoResult,video,modalVisible, setModalVisible, setVideo} = usePurchaseListPage();
+    const [refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         onGetOrder()
         console.log('Purchase List Page posts');
@@ -24,6 +27,11 @@ const PurchaseListPage = () => {
         setModalVisible(false);
         setVideo('');
     }
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        onGetOrder().then(() => setRefreshing(false));
+    }, []);
 
     return (
         <MainContainer mainPage>
@@ -48,7 +56,12 @@ const PurchaseListPage = () => {
                     
                 </View> : <></>}
 
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <View flex paddingH-25 marginV-25 colourText>
                     <Text colourTextPrimary text40BO>Purchased List</Text>
                     <View useSafeArea marginV-10>
