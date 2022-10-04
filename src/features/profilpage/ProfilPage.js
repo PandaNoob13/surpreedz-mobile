@@ -244,8 +244,16 @@ const ProfilPage = () => {
                                     }
                                 ]}/>
                             }
-                            <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
-                            {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
+                            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                                <View>
+                                    <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
+                                </View>
+                                <View style={{marginLeft:16}}>
+                                {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />}
+                                </View>
+                            </View>
+                            {/* <Button title='Upload Photo' onPress={()=> setAlertShow({editPhoto:true})} />
+                            {image && <Image source={{uri:image}} style={{width: 100,height: 100}} />} */}
                         </View>
 
                         {(alertShow.submitFailed || alertShow.submitSuccess) && 
@@ -255,8 +263,8 @@ const ProfilPage = () => {
                                 <ModalAlert success visible={alertShow.submitSuccess} title={'Edit Profile Success'} onPress={() => handleAlert()}/>}
                             </>
                         }  
-                        <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />
-                    </ScrollView>                  
+                    </ScrollView>      
+                    <FormButton disabled={buttonDisabled} label={'Submit'} onPress={handleSubmitEditProfile} />            
                 </ModalDialog>
             }
             <ScrollView>

@@ -13,10 +13,10 @@ const ServiceCard = (props) => {
     const photoProfile = accountDetail.PhotoProfiles[accountDetail.PhotoProfiles.length - 1]
     const {photo_link} = photoProfile
     const serviceDetail = props.data.ServiceDetail
-    const {id, role} = serviceDetail
+    const {id, role, description} = serviceDetail
     const servicePrice = serviceDetail.ServicePrices[serviceDetail.ServicePrices.length - 1]
     const {price} = servicePrice
-
+    console.log("Description: ", description);
     const theme = useTheme();
     const styles = styling(theme);
     const navigation = useNavigation();
@@ -32,6 +32,7 @@ const ServiceCard = (props) => {
                     location: location,
                     joinDate: props.data.join_date,
                     serviceDetailId: id,
+                    serviceDescription: description,
                     price: price,
                     dataUrl: props.pic,
                     prevPage: route.name

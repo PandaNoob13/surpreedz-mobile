@@ -12,7 +12,7 @@ const ProfileCard = (props) => {
     const storage = Storage();
     const theme = useTheme();
     const styles = styling(theme);
-    const {name, location, joinDate, dataUrl} = props.data;
+    const {name, location, joinDate, dataUrl, serviceDescription} = props.data;
     // const [dataUrl, setDataUrl] = useState('');
     // const {changedPhotoProf} = UseEditProfilePage();
     // const getPicUrl = async () => {
@@ -33,14 +33,17 @@ const ProfileCard = (props) => {
                     style={styles.imageStyle}
                     />
                 </View>
+                {serviceDescription ? 
+                <View style={{marginTop: 10}}>
+                    <Text style={[styles.subtitle,{textAlign:'center'}]}>{name}</Text>
+                    <Text style={[styles.italicTextStyle,{textAlign:'center'}]}>{`"${serviceDescription}"`}</Text>
+                </View> : 
                 <View>
                     <Text style={[styles.subtitle,{textAlign:'center'}]}>{name}</Text>
                     <Text style={styles.textStyle}>{location}</Text>
-                </View>
-                
-
+                </View>}
                 <View>
-                    <Text style={[styles.textStyle, {marginTop:32}]}>Member since {moment({joinDate}).format("MMMM Do YYYY")}</Text>
+                    <Text style={[styles.textStyle, {marginTop:18}]}>Member since {moment({joinDate}).format("MMMM Do YYYY")}</Text>
                 </View>
             </View>
 
@@ -68,7 +71,13 @@ const styling = (theme) => ( StyleSheet.create({
         alignItems:'center',
         alignSelf:'center',
         marginBottom:8
-    }
+    },
+    italicTextStyle :{
+        fontSize:16,
+        color: '#ffffff',
+        textAlign:'center',
+        fontStyle: 'italic'
+    },
  }))
 
 export default ProfileCard

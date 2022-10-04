@@ -64,6 +64,7 @@ const OrderPage = () => {
             location: route.params.location,
             joinDate: route.params.joinDate,
             serviceDetailId: route.params.serviceDetailId,
+            serviceDescription: route.params.serviceDescription,
             price: route.params.price,
             dataUrl: route.params.dataUrl,
             prevPage: route.params.prevPage
@@ -74,12 +75,13 @@ const OrderPage = () => {
 
     useEffect(()=>{
         setDataSeller({
-            picUrl:orderParam.picUrl,
+            picUrl: orderParam.picUrl,
             name: orderParam.name,
             email: orderParam.email,
             location: orderParam.location,
             joinDate: orderParam.joinDate,
             serviceDetailId: orderParam.serviceDetailId,
+            serviceDescription: orderParam.serviceDescription,
             price: orderParam.price,
             dataUrl: orderParam.dataUrl,
 
