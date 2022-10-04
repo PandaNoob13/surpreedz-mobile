@@ -65,10 +65,10 @@ const OccasionCard = (props) => {
                 </Text>
 
                 <View style={styles.container}>
-                    <Occasion onPress={() => props.onPress("Birthday")} occasion={"Birthday"}></Occasion>
-                    <Occasion onPress={() => props.onPress("Graduation")} occasion={"Graduation"}></Occasion>
-                    <Occasion onPress={() => props.onPress("Surprise")} occasion={"Surprise"}></Occasion>
-                    <Occasion onPress={() => props.onPress("Other")} occasion={"Other"}></Occasion>
+                    <Occasion disabled={props.disabled.birthday} onPress={() => props.onPress("Birthday")} occasion={"Birthday"}></Occasion>
+                    <Occasion disabled={props.disabled.graduation} onPress={() => props.onPress("Graduation")} occasion={"Graduation"}></Occasion>
+                    <Occasion disabled={props.disabled.surprise} onPress={() => props.onPress("Surprise")} occasion={"Surprise"}></Occasion>
+                    <Occasion disabled={props.disabled.other} onPress={() => props.onPress("Other")} occasion={"Other"}></Occasion>
                 </View>
             </View>
         </CardContainer>
