@@ -1,4 +1,4 @@
-import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated} from 'react-native'
+import { View ,StyleSheet, ScrollView, useWindowDimensions, Animated, RefreshControl} from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { useTheme } from '../../../shared/context/ThemeContext';
 import MainContainer from '../../../shared/components/MainContainer';
@@ -27,14 +27,25 @@ const HomePage = () => {
     const { width: windowWidth } = useWindowDimensions();
     const [modalVisible, setModalVisible] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(()=>{
       onGetService();
     },[])
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        onGetService().then(() => setRefreshing(false));
+    }, []);
+
     return (
         <MainContainer mainPage>
-            <ScrollView>
+            <ScrollView refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }>
                 <View style={styles.container}>
                     <FormButton link style={{marginTop:2, marginBottom: 10}} labelStyle={{color:'#fff'}} label='  How Surpreedz works?' onPress={()=>setModalVisible(true)}>
                         <Feather name="info" size={24} color={'white'} />
