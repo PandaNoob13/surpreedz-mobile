@@ -28,18 +28,24 @@ const PurchaseListPage = () => {
     return (
         <MainContainer mainPage>
             {modalVisible == true && video != '' ? <View>
-                    <TouchableOpacity onPress={handleCloseModal}>
-                        <Text style={styles.subtitle}>Close Video</Text>
-                    </TouchableOpacity>
-                    <VideoPlayer 
-                    videoProps={{
-                        shouldPlay: true,
-                        resizeMode:ResizeMode.CONTAIN,
-                        source:{
-                            uri:`data:video/mp4;base64,${video}`
-                        },
-                    }}
-                    />
+
+                     
+                    <View style={{marginTop: 0}}>
+                        <TouchableOpacity onPress={handleCloseModal}>
+                            <Text style={styles.subtitle}>Close Video</Text>
+                        </TouchableOpacity>
+                        <VideoPlayer 
+                            videoProps={{
+                                shouldPlay: true,
+                                resizeMode: ResizeMode.COVER,
+                                source:{
+                                    uri:`data:video/mp4;base64,${video}`
+                                },
+                            }}
+                        />
+
+                    </View>
+                    
                 </View> : <></>}
 
             <ScrollView>
@@ -67,7 +73,7 @@ const PurchaseListPage = () => {
                             })
                             return orders
                         }) : 
-                        <View style={{marginVertical:16}}>
+                        <View style={{marginVertical:220}}>
                             <View style={styles.container}>
                                 <LottieView autoPlay style={styles.image}
                                     source={require('../../../assets/img/51382-astronaut-light-theme.json')}>

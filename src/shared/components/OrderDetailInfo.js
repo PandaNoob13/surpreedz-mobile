@@ -4,16 +4,17 @@ import { useTheme } from '../context/ThemeContext'
 import FormTextInput from './FormTextInput';
 
 const OrderDetailInfo = (props) => {
-    const theme = useTheme();
-    const styles = styling(theme);
-    const data = props.data
-
+  const theme = useTheme();
+  const styles = styling(theme);
+  const data = props.data
+  const orderRequest = data.orderRequest
+  console.log("Data in order detail modal : ", data);
   return (
     <ScrollView >
         {/* <Text> Order request from : </Text> */}
-        <FormTextInput editable={false} label={'Recepient name:'} value={data.orderRequest.recipient_name}></FormTextInput>
-        <FormTextInput editable={false} label={'Message:'} value={data.orderRequest.message} multiline ></FormTextInput>
-        <FormTextInput editable={false} label={'Description'} value={data.orderRequest.description} multiline></FormTextInput>
+        <FormTextInput editable={false} label={'Recepient name:'} value={orderRequest.recipient_name}></FormTextInput>
+        <FormTextInput editable={false} label={'Message:'} value={orderRequest.message} multiline ></FormTextInput>
+        <FormTextInput editable={false} label={'Description'} value={orderRequest.description} multiline></FormTextInput>
     </ScrollView>
   )
 }

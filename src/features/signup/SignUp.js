@@ -47,7 +47,7 @@ const SignUp = () => {
     }, [name, location])
 
     const handleSignIn = async () => {
-        await onPostSignIn(email,password);
+        await onPostSignIn(email, password);
         navigation.replace(ROUTE.MAIN)
     }
 

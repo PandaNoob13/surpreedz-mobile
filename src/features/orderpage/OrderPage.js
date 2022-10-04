@@ -150,14 +150,14 @@ const OrderPage = () => {
                 <View style={{marginBottom:16}}>
                     <FormButton disabled={buttonDisabled} label={`Send Request`} onPress={handleSendRequest} />
                 </View>
-                {modalVisible && 
-                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'70%'} >
+                {/* {modalVisible && 
+                    <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`How Surpreedz works?`} modalHeight={'40%'} >
                         <About></About>
                     </ModalDialog>}
                     
                 <FormButton link style={{marginBottom:16}} labelStyle={{color:'#fff'}} label=' How Surpreedz works?' onPress={()=>setModalVisible(true)}>
                     <Feather name="info" size={24} color={'white'} />
-                </FormButton>
+                </FormButton> */}
             </View>
             {alertShow.success && 
                 <ModalAlert visible={alertShow.success} title={`Your request has been saved successfully`} subtitle={'Please complete the transaction !'} success onPress={() => handleAlert()}/>

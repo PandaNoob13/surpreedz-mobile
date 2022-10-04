@@ -61,7 +61,7 @@ const RequestListPage = () => {
                     return orders
                 }) 
                 : 
-                <View style={{marginVertical:16}}>
+                <View style={{marginVertical:130}}>
                     <View style={styles.container}>
                         <LottieView autoPlay style={styles.image}
                             source={require('../../../../assets/img/51382-astronaut-light-theme.json')}>

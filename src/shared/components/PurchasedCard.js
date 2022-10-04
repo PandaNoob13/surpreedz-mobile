@@ -11,23 +11,24 @@ import { Entypo } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import OrderDetailInfo from './OrderDetailInfo';
+import ModalDialog from './ModalDialog';
 
-const StatusCondition = (status, callback, orderId,callPlayVideo) => {
+const StatusCondition = (status, callback, orderId, callPlayVideo) => {
     const theme = useTheme();
     const styles = styling(theme)
     switch (status) {
         case "On progress":
             return (
-                <View style={{flexDirection:'row'}}>
-                    <Entypo name="dots-three-horizontal" size={16} color="yellow" />
-                    <Text style={styles.textStyle}> Processing your video ...</Text>
+                <View style={{flexDirection:'row', margin: 10}}>
+                    <Entypo name="dots-three-horizontal" size={20} color="yellow" />
+                    <Text style={styles.textStyle}>  On Progress</Text>
                 </View>
             )
         case "Rejected":
             return (
-                <View style={{flexDirection:'row'}}>
-                    <MaterialIcons name="error-outline" size={16} color="red" />
-                    <Text style={styles.textStyle}> Sorry, it's rejected</Text>
+                <View style={{flexDirection:'row', margin: 10}}>
+                    <MaterialIcons name="error-outline" size={16} color="red"/>
+                    <Text style={styles.textStyle}>  Rejected</Text>
                 </View>
 
             )
@@ -42,18 +43,18 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
         case "Submitted":
             return (
                 <View>
-                    <View style={{flexDirection:'row'}}>
-                        <FontAwesome name="check-circle" size={16} color="green" />
-                        <Text style={styles.textStyle}> Video is ready!</Text>
+                    <View style={{flexDirection:'row', margin: 10}}>
+                        <FontAwesome name="check-circle" size={20} color="green" />
+                        <Text style={styles.textStyle}>  Video is ready!</Text>
                     </View>
                     <View>
-                        <View style={{margin:5}}>
-                            <FormButton label={'Play'} onPress={()=>{callPlayVideo(orderId)}}>
+                        <View style={{margin: 10}}>
+                            <FormButton label={' Play'} onPress={()=>{callPlayVideo(orderId)}}>
                                 <Feather name="play" size={16} color="black" />
                             </FormButton>
                         </View>
-                        <View style={{margin:5}}>
-                            <FormButton onPress={()=>{callback(orderId)}} label={'Download Video'}>
+                        <View style={{margin:10}}>
+                            <FormButton onPress={()=>{callback(orderId)}} label={'  Download Video'}>
                                 <Feather name="download-cloud" size={16} color="black" />
                             </FormButton>
                         </View>
@@ -62,7 +63,7 @@ const StatusCondition = (status, callback, orderId,callPlayVideo) => {
             )
         default:
             return (
-                <View style={{flexDirection:'row'}}>
+                <View style={{flexDirection:'row', margin: 10}}>
                     <FontAwesome5 name="comment-dots" size={16} color="yellow" />
                     <Text style={styles.textStyle}> Waiting for confirmation</Text>
                 </View>
@@ -82,9 +83,9 @@ const PurchasedCard = (props) => {
             {modalVisible && 
                 <ModalDialog visible={modalVisible} onPress={()=> setModalVisible(false)} titleModal={`Order Detail`} >
                         <OrderDetailInfo 
-                        data={{
-                            orderRequest: orderRequest,
-                            buyerName:name
+                            data={{
+                                orderRequest: orderRequest,
+                                buyerName:name
                         }}
                         />
                 </ModalDialog>
@@ -105,7 +106,7 @@ const PurchasedCard = (props) => {
                     </View>
                 </View>
                 
-                <View>
+                <View style={{margin: 10}}>
                     <Text text70L style={styles.textDesc}>Message for:</Text>
                     <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
                     <Text text70L style={styles.textDesc}>Description:</Text>

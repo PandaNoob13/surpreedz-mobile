@@ -38,7 +38,7 @@ const ServiceCard = (props) => {
                 })
             }}
         >
-            <CardContainer style={{padding: 0, paddingBottom: 8, width: 152, minHeight: 250, margin: 4}}>
+            <CardContainer style={{padding: 0, paddingBottom: 8, width: 152, height: 75, margin: 4, marginBottom: 15}}>
                 <Image source={{uri: `data:image/jpg;base64,${props.pic}`}} style={{height: 150, objectFit: "cover", borderTopRightRadius: 12, borderTopLeftRadius: 12}}></Image>
                 <View flex style={{padding: 8}}>
                     <View marginB-10>
