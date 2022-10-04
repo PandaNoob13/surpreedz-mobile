@@ -3,7 +3,7 @@ const homeService = ({doGet}) => {
         // console.log("Try Getting Service Cards");
         try {
             const page = 1;
-            const limit = 10;
+            const limit = 100;
             return await doGet({url: `/service-detail/homepage/?page=${page}&limit=${limit}`})
         } catch (error) {
             throw error

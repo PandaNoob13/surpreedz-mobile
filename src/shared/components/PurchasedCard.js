@@ -106,7 +106,7 @@ const PurchasedCard = (props) => {
                         </View>
                     </View>
                     
-                    <View>
+                    <View style={{margin: 10}}>
                         <Text text70L style={styles.textDesc}>Message for:</Text>
                         <Text style={styles.textStyle}>{orderRequest.recipient_name}</Text>
                         <Text text70L style={styles.textDesc}>Description:</Text>
